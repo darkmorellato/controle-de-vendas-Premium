@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Vendas - Miplace Premium (Obsidian & Gold)</title>
+    <title>Controle de Vendas - Miplace Premium (Champagne & Noir)</title>
 
-    <!-- Fontes Premium -->
+    <!-- Preconnect for faster font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fontes Premium - apenas pesos essenciais -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&family=Space+Mono:wght@700&display=swap"
         rel="stylesheet">
     <!-- Fonte Mono para Recibo -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -31,29 +35,29 @@
                     },
                     colors: {
                         gold: {
-                            50: '#fffcf0',
-                            100: '#fef5d6',
-                            200: '#fce6a8',
-                            300: '#f9d172',
-                            400: '#f6b73c',
-                            500: '#d4af37', // Ouro Principal
-                            600: '#aa8439',
-                            700: '#8c6a2e',
-                            800: '#73582a',
-                            900: '#5e4825',
+                            50: '#fdfaf2',
+                            100: '#faf3dc',
+                            200: '#f5e4ab',
+                            300: '#eecf77',
+                            400: '#e4ba4a',
+                            500: '#c9a227', // Champagne Gold Principal
+                            600: '#a8851e',
+                            700: '#886918',
+                            800: '#6e5314',
+                            900: '#5a4310',
                         },
                         onyx: {
-                            950: '#020202', // Obsidian Absoluto
-                            900: '#050505', // Preto Profundo
-                            800: '#0a0a0a', // Preto Elevado
-                            700: '#121212',
-                            600: '#1a1a1a'
+                            950: '#0a0a0a',
+                            900: '#111111',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a'
                         },
                         odoo: {
-                            400: '#f6b73c',
-                            500: '#d4af37',
-                            600: '#aa8439',
-                            700: '#8c6a2e',
+                            400: '#e4ba4a',
+                            500: '#c9a227',
+                            600: '#a8851e',
+                            700: '#886918',
                         }
                     },
                     animation: {
@@ -87,13 +91,13 @@
                         }
                     },
                     boxShadow: {
-                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
-                        'vision': '0 25px 50px -12px rgba(0, 0, 0, 0.9)',
-                        'neon': '0 0 10px #d4af37, 0 0 40px rgba(212, 175, 55, 0.2)',
-                        'gold-glow': '0 0 15px rgba(212, 175, 55, 0.3)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+                        'vision': '0 20px 40px -12px rgba(0, 0, 0, 0.15)',
+                        'neon': '0 0 10px rgba(201, 162, 39, 0.3), 0 0 40px rgba(201, 162, 39, 0.1)',
+                        'gold-glow': '0 4px 20px rgba(201, 162, 39, 0.25)',
                     },
                     backgroundImage: {
-                        'gold-gradient': 'linear-gradient(135deg, #8c6a2e 0%, #d4af37 25%, #fce6a8 50%, #d4af37 75%, #8c6a2e 100%)',
+                        'gold-gradient': 'linear-gradient(110deg, #886918 0%, #c9a227 20%, #f5e4ab 45%, #fff8e7 50%, #f5e4ab 55%, #c9a227 80%, #886918 100%)',
                     }
                 }
             }
@@ -101,44 +105,65 @@
     </script>
 
     <style>
-        /* TEMA OBSIDIANA & OURO */
+        /* ============================================
+           TEMA CHAMPAGNE & NOIR — Boutique Edition
+           Background: warm beige/off-white
+           Panels: crisp white / ivory
+           Buttons: champagne gold metallic + black text
+           Accents: pure black borders, black typography
+        ============================================ */
+
+        :root {
+            --bg-base: #f5f0e8;
+            /* warm beige */
+            --bg-card: #fdfaf4;
+            /* ivory white */
+            --bg-card-alt: #f9f5ed;
+            /* off-white */
+            --noir: #0f0f0f;
+            /* rich black */
+            --noir-soft: #1c1c1c;
+            --noir-muted: #3a3633;
+            /* dark warm-grey */
+            --noir-subtle: #6b6560;
+            /* medium warm-grey */
+            --border: rgba(15, 15, 15, 0.12);
+            /* ultra-thin black border */
+            --border-dark: rgba(15, 15, 15, 0.22);
+            --champagne: #c9a227;
+            /* champagne gold core */
+            --champagne-lt: #e8c84e;
+            --champagne-dk: #8a6d18;
+        }
+
         body {
-            background-color: #020202;
-            /* Profundidade com gradientes radiais sutis */
+            background-color: var(--bg-base);
             background-image:
-                radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(212, 175, 55, 0.06) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(5, 5, 5, 1) 0%, rgba(2, 2, 2, 1) 100%);
-            background-attachment: fixed;
-            color: #e2e8f0;
+                radial-gradient(ellipse at 10% 10%, rgba(201, 162, 39, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(201, 162, 39, 0.04) 0%, transparent 50%);
+            color: var(--noir);
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
         }
 
-        /* Moldura Clássica (The Classic Frame) */
+        /* ─── Classic Frame (light panels) ─── */
         .classic-frame {
             position: relative;
-            background: rgba(5, 5, 5, 0.75);
-            /* Onyx translúcido */
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            /* Borda externa Ouro */
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
             box-shadow:
-                0 30px 60px -12px rgba(0, 0, 0, 0.95),
-                /* Sombra profunda */
-                inset 0 0 0 1px rgba(212, 175, 55, 0.08);
-            /* Linha interna de refino */
+                0 2px 12px rgba(0, 0, 0, 0.06),
+                0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
-        /* Efeito de reflexo na borda da moldura */
+        /* subtle top-edge shimmer */
         .classic-frame::before {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(212, 175, 55, 0.1) 40%, transparent 80%);
+            background: linear-gradient(160deg, rgba(201, 162, 39, 0.22) 0%, transparent 60%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -146,187 +171,395 @@
             pointer-events: none;
         }
 
-        /* Inputs e Selects Premium - Glow Effect */
+        /* ─── Inputs / Selects ─── */
         input,
         select,
         textarea {
-            background-color: rgba(10, 10, 10, 0.8) !important;
-            border: 1px solid rgba(212, 175, 55, 0.15) !important;
-            color: #f8fafc !important;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            background-color: #ffffff !important;
+            border: 1px solid var(--border-dark) !important;
+            color: var(--noir) !important;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         input:focus,
         select:focus {
-            background-color: rgba(5, 5, 5, 0.95) !important;
-            border-color: #d4af37 !important;
+            background-color: #ffffff !important;
+            border-color: var(--champagne) !important;
             box-shadow:
-                0 0 20px rgba(212, 175, 55, 0.25),
-                inset 0 2px 4px rgba(0, 0, 0, 0.8) !important;
-            transform: translateY(-1px);
+                0 0 0 3px rgba(201, 162, 39, 0.15),
+                inset 0 1px 3px rgba(0, 0, 0, 0.05) !important;
         }
 
         input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(15, 15, 15, 0.35);
         }
 
-        /* Botões com Gradiente Ouro Metálico e Shimmer */
+        /* ─── Champagne Gold Metallic Button ─── */
         .btn-gold {
             background: linear-gradient(110deg,
-                    #aa8439 0%,
-                    #d4af37 25%,
-                    #fce6a8 45%,
-                    #fff 50%,
-                    #fce6a8 55%,
-                    #d4af37 75%,
-                    #aa8439 100%);
+                    #886918 0%,
+                    #c9a227 18%,
+                    #f5e4ab 40%,
+                    #fff8e7 50%,
+                    #f5e4ab 60%,
+                    #c9a227 82%,
+                    #886918 100%);
             background-size: 200% auto;
-            color: #050505;
+            color: #0f0f0f;
             text-transform: uppercase;
             font-weight: 800;
-            letter-spacing: 0.08em;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-            transition: all 0.4s ease;
+            letter-spacing: 0.09em;
+            border: 1.5px solid rgba(15, 15, 15, 0.55);
+            box-shadow:
+                0 2px 8px rgba(201, 162, 39, 0.20),
+                inset 0 1px 0 rgba(255, 255, 255, 0.60);
+            transition: background-position 0.35s ease, box-shadow 0.2s ease, transform 0.15s ease;
         }
 
         .btn-gold:hover {
             background-position: right center;
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px) scale(1.015);
+            box-shadow:
+                0 8px 24px rgba(201, 162, 39, 0.30),
+                inset 0 1px 0 rgba(255, 255, 255, 0.70);
+            border-color: rgba(15, 15, 15, 0.70);
         }
 
         .btn-gold:active {
-            transform: scale(0.98);
+            transform: scale(0.975);
+            box-shadow: 0 1px 4px rgba(201, 162, 39, 0.15);
         }
 
-        /* Substituindo classes utilitárias antigas para manter compatibilidade */
+        /* ─── Glass / Glass-dark (repurposed to light) ─── */
         .glass {
             position: relative;
-            background: rgba(5, 5, 5, 0.75);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.95), inset 0 0 0 1px rgba(212, 175, 55, 0.08);
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
         }
 
         .glass-dark {
             position: relative;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.95), inset 0 0 0 1px rgba(212, 175, 55, 0.08);
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
         }
 
-        /* Scrollbar Dourada Premium */
+        /* ─── Scrollbar — thin champagne on cream ─── */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #020202;
-            border-left: 1px solid #1a1a1a;
+            background: var(--bg-base);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #73582a, #d4af37, #73582a);
+            background: linear-gradient(to bottom, #c9a227, #e4ba4a, #c9a227);
             border-radius: 4px;
-            border: 2px solid #020202;
+            border: 1px solid var(--bg-base);
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #fce6a8;
+            background: var(--champagne);
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.3);
+            background: rgba(201, 162, 39, 0.4);
         }
 
-        /* Ajustes para texto Playfair (Títulos) */
+        /* ─── Headings ─── */
         h1,
         h2,
         h3,
         .font-display {
             font-family: 'Playfair Display', serif;
             letter-spacing: -0.02em;
+            color: var(--noir);
         }
 
-        /* Impressão Limpa */
+        /* ─── Tailwind overrides for dark-mode classes used inline ─── */
+        /* Remap text-slate-* to dark noir tones */
+        .text-slate-200 {
+            color: #1c1c1c !important;
+        }
+
+        .text-slate-300 {
+            color: #2e2b27 !important;
+        }
+
+        .text-slate-400 {
+            color: #4a4640 !important;
+        }
+
+        .text-slate-500 {
+            color: #6b6560 !important;
+        }
+
+        .text-white {
+            color: #0f0f0f !important;
+        }
+
+        /* Cards that used bg-black / bg-onyx → ivory */
+        .bg-black,
+        .bg-onyx-950,
+        .bg-onyx-900,
+        .bg-onyx-800 {
+            background-color: var(--bg-card) !important;
+        }
+
+        /* border-white/* → thin black border */
+        [class*="border-white"] {
+            border-color: var(--border) !important;
+        }
+
+        /* bg-white/* overlays → very light beige */
+        .bg-white\/5 {
+            background-color: rgba(15, 15, 15, 0.03) !important;
+        }
+
+        .bg-white\/10 {
+            background-color: rgba(15, 15, 15, 0.05) !important;
+        }
+
+        .bg-white\/20 {
+            background-color: rgba(15, 15, 15, 0.08) !important;
+        }
+
+        /* Nav / header area */
+        nav,
+        header,
+        .navbar {
+            background: var(--bg-card) !important;
+            border-color: var(--border-dark) !important;
+        }
+
+        /* ─── Impressão A4 — Apenas Tabela de Vendas ─── */
+        /* ─── Print: Relatório de Vendas (A4) ─── */
         @media print {
             @page {
-                margin: 5mm;
-                size: auto;
+                margin: 10mm 12mm;
+                size: A4 portrait;
             }
 
-            body {
+            /* Método visibility: oculta tudo mas mantém no fluxo */
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
                 background: white !important;
-                color: black !important;
-                background-image: none !important;
             }
 
-            .no-print {
-                display: none !important;
+            body * {
+                visibility: hidden !important;
             }
 
-            .classic-frame,
-            .glass {
-                border: none !important;
-                background: white !important;
-                box-shadow: none !important;
-                color: black !important;
-                backdrop-filter: none !important;
+            /* Revelar apenas a área de vendas e todos seus filhos */
+            .print-sales-area,
+            .print-sales-area * {
+                visibility: visible !important;
             }
 
-            .receipt-paper {
-                box-shadow: none !important;
-                width: 100% !important;
-                max-width: 80mm !important;
-                border: 1px solid #ddd !important;
-            }
-
-            .receipt-modal-wrapper {
+            /* Posicionar EXATAMENTE no topo-esquerdo da página */
+            .print-sales-area {
                 position: fixed !important;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 9999;
-                background: white;
+                inset: 0 !important;
+                width: 100vw !important;
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+                z-index: 9999 !important;
             }
 
-            input,
-            select {
-                border: 1px solid #ddd !important;
-                background: white !important;
-                color: black !important;
+            /* Cabeçalho do relatório — override inline style */
+            .print-header {
+                visibility: visible !important;
+                display: block !important;
+                height: auto !important;
+                overflow: visible !important;
+                text-align: center !important;
+                margin-bottom: 6mm !important;
+                padding-bottom: 4mm !important;
+                border-bottom: 1.5px solid #c9a227 !important;
+            }
+
+            /* Espaçamento entre grupos */
+            .print-sales-area .space-y-10 > div + div {
+                margin-top: 6mm !important;
+            }
+
+            /* Tabela principal */
+            table.sales-table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                font-size: 9px !important;
+                font-family: Arial, sans-serif !important;
+                table-layout: fixed !important;
+                page-break-inside: auto !important;
+            }
+
+            table.sales-table tr {
+                page-break-inside: avoid !important;
+            }
+
+            /* Cabeçalhos */
+            table.sales-table thead tr {
+                border-bottom: 1.5px solid #c9a227 !important;
+            }
+
+            table.sales-table th {
+                padding: 4px 5px !important;
+                font-size: 7.5px !important;
+                font-weight: 900 !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.07em !important;
+                color: #8a6d18 !important;
+                background: transparent !important;
+                border: none !important;
+                vertical-align: bottom !important;
+            }
+
+            /* Células */
+            table.sales-table td {
+                padding: 5px 5px !important;
+                border: none !important;
+                color: #0f0f0f !important;
+                background: transparent !important;
+                vertical-align: top !important;
+                font-size: 9px !important;
+                line-height: 1.4 !important;
+                overflow: visible !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+
+            /* Separador fino entre linhas */
+            table.sales-table tbody tr {
+                border-bottom: 0.5px solid rgba(0,0,0,0.07) !important;
+            }
+            table.sales-table tbody tr:last-child {
+                border-bottom: none !important;
+            }
+
+            /* ── Larguras A4 portrait (176mm úteis aprox) ── */
+            /* Cliente */
+            table.sales-table th:nth-child(1),
+            table.sales-table td:nth-child(1) { width: 17% !important; }
+
+            /* Itens & Detalhes */
+            table.sales-table th:nth-child(2),
+            table.sales-table td:nth-child(2) { width: 36% !important; }
+
+            /* Vendedor */
+            table.sales-table th:nth-child(3),
+            table.sales-table td:nth-child(3) { width: 9% !important; text-align: center !important; }
+
+            /* Pagamento */
+            table.sales-table th:nth-child(4),
+            table.sales-table td:nth-child(4) { width: 24% !important; }
+
+            /* Total Pago */
+            table.sales-table th:nth-child(5),
+            table.sales-table td:nth-child(5) { width: 14% !important; text-align: right !important; }
+
+            /* Ocultar coluna de ações */
+            table.sales-table th:nth-child(6),
+            table.sales-table td:nth-child(6) { display: none !important; }
+
+            /* Revelar elementos ocultos por hover */
+            .opacity-0 { opacity: 1 !important; }
+            [class*="translate-x"] { transform: none !important; }
+
+            /* Remover todos os estilos decorativos das células */
+            table.sales-table td * {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+
+            /* Total Pago: texto grande e limpo */
+            table.sales-table td:nth-child(5) > span:first-child {
+                font-weight: 900 !important;
+                font-size: 11px !important;
+                padding: 0 !important;
+                background: transparent !important;
+                border: none !important;
+                white-space: nowrap !important;
+            }
+
+            /* Remover wrapper visual azul da tabela */
+            .print-sales-area > div > div > div > div[class*="bg-"] {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                overflow: visible !important;
+            }
+
+            /* Linha de data do grupo */
+            .print-sales-area .flex.justify-between.items-end {
+                border-left: 2px solid #c9a227 !important;
+                padding: 1px 5px !important;
+                margin-bottom: 2mm !important;
+                background: transparent !important;
+                border-radius: 0 !important;
                 box-shadow: none !important;
             }
 
-            * {
-                text-shadow: none !important;
-                color: black !important;
-            }
-
-            .bg-black,
-            .bg-onyx-900,
-            .bg-onyx-950 {
-                background: white !important;
-            }
-
-            .text-gold-500,
-            .text-gold-400,
-            .text-odoo-400,
-            .text-odoo-500 {
-                color: black !important;
+            /* Ocultar paginação */
+            .print-sales-area .flex.justify-center.items-center {
+                display: none !important;
             }
         }
 
         .receipt-paper {
-            background-color: #ffffff;
-            color: #000;
+            background-color: #fdfaf4;
+            color: #0f0f0f;
+        }
+
+        /* ─── Performance hints ─── */
+        [class*="sticky"] {
+            will-change: transform;
+        }
+        .classic-frame {
+            contain: layout style;
+        }
+        /* Reduce blur cost on decorative elements */
+        .blur-3xl { filter: blur(40px); }
+        .blur-2xl { filter: blur(24px); }
+        /* Disable pointer-events on decorative blobs */
+        .absolute.blur-3xl,
+        .absolute.blur-2xl {
+            pointer-events: none;
+        }
+        /* GPU-accelerate modals */
+        .fixed[class*="z-["] {
+            will-change: opacity, transform;
+            transform: translateZ(0);
+        }
+        /* Reduce transition cost on list items - use shorter durations */
+        .space-y-10 > div,
+        .space-y-8 > div {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        /* Prevent layout thrash on scrollable containers */
+        .overflow-y-auto {
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Contain list items for faster paint */
+        .paginatedSale {
+            contain: content;
+        }
+        /* Reduce animations for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 
@@ -361,16 +594,16 @@
     </script>
 
     <!-- React & Babel -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
-<body class="antialiased selection:bg-gold-500 selection:text-black">
+<body class="antialiased selection:bg-gold-400 selection:text-black">
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useMemo, useRef } = React;
+        const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
         const Icon = ({ path, className }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} dangerouslySetInnerHTML={{ __html: path }} />
@@ -481,15 +714,20 @@
         const formatCurrency = (value) => new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Math.round((value + Number.EPSILON) * 100) / 100);
         const parseCurrency = (str) => typeof str !== 'string' ? (typeof str === 'number' ? str : 0) : Math.round((parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0) * 100) / 100;
 
-        const RealTimeClock = () => {
+        // Single shared clock — avoids two separate setInterval timers
+        const useClock = () => {
             const [time, setTime] = useState(new Date());
-            useEffect(() => { const interval = setInterval(() => setTime(new Date()), 1000); return () => clearInterval(interval); }, []);
+            useEffect(() => { const t = setInterval(() => setTime(new Date()), 1000); return () => clearInterval(t); }, []);
+            return time;
+        };
+
+        const RealTimeClock = () => {
+            const time = useClock();
             return (<div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md shadow-lg shadow-black/5 hover:bg-white/10 transition-all duration-300"><Icons.Clock className="w-4 h-4 text-odoo-500" /><span className="font-mono text-sm font-bold text-odoo-400 tracking-wide">{time.toLocaleTimeString('pt-BR')}</span></div>);
         };
 
         const HeaderClock = () => {
-            const [time, setTime] = useState(new Date());
-            useEffect(() => { const interval = setInterval(() => setTime(new Date()), 1000); return () => clearInterval(interval); }, []);
+            const time = useClock();
             return (<div className="hidden md:flex items-center gap-2 bg-white/5 px-5 py-2.5 rounded-full border border-white/10 shadow-sm backdrop-blur-sm"><Icons.Clock className="w-4 h-4 text-odoo-500" /><span className="font-mono text-sm font-bold text-slate-300 tracking-wide">{time.toLocaleTimeString('pt-BR')}</span></div>);
         };
 
@@ -644,7 +882,8 @@
             const [settings, setSettings] = useState({ employeeName: "", currency: "R$" });
             const [toasts, setToasts] = useState([]);
             const [searchTerm, setSearchTerm] = useState('');
-            const [filterDate, setFilterDate] = useState('');
+            const [filterDate, setFilterDate] = useState(() => new Date().toISOString().split('T')[0]);
+            const [filterMode, setFilterMode] = useState('daily'); // 'daily', 'monthly', 'yearly'
             const [groupBy, setGroupBy] = useState('date');
             const [currentView, setCurrentView] = useState('dashboard');
             const [clientSearchModalOpen, setClientSearchModalOpen] = useState(false);
@@ -656,6 +895,7 @@
             const [managerAuthModalOpen, setManagerAuthModalOpen] = useState(false);
             const [managerPassword, setManagerPassword] = useState('');
             const [loginModalOpen, setLoginModalOpen] = useState(false);
+            const [sessionPromptOpen, setSessionPromptOpen] = useState(false);
             const [selectedUserForLogin, setSelectedUserForLogin] = useState(null);
             const [loginPasswordInput, setLoginPasswordInput] = useState('');
             const [receiptModalOpen, setReceiptModalOpen] = useState(false);
@@ -665,11 +905,13 @@
             const [isBackupOpen, setIsBackupOpen] = useState(false);
             const [logoutModalOpen, setLogoutModalOpen] = useState(false);
             const [confirmSaleModalOpen, setConfirmSaleModalOpen] = useState(false);
+            const [confirmChangeModalOpen, setConfirmChangeModalOpen] = useState(false);
             const [confirmClientUpdateModalOpen, setConfirmClientUpdateModalOpen] = useState(false);
             const fileInputInternalRef = useRef(null);
             const [currentPage, setCurrentPage] = useState(1);
             const itemsPerPage = 50;
             const [editingId, setEditingId] = useState(null);
+            const [originalEmployeeName, setOriginalEmployeeName] = useState(null);
             const [date, setDate] = useState(() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; });
             const [isDateLocked, setIsDateLocked] = useState(true);
             const [clientName, setClientName] = useState('');
@@ -701,6 +943,8 @@
             const [currentPaymentType, setCurrentPaymentType] = useState('');
             const [currentPaymentAmount, setCurrentPaymentAmount] = useState('');
             const [currentInstallments, setCurrentInstallments] = useState('');
+            const [clientSource, setClientSource] = useState('');
+            const [paymentObservation, setPaymentObservation] = useState('');
             const [pendingAuthAction, setPendingAuthAction] = useState(null);
             const [pendingEditItem, setPendingEditItem] = useState(null);
             const [routineState, setRoutineState] = useState({});
@@ -728,12 +972,12 @@
                 const unsubscribeAuth = auth.onAuthStateChanged(user => {
                     if (user) {
                         console.log("Conectado como:", user.uid);
-                        const unsubSales = db.collection('vendas').onSnapshot(snapshot => {
+                        const unsubSales = db.collection('vendas').orderBy('date', 'desc').onSnapshot(snapshot => {
                             const loadedSales = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                             setSales(loadedSales);
                         }, err => console.error("Erro sincronia vendas:", err));
 
-                        const unsubClients = db.collection('clientes').onSnapshot(snapshot => {
+                        const unsubClients = db.collection('clientes').orderBy('name').onSnapshot(snapshot => {
                             const loadedClients = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                             setClients(loadedClients);
                         }, err => console.error("Erro sincronia clientes:", err));
@@ -762,19 +1006,22 @@
                 if (st) {
                     const p = JSON.parse(st);
                     setSettings(p);
-                    if (p.employeeName) setIsLoggedIn(true);
+                    if (p.employeeName) {
+                        setSelectedUserForLogin(p.employeeName);
+                        setSessionPromptOpen(true);
+                    }
                 }
             }, []);
             useEffect(() => localStorage.setItem('vendas_settings_v14', JSON.stringify(settings)), [settings]);
 
-            const toggleRoutine = (category, index) => {
+            const toggleRoutine = useCallback((category, index) => {
                 const key = `${category}-${index}`;
                 const today = new Date().toISOString().split('T')[0];
                 const newVal = !routineState[key];
                 db.collection('rotina_state').doc(today).set({ [key]: newVal }, { merge: true });
-            };
+            }, [routineState]);
 
-            const playAlertSound = () => { try { new Audio('speech_1771176567518.mp3').play().catch(e => console.error(e)); } catch (e) { console.error(e); } };
+            const playAlertSound = useCallback(() => { try { new Audio('speech_1771176567518.mp3').play().catch(e => console.error(e)); } catch (e) { console.error(e); } }, []);
 
             useEffect(() => {
                 if (!isLoggedIn) return;
@@ -823,31 +1070,32 @@
             const changeAmount = totalPaid - finalTotal;
             const remainingToPay = Math.max(0, Math.round(((finalTotal - totalPaid) + Number.EPSILON) * 100) / 100);
 
-            const getPaymentStyles = (type) => {
+            const getPaymentStyles = useCallback((type) => {
                 switch (type) {
-                    case 'Entrada': return { wrapper: 'bg-emerald-900/30 border-emerald-500/30 text-emerald-400', amount: 'text-emerald-400' };
-                    case 'Parte do Pagamento': return { wrapper: 'bg-slate-800 border-slate-700 text-slate-300', amount: 'text-slate-400' };
-                    case 'Restante': return { wrapper: 'bg-odoo-900/30 border-odoo-500/30 text-odoo-400', amount: 'text-odoo-500' };
-                    default: return { wrapper: 'bg-slate-800 border-slate-700 text-slate-300', amount: 'text-slate-400' };
+                    case 'Entrada': return { wrapper: 'bg-gradient-to-r from-[#598c73]/20 to-[#4d7f66]/20 border-[#598c73]/40 text-[#406852]', amount: 'text-[#406852]' };
+                    case 'Parte do Pagamento': return { wrapper: 'bg-gradient-to-r from-[#C96A27]/20 to-[#A85115]/20 border-[#C96A27]/40 text-[#A85115]', amount: 'text-[#8A410D]' };
+                    case 'Restante': return { wrapper: 'bg-gradient-to-r from-[#6B4C9A]/20 to-[#563A80]/20 border-[#6B4C9A]/40 text-[#563A80]', amount: 'text-[#452E66]' };
+                    case 'Integral': return { wrapper: 'bg-gradient-to-r from-[#2B548F]/20 to-[#224373]/20 border-[#2B548F]/40 text-[#224373]', amount: 'text-[#1A3357]' };
+                    default: return { wrapper: 'bg-gradient-to-r from-[#2B548F]/20 to-[#224373]/20 border-[#2B548F]/40 text-[#224373]', amount: 'text-[#1A3357]' };
                 }
-            };
+            }, []);
 
             useEffect(() => {
                 if (receiptModalOpen) document.body.classList.add('receipt-open');
                 else document.body.classList.remove('receipt-open');
             }, [receiptModalOpen]);
 
-            const showToast = (message, type = 'success') => {
+            const showToast = useCallback((message, type = 'success') => {
                 const id = Date.now();
                 setToasts(prev => [...prev, { id, message, type }]);
                 setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 4000);
-            };
+            }, []);
 
-            const fillClientData = (f) => {
+            const fillClientData = useCallback((f) => {
                 setClientName(f.name); setClientCpf(f.cpf || ''); setClientPhone(f.phone || ''); setClientEmail(f.email || ''); setClientDob(f.dob || ''); setClientAddress(f.address || ''); setClientNumber(f.number || ''); setClientNeighborhood(f.neighborhood || ''); setClientCity(f.city || ''); setClientZip(f.zip || ''); setClientState(f.state || '');
-            };
+            }, []);
 
-            const handleZipChange = async (e) => {
+            const handleZipChange = useCallback(async (e) => {
                 const value = maskCEP(e.target.value); setClientZip(value);
                 if (value.replace(/\D/g, '').length === 8) {
                     try {
@@ -857,15 +1105,15 @@
                         if (!data.erro) { setClientAddress(data.logradouro); setClientCity(data.localidade); setClientState(data.uf); setClientNeighborhood(data.bairro); showToast("Endereço encontrado!"); }
                     } catch (err) { console.error(err); }
                 }
-            };
+            }, [showToast]);
 
-            const handleCpfChange = (e) => {
+            const handleCpfChange = useCallback((e) => {
                 const val = maskCPF(e.target.value); setClientCpf(val);
                 if (val.replace(/\D/g, '').length === 11) {
                     const f = clients.find(c => c.cpf && c.cpf.replace(/\D/g, '') === val.replace(/\D/g, ''));
                     if (f) { showToast("Cliente encontrado!", "info"); fillClientData(f); }
                 }
-            };
+            }, [clients, showToast, fillClientData]);
 
             const handleSaveClient = () => {
                 if (!clientName) { showToast("Nome é obrigatório", "error"); return; }
@@ -965,9 +1213,9 @@
             };
 
             const handleRemovePayment = (id) => setPaymentList(paymentList.filter(p => p.id !== id));
-            const handleRemoveItem = (id) => setItems(items.filter(i => i.id !== id));
-            const resetForm = () => { setClientName(''); setClientCpf(''); setClientPhone(''); setClientEmail(''); setClientDob(''); setClientAddress(''); setClientNumber(''); setClientCity(''); setClientZip(''); setClientState(''); setClientNeighborhood(''); setItems([]); setEditingId(null); setIsDateLocked(true); setPaymentList([]); setCurrentPaymentMethod(''); setCurrentPaymentType(''); setCurrentPaymentAmount(''); setCurrentInstallments(''); };
-            const openReceipt = (sale) => { setCurrentReceipt(sale); setReceiptModalOpen(true); };
+            const handleRemoveItem = useCallback((id) => setItems(prev => prev.filter(i => i.id !== id)), []);
+            const resetForm = useCallback(() => { setClientName(''); setClientCpf(''); setClientPhone(''); setClientEmail(''); setClientDob(''); setClientAddress(''); setClientNumber(''); setClientCity(''); setClientZip(''); setClientState(''); setClientNeighborhood(''); setItems([]); setEditingId(null); setOriginalEmployeeName(null); setIsDateLocked(true); setPaymentList([]); setCurrentPaymentMethod(''); setCurrentPaymentType(''); setCurrentPaymentAmount(''); setCurrentInstallments(''); setClientSource(''); setPaymentObservation(''); }, []);
+            const openReceipt = useCallback((sale) => { setCurrentReceipt(sale); setReceiptModalOpen(true); }, []);
 
             const performSave = () => {
                 if (clientName) handleSaveClient();
@@ -980,7 +1228,7 @@
                     id: saleId,
                     date,
                     timestamp: new Date().toISOString(),
-                    clientName, clientCpf, clientPhone, clientEmail, clientDob, clientAddress, clientNumber, clientCity, clientZip, clientState, clientNeighborhood, category, items, amount: safeTotal, discount: safeDiscount, employeeName: settings.employeeName, store: "Miplace Premium", payments: paymentList, amountPaid: totalPaid, change: changeAmount
+                    clientName, clientCpf, clientPhone, clientEmail, clientDob, clientAddress, clientNumber, clientCity, clientZip, clientState, clientNeighborhood, category, items, amount: safeTotal, discount: safeDiscount, employeeName: originalEmployeeName || settings.employeeName, store: "Miplace Premium", payments: paymentList, amountPaid: totalPaid, change: changeAmount, clientSource, paymentObservation
                 };
 
                 db.collection('vendas').doc(saleId).set(saleData)
@@ -1004,11 +1252,17 @@
                 e.preventDefault();
                 if (items.length === 0) { showToast("Adicione itens!", "error"); return; }
                 const isRefundOrExchangeCredit = finalTotal < 0;
-                if (!isRefundOrExchangeCredit && totalPaid < finalTotal - 0.02) {
-                    setPendingAuthAction('save');
-                    setManagerAuthModalOpen(true);
+
+                if (!isRefundOrExchangeCredit && remainingToPay > 0.02) {
+                    showToast("O valor pago não pode ser menor que o total a pagar.", "error");
                     return;
                 }
+
+                if (!isRefundOrExchangeCredit && changeAmount > 0.02) {
+                    setConfirmChangeModalOpen(true);
+                    return;
+                }
+
                 setConfirmSaleModalOpen(true);
             };
 
@@ -1207,14 +1461,14 @@
                 });
             };
 
-            const startEdit = (sale) => {
-                setEditingId(sale.id); setDate(sale.date); setClientName(sale.clientName); setClientCpf(sale.clientCpf || ''); setClientPhone(sale.clientPhone || ''); setClientEmail(sale.clientEmail || ''); setClientDob(sale.clientDob || ''); setClientAddress(sale.clientAddress || ''); setClientNumber(sale.clientNumber || ''); setClientCity(sale.clientCity || ''); setClientZip(sale.clientZip || ''); setClientState(sale.clientState || ''); setClientNeighborhood(sale.clientNeighborhood || ''); setCategory(sale.category);
+            const startEdit = useCallback((sale) => {
+                setEditingId(sale.id); setOriginalEmployeeName(sale.employeeName || null); setDate(sale.date); setClientName(sale.clientName); setClientCpf(sale.clientCpf || ''); setClientPhone(sale.clientPhone || ''); setClientEmail(sale.clientEmail || ''); setClientDob(sale.clientDob || ''); setClientAddress(sale.clientAddress || ''); setClientNumber(sale.clientNumber || ''); setClientCity(sale.clientCity || ''); setClientZip(sale.clientZip || ''); setClientState(sale.clientState || ''); setClientNeighborhood(sale.clientNeighborhood || ''); setCategory(sale.category); setPaymentObservation(sale.paymentObservation || '');
                 if (sale.items) setItems(sale.items);
                 if (sale.payments) setPaymentList(sale.payments);
                 setIsDateLocked(true); window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
+            }, []);
 
-            const handleViewHistory = (client) => {
+            const handleViewHistory = useCallback((client) => {
                 const cleanTargetCpf = client.cpf ? client.cpf.replace(/\D/g, '') : null;
                 const targetName = (client.name || '').trim().toLowerCase();
 
@@ -1223,17 +1477,160 @@
                     return (cleanTargetCpf && saleCpf && cleanTargetCpf === saleCpf) || ((s.clientName || '').trim().toLowerCase() === targetName);
                 });
                 setSelectedClientHistory({ client, history: clientSales }); setClientHistoryModalOpen(true);
-            };
+            }, [sales]);
+
+            const uniqueDates = useMemo(() => {
+                const dates = [...new Set(sales.map(s => s.date))];
+                return dates.sort((a, b) => (a || '').localeCompare(b || ''));
+            }, [sales]);
+
+            const handlePrevDate = useCallback(() => {
+                if (!filterDate) {
+                    if (uniqueDates.length > 0) setFilterDate(uniqueDates[uniqueDates.length - 1]);
+                    return;
+                }
+                const idx = uniqueDates.indexOf(filterDate);
+                if (idx > 0) setFilterDate(uniqueDates[idx - 1]);
+            }, [filterDate, uniqueDates]);
+
+            const handleNextDate = useCallback(() => {
+                if (!filterDate) {
+                    if (uniqueDates.length > 0) setFilterDate(uniqueDates[0]);
+                    return;
+                }
+                const idx = uniqueDates.indexOf(filterDate);
+                if (idx !== -1 && idx < uniqueDates.length - 1) setFilterDate(uniqueDates[idx + 1]);
+            }, [filterDate, uniqueDates]);
 
             const filteredSales = useMemo(() => {
                 let f = sales;
-                if (filterDate) f = f.filter(s => s.date === filterDate);
+                if (filterDate) {
+                    if (filterMode === 'daily') {
+                        f = f.filter(s => s.date === filterDate);
+                    } else if (filterMode === 'monthly') {
+                        const [year, month] = filterDate.split('-');
+                        f = f.filter(s => s.date && s.date.startsWith(`${year}-${month}`));
+                    } else if (filterMode === 'yearly') {
+                        const [year] = filterDate.split('-');
+                        f = f.filter(s => s.date && s.date.startsWith(`${year}`));
+                    }
+                }
                 if (searchTerm) {
                     const l = searchTerm.toLowerCase();
-                    f = f.filter(s => (s.clientName || '').toLowerCase().includes(l) || s.items.some(i => i.description.toLowerCase().includes(l)));
+                    f = f.filter(s => (s.clientName || '').toLowerCase().includes(l) || (s.items || []).some(i => (i.description || '').toLowerCase().includes(l)));
                 }
-                return f.sort((a, b) => b.timestamp?.localeCompare(a.timestamp || '') || 0);
-            }, [sales, searchTerm, filterDate]);
+                return f.sort((a, b) => {
+                    const ta = a.timestamp || '';
+                    const tb = b.timestamp || '';
+                    return tb > ta ? 1 : tb < ta ? -1 : 0;
+                });
+            }, [sales, searchTerm, filterDate, filterMode]);
+
+                    const exportListToPDF = () => {
+                        const source = document.querySelector('.print-sales-area');
+                        if (!source) { showToast("Nenhum dado para exportar", "error"); return; }
+
+                        showToast("Gerando PDF...", "info");
+
+                        // Clonar a área exata do print
+                        const clone = source.cloneNode(true);
+
+                        // Remover elementos no-print (ações, paginação)
+                        clone.querySelectorAll('.no-print').forEach(el => el.remove());
+
+                        // Revelar o print-header (que fica oculto na tela)
+                        const ph = clone.querySelector('.print-header');
+                        if (ph) { ph.style.cssText = 'display:block;visibility:visible;height:auto;overflow:visible;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #c9a227;font-family:Arial,sans-serif;'; }
+
+                        // Resetar opacidades e transforms (hover states)
+                        clone.querySelectorAll('[class*="opacity-0"]').forEach(el => el.style.opacity = '1');
+                        clone.querySelectorAll('[class*="translate-x"]').forEach(el => el.style.transform = 'none');
+
+                        // Aplicar estilos inline que replicam o @media print
+                        clone.style.cssText = 'background:white;padding:0;margin:0;width:794px;font-family:Arial,sans-serif;color:#0f0f0f;';
+
+                        // Remover backgrounds/bordas decorativos dos wrappers
+                        clone.querySelectorAll('[class*="bg-\\[#A1B5C9\\]"], [class*="rounded-\\[3rem\\]"]').forEach(el => {
+                            el.style.background = 'transparent';
+                            el.style.border = 'none';
+                            el.style.borderRadius = '0';
+                            el.style.boxShadow = 'none';
+                            el.style.overflow = 'visible';
+                            el.style.backdropFilter = 'none';
+                        });
+
+                        // Estilizar a tabela
+                        clone.querySelectorAll('table.sales-table').forEach(t => {
+                            t.style.cssText = 'width:100%;border-collapse:collapse;font-size:9px;font-family:Arial,sans-serif;table-layout:fixed;';
+                        });
+
+                        // Cabeçalhos da tabela
+                        clone.querySelectorAll('table.sales-table th').forEach((th, i) => {
+                            const widths = ['17%','36%','9%','24%','14%'];
+                            const aligns = ['left','left','center','left','right'];
+                            th.style.cssText = `width:${widths[i]||'auto'};padding:4px 5px;font-size:7.5px;font-weight:900;text-transform:uppercase;letter-spacing:0.07em;color:#8a6d18;background:transparent;border:none;vertical-align:bottom;text-align:${aligns[i]||'left'};border-bottom:1.5px solid #c9a227;`;
+                        });
+
+                        // Células da tabela
+                        clone.querySelectorAll('table.sales-table td').forEach(td => {
+                            td.style.cssText = 'padding:5px;border:none;border-bottom:0.5px solid rgba(0,0,0,0.07);color:#0f0f0f;background:transparent;vertical-align:top;font-size:9px;line-height:1.4;overflow:visible;white-space:normal;word-break:break-word;';
+                        });
+
+                        // Larguras corretas por posição
+                        clone.querySelectorAll('table.sales-table tr').forEach(row => {
+                            const cells = row.querySelectorAll('td, th');
+                            const widths = ['17%','36%','9%','24%','14%'];
+                            const aligns = ['left','left','center','left','right'];
+                            cells.forEach((cell, i) => {
+                                if (widths[i]) {
+                                    cell.style.width = widths[i];
+                                    cell.style.textAlign = aligns[i];
+                                }
+                            });
+                        });
+
+                        // Limpar sub-estilos decorativos (badges, cards de pagamento)
+                        clone.querySelectorAll('table.sales-table td *').forEach(el => {
+                            el.style.background = 'transparent';
+                            el.style.border = 'none';
+                            el.style.boxShadow = 'none';
+                            el.style.borderRadius = '0';
+                        });
+
+                        // Total Pago: destaque em negrito
+                        clone.querySelectorAll('table.sales-table td:nth-child(5)').forEach(td => {
+                            const first = td.querySelector('div');
+                            if (first) { first.style.cssText = 'font-weight:900;font-size:11px;text-align:right;white-space:nowrap;color:#0f0f0f;'; }
+                        });
+
+                        // Linha de data do grupo: borda champagne
+                        clone.querySelectorAll('.flex.justify-between.items-end').forEach(el => {
+                            el.style.cssText = 'display:flex;justify-content:space-between;align-items:center;border-left:2px solid #c9a227;padding:2px 5px;margin-bottom:4px;background:transparent;box-shadow:none;border-radius:0;';
+                        });
+
+                        // Inserir no DOM fora da viewport para html2canvas capturar
+                        const wrapper = document.createElement('div');
+                        wrapper.style.cssText = 'position:absolute;left:-9999px;top:0;width:794px;background:white;z-index:-1;overflow:visible;';
+                        wrapper.appendChild(clone);
+                        document.body.appendChild(wrapper);
+
+                        const opt = {
+                            margin: [10, 12, 10, 12],
+                            filename: `relatorio_vendas_${filterDate || 'geral'}.pdf`,
+                            image: { type: 'jpeg', quality: 0.97 },
+                            html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff', allowTaint: true },
+                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                        };
+
+                        html2pdf().set(opt).from(clone).save().then(() => {
+                            document.body.removeChild(wrapper);
+                            showToast("PDF exportado com sucesso!");
+                        }).catch(err => {
+                            if (document.body.contains(wrapper)) document.body.removeChild(wrapper);
+                            console.error("Erro PDF:", err);
+                            showToast("Erro ao gerar PDF: " + err.message, "error");
+                        });
+                    };
 
             const filteredClients = useMemo(() => {
                 if (!clientSearchTerm) return clients;
@@ -1257,12 +1654,23 @@
 
             useEffect(() => setCurrentPage(1), [filterDate, searchTerm]);
 
-            const handleLoginClick = (name) => { setSelectedUserForLogin(name); setLoginPasswordInput(''); setLoginModalOpen(true); };
-            const performLogin = () => {
+            // Ao carregar, vai para o último lançamento do dia. Se não houver hoje, vai para a data mais recente.
+            useEffect(() => {
+                if (sales.length === 0) return;
+                const today = new Date().toISOString().split('T')[0];
+                const hasToday = sales.some(s => s.date === today);
+                if (!hasToday) {
+                    const dates = [...new Set(sales.map(s => s.date))].filter(Boolean).sort();
+                    if (dates.length > 0) setFilterDate(dates[dates.length - 1]);
+                }
+            }, [sales.length > 0 ? 'loaded' : 'empty']);
+
+            const handleLoginClick = useCallback((name) => { setSelectedUserForLogin(name); setLoginPasswordInput(''); setLoginModalOpen(true); }, []);
+            const performLogin = useCallback(() => {
                 if (loginPasswordInput === EMPLOYEES_CREDENTIALS[selectedUserForLogin]) {
                     setSettings({ employeeName: selectedUserForLogin }); setIsLoggedIn(true); setLoginModalOpen(false); showToast(`Bem-vindo, ${selectedUserForLogin}!`);
                 } else showToast("Senha incorreta", "error");
-            };
+            }, [loginPasswordInput, selectedUserForLogin, showToast]);
 
             if (!isLoggedIn) {
                 return (
@@ -1272,13 +1680,14 @@
                             <div className="bg-gold-gradient p-12 text-center text-onyx-950 relative overflow-hidden shadow-lg">
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
                                 <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
-                                <div className="relative z-10"><div className="inline-flex p-4 bg-onyx-950/10 rounded-[1.5rem] mb-6 backdrop-blur-md shadow-lg border border-white/10 animate-float"><Icons.Store className="w-10 h-10 text-onyx-900" /></div><h1 className="text-3xl font-bold tracking-tight font-display mb-1 text-onyx-950">Miplace</h1><p className="text-onyx-900 text-xs font-bold uppercase tracking-[0.3em] opacity-80">Premium</p></div>
+                                <div className="relative z-10"><div className="inline-flex p-4 bg-onyx-950/10 rounded-[1.5rem] mb-6 backdrop-blur-md shadow-lg border border-white/10"><Icons.Store className="w-10 h-10 text-onyx-900" /></div><h1 className="text-3xl font-bold tracking-tight font-display mb-1 text-onyx-950">Miplace</h1><p className="text-onyx-900 text-xs font-bold uppercase tracking-[0.3em] opacity-80">Premium</p></div>
                             </div>
                             <div className="p-10 space-y-5">
                                 <p className="text-center text-slate-400 text-sm font-medium mb-4">Selecione seu perfil para entrar</p>
                                 {SELLERS_LIST.map(n => (<button key={n} onClick={() => handleLoginClick(n)} className="w-full py-5 px-6 bg-white/5 border border-white/10 rounded-[2rem] flex items-center justify-between hover:bg-odoo-500/10 hover:border-odoo-500/30 hover:shadow-lg transition-all duration-300 group input-focus-effect active-scale relative overflow-hidden shadow-sm"><span className="font-bold text-slate-300 group-hover:text-odoo-400 relative z-10">{n}</span><div className="bg-white/5 p-2.5 rounded-full group-hover:bg-odoo-500 group-hover:text-white transition-colors relative z-10 shadow-sm"><Icons.ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-white" /></div></button>))}
                             </div>
-                            {loginModalOpen && (<div className="absolute inset-0 bg-black/90 backdrop-blur-xl z-20 flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500"><h3 className="text-3xl font-bold text-white mb-2 font-display">Olá, {selectedUserForLogin}!</h3><p className="text-slate-400 mb-10 text-sm font-medium">Digite sua senha para acessar.</p><input type="password" value={loginPasswordInput} onChange={e => setLoginPasswordInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && performLogin()} className="w-full p-5 border border-white/10 rounded-[2rem] text-center mb-10 font-bold outline-none focus:ring-4 focus:ring-odoo-500/50 focus:border-odoo-500 transition-all text-xl placeholder:font-normal bg-white/5 focus:bg-white/10 text-white shadow-inner" placeholder="••••••" autoFocus /><div className="flex gap-4 w-full"><button onClick={() => setLoginModalOpen(false)} className="flex-1 p-5 bg-white/5 border border-white/10 text-slate-400 rounded-[2rem] font-bold hover:bg-white/10 hover:shadow-md transition-all active-scale">Voltar</button><button onClick={performLogin} className="flex-1 btn-gold rounded-[2rem] font-bold shadow-vision transition-all active-scale">Entrar</button></div></div>)}
+                            {sessionPromptOpen && (<div className="absolute inset-0 rounded-[3rem] z-[25] flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.User className="w-8 h-8" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl text-center font-bold mb-4 font-display" style={{ color: '#0f0f0f' }}>Bem-vindo de volta!</h3><p className="mb-10 text-sm font-medium text-center" style={{ color: '#6b6560' }}>Deseja continuar logado como <b>{selectedUserForLogin}</b>?</p><div className="flex gap-4 w-full"><button onClick={() => { setSessionPromptOpen(false); setSettings({ employeeName: null }); }} className="flex-1 p-5 rounded-[2rem] font-bold transition-all hover:bg-black/5 active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Não, Sair</button><button onClick={() => { setIsLoggedIn(true); setSessionPromptOpen(false); showToast(`Sessão restaurada para ${selectedUserForLogin}`); }} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all shadow-md active-scale p-5 text-onyx-900">Sim, Continuar</button></div></div>)}
+                            {loginModalOpen && (<div className="absolute inset-0 rounded-[3rem] z-20 flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-14 h-14 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.Lock className="w-6 h-6" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl font-bold mb-2 font-display" style={{ color: '#0f0f0f' }}>Olá, {selectedUserForLogin}!</h3><p className="mb-10 text-sm font-medium" style={{ color: '#6b6560' }}>Digite sua senha para acessar.</p><input type="password" value={loginPasswordInput} onChange={e => setLoginPasswordInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && performLogin()} className="w-full p-5 rounded-[2rem] text-center mb-10 font-bold outline-none transition-all text-xl placeholder:font-normal shadow-sm" style={{ background: '#fff', border: '1.5px solid rgba(15,15,15,0.20)', color: '#0f0f0f' }} placeholder="••••••" autoFocus /><div className="flex gap-4 w-full"><button onClick={() => setLoginModalOpen(false)} className="flex-1 p-5 rounded-[2rem] font-bold transition-all active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Voltar</button><button onClick={performLogin} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all active-scale p-5">Entrar</button></div></div>)}
                         </div>
                     </div>
                 );
@@ -1319,12 +1728,13 @@
                                                     {HELP_LINKS.map((link, idx) => {
                                                         const IconComp = Icons[link.icon] || Icons.Link;
                                                         return (
-                                                            <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 hover:shadow-sm transition-all text-xs font-medium text-slate-300 group border border-transparent hover:border-white/5" onClick={() => setIsHelpDropdownOpen(false)}>
-                                                                <div className="p-2.5 bg-white/5 border border-white/10 rounded-xl group-hover:border-odoo-500/50 group-hover:text-odoo-500 text-slate-500 transition-colors shadow-sm">
+                                                            <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 text-xs font-medium text-slate-300 group border border-transparent hover:bg-gradient-to-r hover:from-white/10 hover:to-transparent hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg hover:shadow-black/20 hover:border-white/10 hover:text-white relative overflow-hidden" onClick={() => setIsHelpDropdownOpen(false)}>
+                                                                <div className="absolute inset-0 bg-gradient-to-r from-odoo-400/0 via-odoo-400/0 to-odoo-400/0 group-hover:from-odoo-500/10 group-hover:via-odoo-400/5 group-hover:to-transparent transition-all duration-500"></div>
+                                                                <div className="p-2.5 bg-white/5 border border-white/10 rounded-xl group-hover:border-odoo-500/50 group-hover:text-odoo-400 text-slate-500 transition-colors shadow-sm relative z-10 group-hover:bg-odoo-500/10 group-hover:scale-110 duration-300">
                                                                     <IconComp className="w-4 h-4" />
                                                                 </div>
-                                                                <span className="flex-1 leading-tight">{link.title}</span>
-                                                                <Icons.ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300" />
+                                                                <span className="flex-1 leading-tight relative z-10">{link.title}</span>
+                                                                <Icons.ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-odoo-400 translate-x-0 group-hover:translate-x-1 transition-all duration-300 relative z-10" />
                                                             </a>
                                                         )
                                                     })}
@@ -1346,9 +1756,9 @@
                             <div className="space-y-10">
                                 <div className="classic-frame rounded-[3rem] shadow-vision border border-white/60 p-10">
                                     <h2 className="text-3xl font-bold text-slate-200 mb-10 flex items-center gap-4 font-display"><div className="p-3 bg-white/10 rounded-2xl text-odoo-500 shadow-sm border border-white/5"><Icons.BarChart className="w-8 h-8" /></div>Desempenho de Vendas <span className="text-slate-500 font-normal text-lg mt-1 block sm:inline">• {settings.employeeName}</span></h2>
-                                    <div className="bg-gradient-to-br from-onyx-900 to-black rounded-[2.5rem] p-12 text-white mb-10 shadow-2xl shadow-black/40 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-700 border border-white/10">
-                                        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-odoo-500/10 to-amber-500/10 rounded-full -translate-y-1/3 translate-x-1/4 blur-3xl group-hover:scale-110 transition-transform duration-1000"></div>
-                                        <div className="absolute bottom-0 left-0 w-80 h-80 bg-odoo-500/5 rounded-full translate-y-1/3 -translate-x-1/4 blur-3xl"></div>
+                                    <div className="bg-[#fdfaf4] rounded-[2.5rem] p-12 text-[#0f0f0f] mb-10 shadow-sm relative overflow-hidden group hover:shadow-md transition-all duration-700 border border-[#0f0f0f]/10">
+                                        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-[#A1B5C9]/20 to-amber-500/10 rounded-full -translate-y-1/3 translate-x-1/4 blur-3xl group-hover:scale-110 transition-transform duration-1000"></div>
+                                        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#A1B5C9]/10 rounded-full translate-y-1/3 -translate-x-1/4 blur-3xl"></div>
                                         {(() => {
                                             const isManager = settings.employeeName === "Sabrina Almeida";
                                             const myTarget = isManager ? GOAL_MANAGER : GOAL_SELLERS;
@@ -1371,9 +1781,9 @@
                                             return (
                                                 <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-10">
                                                     <div className="flex-1 w-full">
-                                                        <div className="flex justify-between items-start mb-10"><div><h3 className="text-xs font-bold text-slate-500 uppercase tracking-[0.3em] mb-4">Meta de Aparelhos</h3><div className="flex items-baseline gap-4"><p className="text-7xl font-black tracking-tighter bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent drop-shadow-sm font-display">{unitsSold}</p><span className="text-3xl font-medium text-slate-600">/ {myTarget} <span className="text-base">un</span></span></div></div><div className="text-right bg-white/5 p-6 rounded-[2rem] backdrop-blur-md border border-white/10 shadow-xl"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Premiação Extra</p><p className={`text-4xl font-black ${isGoalReached ? 'text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-500 drop-shadow-[0_0_15px_rgba(251,191,36,0.4)]' : 'text-slate-600'}`}>R$ {formatCurrency(potentialCommission)}</p></div></div>
-                                                        <div className="w-full bg-black/50 rounded-full h-6 mb-6 overflow-hidden border border-white/5 shadow-inner p-1"><div className={`h-full rounded-full transition-all duration-1000 ease-out flex items-center justify-end pr-3 shadow-lg relative overflow-hidden ${isGoalReached ? 'bg-gradient-to-r from-amber-500 to-orange-400 animate-pulse-slow' : 'bg-gradient-to-r from-blue-900 to-teal-800'}`} style={{ width: `${progress}%` }}><div className="absolute inset-0 bg-white/20 w-full h-full skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>{progress > 8 && <span className="text-[11px] font-bold text-white drop-shadow-sm z-10">{Math.round(progress)}%</span>}</div></div>
-                                                        <div className="flex items-center gap-4"><div className={`p-3 rounded-2xl shadow-lg ${isGoalReached ? 'bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/30' : 'bg-white/5 text-blue-400 ring-1 ring-blue-500/20'}`}>{isGoalReached ? <Icons.Trophy className="w-6 h-6 animate-bounce" /> : <Icons.BarChart className="w-6 h-6" />}</div><p className="text-lg font-medium text-slate-400">{isGoalReached ? "Parabéns! Você bateu a meta e já está acumulando comissão!" : `Faltam apenas ${Math.max(0, myTarget - unitsSold)} unidades para desbloquear sua premiação extra. Vamos lá!`}</p></div>
+                                                        <div className="flex justify-between items-start mb-10"><div><h3 className="text-xs font-bold text-slate-500 uppercase tracking-[0.3em] mb-4">Meta de Aparelhos</h3><div className="flex items-baseline gap-4"><p className="text-7xl font-black tracking-tighter text-[#0f0f0f] drop-shadow-sm font-display">{unitsSold}</p><span className="text-3xl font-medium text-slate-500">/ {myTarget} <span className="text-base">un</span></span></div></div><div className="text-right bg-white p-6 rounded-[2rem] border border-[#0f0f0f]/10 shadow-sm"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Premiação Extra</p><p className={`text-4xl font-black ${isGoalReached ? 'text-odoo-500' : 'text-slate-400'}`}>R$ {formatCurrency(potentialCommission)}</p></div></div>
+                                                        <div className="w-full bg-slate-200/50 rounded-full h-6 mb-6 overflow-hidden border border-[#0f0f0f]/5 shadow-inner p-1"><div className={`h-full rounded-full transition-all duration-1000 ease-out flex items-center justify-end pr-3 shadow-sm relative overflow-hidden ${isGoalReached ? 'bg-gradient-to-r from-amber-400 to-amber-500 animate-pulse-slow' : 'bg-gradient-to-r from-[#A1B5C9] to-[#8DABC4]'}`} style={{ width: `${progress}%` }}><div className="absolute inset-0 bg-white/20 w-full h-full skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>{progress > 8 && <span className="text-[11px] font-bold text-white drop-shadow-sm z-10">{Math.round(progress)}%</span>}</div></div>
+                                                        <div className="flex items-center gap-4"><div className={`p-3 rounded-2xl shadow-sm border ${isGoalReached ? 'bg-amber-50 border-amber-500/20 text-amber-500' : 'bg-[#fdfaf4] border-[#0f0f0f]/10 text-slate-600'}`}>{isGoalReached ? <Icons.Trophy className="w-6 h-6 animate-bounce" /> : <Icons.BarChart className="w-6 h-6" />}</div><p className="text-lg font-medium text-slate-600">{isGoalReached ? "Parabéns! Você bateu a meta e já está acumulando comissão!" : `Faltam apenas ${Math.max(0, myTarget - unitsSold)} unidades para desbloquear sua premiação extra. Vamos lá!`}</p></div>
                                                     </div>
                                                 </div>
                                             );
@@ -1534,7 +1944,7 @@
                         ) : currentView === 'clients' ? (
                             <div className="classic-frame rounded-[3rem] shadow-vision border border-white/10 overflow-hidden fade-in-up backdrop-blur-md">
                                 <div className="p-10 border-b border-white/10 flex justify-between items-center gap-6 bg-white/5 backdrop-blur-md"><h2 className="text-2xl font-bold text-slate-200 flex items-center gap-4 font-display"><div className="p-3 bg-white/10 rounded-2xl shadow-sm text-odoo-500 border border-white/5"><Icons.User className="w-6 h-6" /></div>Carteira de Clientes</h2><div className="relative group"><Icons.Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-hover:text-odoo-500 transition-colors" /><input type="text" placeholder="Buscar cliente..." value={clientSearchTerm} onChange={e => setClientSearchTerm(e.target.value)} className="w-80 pl-14 pr-5 py-4 border border-white/10 rounded-[1.5rem] text-sm outline-none font-medium text-slate-300 placeholder-slate-600" /></div></div>
-                                <div className="overflow-x-auto"><table className="w-full text-left"><thead className="bg-white/5 border-b border-white/10 text-slate-500 font-bold text-xs uppercase tracking-widest"><tr><th className="p-6 pl-10">Nome</th><th className="p-6">Contato</th><th className="p-6">Vendedor</th><th className="p-6 text-right pr-10">Ações</th></tr></thead><tbody className="divide-y divide-white/10">{filteredClients.map(c => (<tr key={c.id} className="hover:bg-white/5 transition-colors text-sm text-slate-400 group"><td className="p-6 pl-10"><div className="font-bold text-slate-200 leading-tight text-base group-hover:text-odoo-400 transition-colors">{c.name}</div><div className="text-xs text-slate-500 mt-1 font-mono">{c.cpf}</div></td><td className="p-6"><div className="flex items-center gap-3"><span>{c.phone}</span>{c.phone && (<button onClick={() => window.open(`https://wa.me/55${c.phone.replace(/\D/g, '')}`, '_blank')} className="text-slate-500 hover:text-green-500 transition-all hover:scale-110 active:scale-95" title="Chamar no WhatsApp"><Icons.WhatsApp className="w-4 h-4" /></button>)}</div><div className="text-[10px] italic text-slate-600 mt-0.5">{c.email}</div></td><td className="p-6"><span className="bg-white/5 text-slate-400 px-3 py-1.5 rounded-xl text-xs font-bold border border-white/10 shadow-sm">{c.createdBy || '-'}</span></td><td className="p-6 text-right pr-10"><button onClick={() => handleViewHistory(c)} className="px-5 py-3 bg-white/5 border border-white/10 text-slate-400 rounded-2xl text-xs font-bold mr-3 hover:bg-white/10 hover:text-white hover:shadow-md transition-all active-scale">Histórico</button><button onClick={() => handleOpenClientData(c)} className="px-5 py-3 bg-odoo-500/10 border border-odoo-500/20 text-odoo-500 rounded-2xl text-xs font-bold mr-3 hover:bg-odoo-500/20 hover:text-odoo-400 hover:shadow-md transition-all active-scale">Dados</button><button onClick={() => { fillClientData(c); setCurrentView('dashboard'); window.scrollTo(0, 0); }} className="px-5 py-3 btn-gold rounded-2xl text-xs font-bold shadow-vision transition-all active-scale">Nova Venda</button></td></tr>))}</tbody></table></div>
+                                <div className="overflow-x-auto"><table className="w-full text-left"><thead className="bg-white/5 border-b border-white/10 text-slate-500 font-bold text-xs uppercase tracking-widest"><tr><th className="p-6 pl-10">Nome</th><th className="p-6">Contato</th><th className="whitespace-nowrap p-6">Vendedor</th><th className="whitespace-nowrap p-6 text-right pr-10">Ações</th></tr></thead><tbody className="divide-y divide-white/10">{filteredClients.map(c => (<tr key={c.id} className="hover:bg-white/5 transition-colors text-sm text-slate-400 group"><td className="p-6 pl-10"><div className="font-bold text-slate-200 leading-tight text-base group-hover:text-odoo-400 transition-colors">{c.name}</div><div className="text-xs text-[#78866b] mt-1 font-mono">{c.cpf}</div></td><td className="p-6"><div className="flex items-center gap-3"><span>{c.phone}</span>{c.phone && (<button onClick={() => window.open(`https://wa.me/55${c.phone.replace(/\D/g, '')}`, '_blank')} className="text-green-500 hover:text-green-400 transition-all hover:scale-110 active:scale-95" title="Chamar no WhatsApp"><Icons.WhatsApp className="w-4 h-4" /></button>)}</div><div className="text-[10px] italic text-slate-600 mt-0.5">{c.email}</div></td><td className="whitespace-nowrap p-6"><span className={`bg-white/5 px-3 py-1.5 rounded-xl text-xs font-bold border border-white/10 shadow-sm ${c.createdBy === 'Gabriela Ferreira' ? 'text-[#f08080]' : c.createdBy === 'Sabrina Almeida' ? 'text-[#4169e1]' : 'text-slate-400'}`}>{c.createdBy || '-'}</span></td><td className="whitespace-nowrap p-6 text-right pr-10"><button onClick={() => handleViewHistory(c)} className="px-5 py-3 bg-white/5 border border-white/10 text-slate-400 rounded-2xl text-xs font-bold mr-3 hover:bg-white/10 hover:text-white hover:shadow-md transition-all active-scale">Histórico</button><button onClick={() => handleOpenClientData(c)} className="px-5 py-3 bg-odoo-500/10 border border-odoo-500/20 text-odoo-500 rounded-2xl text-xs font-bold mr-3 hover:bg-odoo-500/20 hover:text-odoo-400 hover:shadow-md transition-all active-scale">Dados</button><button onClick={() => { fillClientData(c); setCurrentView('dashboard'); window.scrollTo(0, 0); }} className="px-5 py-3 btn-gold rounded-2xl text-xs font-bold shadow-vision transition-all active-scale">Nova Venda</button></td></tr>))}</tbody></table></div>
                             </div>
                         ) : (
                             <>
@@ -1547,7 +1957,7 @@
                                                 <div className="md:col-span-6 space-y-3"><label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-3">Categoria</label><div className="relative"><select required value={category} onChange={e => setCategory(e.target.value)} className="w-full p-5 rounded-[1.5rem] outline-none text-lg font-bold appearance-none cursor-pointer pr-10"><option value="" className="text-black bg-white">Selecione...</option>{CATEGORIES_LIST.map(c => <option key={c} value={c} className="text-black bg-white">{c}</option>)}</select><div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500"><Icons.ChevronLeft className="-rotate-90 w-5 h-5" /></div></div></div>
 
                                                 <div className="md:col-span-12 border border-white/10 bg-white/5 backdrop-blur-md rounded-[2.5rem] p-10 shadow-sm transition-colors hover:border-white/20">
-                                                    <div className="flex justify-between items-center mb-8"><h3 className="text-xl font-bold text-slate-200 flex items-center gap-4 font-display"><div className="p-3 bg-white/10 rounded-2xl shadow-lg shadow-odoo-500/10 text-odoo-500 border border-white/5"><Icons.User className="w-6 h-6" /></div> Dados do Cliente</h3><div className="flex gap-4"><button type="button" onClick={() => { setClientSearchTerm(''); setClientSearchModalOpen(true); }} className="px-6 py-4 bg-white/5 text-slate-300 rounded-2xl text-xs font-bold hover:shadow-lg transition-all active:scale-95 border border-white/10 hover:bg-white/10 hover:text-white">Importar</button><button type="button" onClick={() => { setClientName(''); setClientCpf(''); setClientPhone(''); setClientEmail(''); setClientDob(''); setClientAddress(''); setClientNumber(''); setClientCity(''); setClientZip(''); setClientState(''); setClientNeighborhood(''); }} className="px-6 py-4 bg-red-500/10 text-red-400 rounded-2xl text-xs font-bold hover:shadow-lg transition-all active:scale-95 border border-red-500/20 hover:bg-red-500/20 flex items-center gap-1.5"><Icons.X className="w-3.5 h-3.5" /> Limpar</button><button type="button" onClick={handleSaveClient} className="px-6 py-4 bg-slate-800 text-white rounded-2xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-black/40 hover:bg-slate-700 transition-all active:scale:95 border border-white/10"><Icons.Save className="w-4 h-4" /> Salvar Cadastro</button></div></div>
+                                                    <div className="flex justify-between items-center mb-8"><h3 className="text-xl font-bold text-slate-200 flex items-center gap-4 font-display"><div className="p-3 bg-white/10 rounded-2xl shadow-lg shadow-odoo-500/10 text-odoo-500 border border-white/5"><Icons.User className="w-6 h-6" /></div> Dados do Cliente</h3><div className="flex gap-4"><button type="button" onClick={() => { setClientSearchTerm(''); setClientSearchModalOpen(true); }} className="px-6 py-4 bg-white/5 text-slate-300 rounded-2xl text-xs font-bold hover:shadow-lg transition-all active:scale-95 border border-white/10 hover:bg-white/10 hover:text-white">Importar</button><button type="button" onClick={() => { setClientName(''); setClientCpf(''); setClientPhone(''); setClientEmail(''); setClientDob(''); setClientAddress(''); setClientNumber(''); setClientCity(''); setClientZip(''); setClientState(''); setClientNeighborhood(''); }} className="px-6 py-4 bg-red-500/10 text-red-400 rounded-2xl text-xs font-bold hover:shadow-lg transition-all active:scale-95 border border-red-500/20 hover:bg-red-500/20 flex items-center gap-1.5"><Icons.X className="w-3.5 h-3.5" /> Limpar</button><button type="button" onClick={handleSaveClient} className="px-6 py-4 bg-[#A1B5C9] text-[#0f0f0f] rounded-2xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-[#A1B5C9]/40 hover:bg-[#8DABC4] transition-all active:scale-95 border border-[#0f0f0f]/10"><Icons.Save className="w-4 h-4" /> Salvar Cadastro</button></div></div>
                                                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                                                         <div className="md:col-span-8 space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-3 mb-1 block">Nome Completo</label><input type="text" required placeholder="Nome do Cliente" value={clientName} onChange={e => setClientName(e.target.value)} className="w-full p-5 rounded-[1.5rem] text-sm outline-none font-medium shadow-inner placeholder-slate-600" /></div>
                                                         <div className="md:col-span-4 space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-3 mb-1 block">CPF</label><input type="text" placeholder="000.000.000-00" value={clientCpf} onChange={handleCpfChange} className="w-full p-5 rounded-[1.5rem] text-sm font-mono outline-none font-medium shadow-inner placeholder-slate-600" /></div>
@@ -1590,14 +2000,39 @@
                                                         {currentPaymentMethod === 'Credito Parcelado' && (<div className="md:col-span-2"><label className="text-xs font-bold text-slate-500 uppercase ml-2 mb-1 block">Parc.</label><select value={currentInstallments} onChange={e => setCurrentInstallments(e.target.value)} className="w-full p-4 rounded-[1.2rem] text-sm outline-none font-medium shadow-inner"><option value="" className="bg-white text-black">Qtd</option>{[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => <option key={i} value={`${i}x`} className="bg-white text-black">{i}x</option>)}</select></div>)}
                                                         <div className={currentPaymentMethod === 'Credito Parcelado' ? "md:col-span-2" : "md:col-span-3"}><label className="text-xs font-bold text-slate-500 uppercase ml-2 mb-1 block">Tipo</label><select value={currentPaymentType} onChange={e => setCurrentPaymentType(e.target.value)} className="w-full p-4 rounded-[1.2rem] text-sm tracking-tight outline-none font-medium shadow-inner"><option value="" className="bg-white text-black">Selecione...</option>{PAYMENT_TYPES.map(t => <option key={t} value={t} className="bg-white text-black">{t}</option>)}</select></div>
                                                         <div className="md:col-span-3"><label className="text-xs font-bold text-slate-500 uppercase ml-2 mb-1 block">Valor</label><input type="text" value={currentPaymentAmount} onChange={handleCurrentPaymentAmountChange} className="w-full p-4 rounded-[1.2rem] text-sm text-right font-bold outline-none shadow-inner" /></div>
-                                                        <div className={currentPaymentMethod === 'Credito Parcelado' ? "md:col-span-2" : "md:col-span-3"}><button type="button" onClick={handleAddPayment} className="w-full bg-odoo-500 text-white font-bold rounded-[1.2rem] py-4 text-sm hover:bg-odoo-600 shadow-lg shadow-odoo-500/20 active-scale whitespace-nowrap transition-all uppercase tracking-wide border border-white/10">Add Pgto</button></div>
+                                                        <div className={currentPaymentMethod === 'Credito Parcelado' ? "md:col-span-2" : "md:col-span-3"}><button type="button" onClick={handleAddPayment} className="w-full bg-[#A1B5C9] text-[#0f0f0f] font-bold rounded-[1.2rem] py-4 text-sm hover:bg-[#8DABC4] shadow-lg shadow-[#A1B5C9]/20 active-scale whitespace-nowrap transition-all uppercase tracking-wide border border-[#0f0f0f]/10">Add Pgto</button></div>
                                                     </div>
                                                     <div className="bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden shadow-sm backdrop-blur-sm">
                                                         <table className="w-full text-left text-xs"><thead className="bg-white/5 border-b border-white/10 text-slate-500 font-bold uppercase tracking-wider"><tr><th className="p-5">Forma</th><th className="p-5 text-right">Valor</th><th className="p-5 w-10"></th></tr></thead><tbody>{paymentList.map(p => { const styles = getPaymentStyles(p.type); return (<tr key={p.id} className="border-b border-white/10 last:border-0"><td className="p-5"><span className="font-bold text-slate-300 text-sm">{p.method}</span> {p.installments && <span className="ml-1 text-slate-500">({p.installments})</span>}<span className="ml-2 px-2 py-0.5 rounded-md bg-white/10 border border-white/10 text-slate-400 font-bold text-[10px] uppercase tracking-wide">{p.type}</span></td><td className={`p-5 text-right font-mono font-bold text-sm ${styles.amount}`}>{formatCurrency(p.amount)}</td><td className="p-5"><button onClick={() => handleRemovePayment(p.id)} className="text-slate-500 hover:text-red-500 transition-colors p-1.5 hover:bg-white/10 rounded-lg"><Icons.Trash2 className="w-4 h-4" /></button></td></tr>); })}</tbody></table>
-                                                        <div className="p-6 bg-black/20 space-y-3 border-t border-white/10"><div className="flex justify-between items-center"><span className="font-bold text-xs uppercase text-slate-500 tracking-wider">Restante a pagar</span> <span className={remainingToPay > 0 ? "text-red-400 font-mono font-bold text-lg" : "text-slate-400 font-mono font-bold text-lg"}>{formatCurrency(remainingToPay)}</span></div><div className="flex justify-between items-center"><span className="font-bold text-xs uppercase text-slate-500 tracking-wider">Total Recebido</span> <span className="text-odoo-500 font-mono font-black text-xl">{formatCurrency(totalPaid)}</span></div></div>
+                                                        <div className="p-6 bg-[#fdfaf4] space-y-3 border-t border-[#0f0f0f]/10">
+                                                            <div className="flex justify-between items-center"><span className="font-bold text-xs uppercase text-slate-500 tracking-wider">Restante a pagar</span> <span className={remainingToPay > 0 ? "text-red-400 font-mono font-bold text-lg" : "text-slate-400 font-mono font-bold text-lg"}>{formatCurrency(remainingToPay)}</span></div>
+                                                            <div className="flex justify-between items-center"><span className="font-bold text-xs uppercase text-slate-500 tracking-wider">Total Recebido</span> <span className="text-odoo-500 font-mono font-black text-xl">{formatCurrency(totalPaid)}</span></div>
+                                                            {changeAmount > 0.02 && (
+                                                                <div className="flex justify-between items-center pt-2 border-t border-[#0f0f0f]/10"><span className="font-bold text-xs uppercase text-slate-500 tracking-wider">Troco</span> <span className="text-orange-500 font-mono font-bold text-lg">{formatCurrency(changeAmount)}</span></div>
+                                                            )}
+                                                            <div className="pt-3 border-t border-[#0f0f0f]/10 mt-2">
+                                                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">Observação no Pagamento</label>
+                                                                <input type="text" value={paymentObservation} onChange={e => setPaymentObservation(e.target.value)} placeholder="Ex: Transferência agendada..." className="w-full p-2.5 rounded-xl outline-none text-xs font-medium shadow-inner border border-[#0f0f0f]/10 bg-white/50 text-[#0f0f0f] placeholder:text-slate-400" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {/* SOURCE / CONHECEU A LOJA BOX */}
+                                            <div className="border border-white/10 bg-white/5 backdrop-blur-md rounded-[1.5rem] p-5 shadow-sm flex items-center gap-4 transition-colors">
+                                                <div className="p-2.5 bg-white/10 rounded-xl shadow-lg text-odoo-500 border border-white/5 shrink-0"><Icons.UserPlus className="w-5 h-5" /></div>
+                                                <h3 className="text-base font-bold text-slate-200 font-display whitespace-nowrap">Conheceu a loja?</h3>
+                                                <div className="flex-1 ml-2">
+                                                    <input type="text" list="source-options" placeholder="Digite ou selecione..." value={clientSource} onChange={e => setClientSource(e.target.value)} className="w-full p-3.5 rounded-[1.5rem] outline-none text-sm font-medium shadow-inner placeholder:text-slate-400 text-[#0f0f0f]" />
+                                                    <datalist id="source-options">
+                                                        <option value="Instagram" />
+                                                        <option value="Facebook" />
+                                                        <option value="Pri Almeida" />
+                                                    </datalist>
+                                                </div>
+                                            </div>
+
                                             <div className="flex gap-5 pt-6 border-t border-white/10">{editingId && (<button type="button" onClick={resetForm} className="w-1/3 py-5 rounded-[2rem] font-bold text-slate-400 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white transition-all active-scale text-base uppercase tracking-wide shadow-sm">Cancelar</button>)}<button type="submit" className={`flex-1 py-5 rounded-[2rem] font-black shadow-vision transition-all active-scale text-lg uppercase tracking-wide btn-gold`}>{editingId ? "Atualizar Registro" : "Finalizar Lançamento"}</button></div>
                                         </form>
                                     </div>
@@ -1605,26 +2040,118 @@
 
                                 <div className="space-y-10 mt-16">
                                     <div className="hidden print:block text-center mb-6 border-b-2 border-black pb-2"><h1 className="text-2xl font-bold uppercase">Relatório de Vendas</h1><p className="text-sm">{filterDate ? `Data: ${formatDateBR(filterDate)}` : (searchTerm ? `Filtro: ${searchTerm}` : `Geral - ${new Date().toLocaleDateString('pt-BR')}`)}</p></div>
-                                    <div className="classic-frame p-8 rounded-[2.5rem] shadow-vision border border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 no-print bg-black/40">
-                                        <div><p className="text-xs text-slate-500 uppercase font-bold tracking-widest mb-1">Total Listado</p><p className="text-4xl font-black text-white tracking-tighter">{settings.currency} {formatCurrency(filteredSales.reduce((s, i) => s + (i.amountPaid || i.amount), 0))}</p></div>
-                                        <div className="flex gap-4 w-full md:w-auto items-center"><div className="flex flex-1 gap-4"><div className="w-40"><DateInput value={filterDate} onChange={e => setFilterDate(e.target.value)} className="w-full p-4 rounded-[1.2rem] text-sm outline-none font-medium text-slate-300 placeholder-slate-500 bg-white/5" placeholder="Filtrar Data" /></div><div className="relative flex-1"><Icons.Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" /><input type="text" placeholder="Filtrar por nome, produto..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-14 pr-5 py-4 rounded-[1.2rem] outline-none text-slate-300 text-sm font-medium" /></div>{(filterDate || searchTerm) && (<button onClick={() => { setFilterDate(''); setSearchTerm(''); }} className="p-4 bg-red-500/10 text-red-500 rounded-[1.2rem] hover:bg-red-500/20 transition-colors border border-red-500/20 shadow-sm" title="Limpar Filtros"><Icons.Trash2 className="w-5 h-5" /></button>)}</div><button onClick={() => window.print()} className="px-8 py-4 bg-white/5 text-slate-300 font-bold rounded-[1.5rem] hover:bg-white/10 transition-all shadow-lg active-scale text-sm flex items-center gap-2 border border-white/10"><Icons.Printer className="w-5 h-5" /> <span className="hidden sm:inline">Imprimir</span></button></div>
+                                    <div className="bg-[#fdfaf4] p-8 rounded-[2.5rem] shadow-sm border border-[#0f0f0f]/10 flex flex-col gap-8 no-print">
+                                        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                                            <div>
+                                                <p className="text-[10px] text-[#0f0f0f]/60 uppercase font-bold tracking-widest mb-1">Total Listado</p>
+                                                <p className="text-4xl font-black text-[#0f0f0f] tracking-tighter">
+                                                    {settings.currency} {formatCurrency(filteredSales.reduce((s, i) => s + (i.amountPaid || i.amount), 0))}
+                                                </p>
+                                            </div>
+                                            <div className="flex flex-wrap gap-4 w-full md:w-auto items-center justify-center md:justify-end">
+                                                <div className="flex items-center gap-2 bg-white border border-[#0f0f0f]/10 p-1 rounded-2xl shadow-sm">
+                                                    <button onClick={() => setFilterMode('daily')} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterMode === 'daily' ? 'bg-[#A1B5C9] text-[#0f0f0f] shadow-md' : 'text-[#0f0f0f]/60 hover:bg-[#0f0f0f]/5'}`}>DIÁRIO</button>
+                                                    <button onClick={() => setFilterMode('monthly')} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterMode === 'monthly' ? 'bg-[#A1B5C9] text-[#0f0f0f] shadow-md' : 'text-[#0f0f0f]/60 hover:bg-[#0f0f0f]/5'}`}>MENSAL</button>
+                                                    <button onClick={() => setFilterMode('yearly')} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterMode === 'yearly' ? 'bg-[#A1B5C9] text-[#0f0f0f] shadow-md' : 'text-[#0f0f0f]/60 hover:bg-[#0f0f0f]/5'}`}>ANUAL</button>
+                                                </div>
+                                                <div className="flex gap-2">
+                                                    <button onClick={() => window.print()} className="px-6 py-4 bg-white text-[#0f0f0f] font-bold rounded-[1.5rem] hover:bg-slate-50 transition-all shadow-sm border border-[#0f0f0f]/10 active-scale text-sm flex items-center gap-2">
+                                                        <Icons.Printer className="w-5 h-5" /> <span className="hidden sm:inline">Imprimir</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col md:flex-row gap-4 items-center pt-6 border-t border-[#0f0f0f]/5">
+                                            <div className="flex items-center gap-3 w-full md:w-80">
+                                                <button onClick={handlePrevDate} className="p-4 bg-white border border-[#0f0f0f]/10 rounded-2xl hover:bg-slate-50 transition-all shadow-sm text-[#0f0f0f]/60 hover:text-[#0f0f0f] active-scale" title="Data Anterior">
+                                                    <Icons.ChevronLeft className="w-5 h-5" />
+                                                </button>
+                                                <div className="flex-1">
+                                                    <DateInput
+                                                        value={filterDate}
+                                                        onChange={e => setFilterDate(e.target.value)}
+                                                        className="w-full p-4 rounded-[1.2rem] text-sm outline-none font-bold text-[#0f0f0f] placeholder-[#0f0f0f]/50 bg-white border border-[#0f0f0f]/10 shadow-inner"
+                                                        placeholder="Filtrar Data"
+                                                    />
+                                                </div>
+                                                <button onClick={handleNextDate} className="p-4 bg-white border border-[#0f0f0f]/10 rounded-2xl hover:bg-slate-50 transition-all shadow-sm text-[#0f0f0f]/60 hover:text-[#0f0f0f] active-scale" title="Próxima Data">
+                                                    <Icons.ChevronRight className="w-5 h-5" />
+                                                </button>
+                                            </div>
+                                            <div className="relative flex-1 w-full">
+                                                <Icons.Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0f0f0f]/50" />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Filtrar por nome, produto..."
+                                                    value={searchTerm}
+                                                    onChange={e => setSearchTerm(e.target.value)}
+                                                    className="w-full pl-14 pr-5 py-4 rounded-[1.2rem] outline-none text-[#0f0f0f] placeholder-[#0f0f0f]/50 bg-white border border-[#0f0f0f]/10 shadow-inner text-sm font-medium"
+                                                />
+                                            </div>
+                                            {(filterDate || searchTerm) && (
+                                                <button onClick={() => { setFilterDate(''); setSearchTerm(''); setFilterMode('daily'); }} className="p-4 bg-red-500/10 text-red-600 rounded-[1.2rem] hover:bg-red-500/20 transition-colors border border-red-500/20 shadow-sm" title="Limpar Filtros">
+                                                    <Icons.Trash2 className="w-5 h-5" />
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                     {groupedSales.length > 0 ? (
-                                        <div className="space-y-10">
+                                        <div className="space-y-10 print-sales-area">
+                                            {/* Cabeçalho visível apenas na impressão */}
+                                            <div className="print-header" style={{visibility:'hidden',height:0,overflow:'hidden'}}>
+                                                <div style={{fontFamily:'sans-serif'}}>
+                                                    <h1 style={{fontSize:'16px',fontWeight:900,textTransform:'uppercase',letterSpacing:'3px',margin:0,color:'#0f0f0f'}}>MIPLACE PREMIUM</h1>
+                                                    <p style={{fontSize:'9px',color:'#8a6d18',marginTop:'3px',fontWeight:700,textTransform:'uppercase',letterSpacing:'2px'}}>Relatório de Vendas</p>
+                                                    <p style={{fontSize:'9px',color:'#6b6560',marginTop:'2px'}}>{filterDate ? `Data: ${formatDateBR(filterDate)}` : (searchTerm ? `Filtro: ${searchTerm}` : `Geral — ${new Date().toLocaleDateString('pt-BR')}`)}</p>
+                                                </div>
+                                            </div>
                                             {groupedSales.map(group => (
                                                 <div key={group.key} className="space-y-5">
-                                                    <div className="flex justify-between items-end px-4 font-bold text-slate-300 tracking-tight border-l-4 border-odoo-500 pl-6 py-2"><h3 className="text-xl">{groupBy === 'date' ? formatDateBR(group.key) : "Registros"}</h3><span className="text-sm bg-white/5 backdrop-blur-sm px-4 py-1.5 rounded-xl border border-white/10 shadow-sm text-slate-500">Subtotal: <span className="text-slate-200">{formatCurrency(group.total)}</span></span></div>
-                                                    <div className="bg-black/30 backdrop-blur-md rounded-[3rem] border border-white/10 shadow-vision overflow-hidden overflow-x-auto">
-                                                        <table className="w-full text-base"><thead className="bg-white/5 text-slate-500 border-b border-white/10 font-bold text-[11px] uppercase tracking-widest"><tr><th className="p-6 text-left w-[15%] print-col-cliente pl-10">Cliente</th><th className="p-6 text-left w-[35%] print-col-itens">Itens & Detalhes</th><th className="p-6 text-center w-[10%] print-col-vendedor">Vendedor</th><th className="p-6 text-left w-[25%] print-col-pagamento">Pagamento</th><th className="p-6 text-right w-[10%] print-col-total">Total Pago</th><th className="p-6 text-center no-print w-[5%] pr-10">Ações</th></tr></thead>
-                                                            <tbody className="divide-y divide-white/40">
+                                                    <div className="flex justify-between items-end px-4 font-bold text-[#0f0f0f] tracking-tight border-l-4 border-[#c9a227] pl-6 py-2"><h3 className="text-xl">{groupBy === 'date' ? formatDateBR(group.key) : "Registros"}</h3><span className="text-sm bg-[#fdfaf4] px-4 py-1.5 rounded-xl border border-[#0f0f0f]/10 shadow-sm text-[#0f0f0f]/60 uppercase tracking-widest font-bold flex items-center gap-2">Subtotal: <span className="text-base text-[#0f0f0f] font-black tracking-normal">{formatCurrency(group.total)}</span></span></div>
+                                                    <div className="bg-[#A1B5C9] backdrop-blur-md rounded-[3rem] border border-[#0f0f0f]/10 shadow-vision overflow-hidden overflow-x-auto">
+                                                        <table className="w-full sales-table"><thead className="bg-[#0f0f0f]/5 text-[#0f0f0f] border-b-2 border-[#c9a227]/60 font-bold text-[11px] uppercase tracking-widest"><tr><th className="p-4 pl-6 text-left" style={{width:'16%'}}>Cliente</th><th className="p-4 text-left" style={{width:'33%'}}>Itens & Detalhes</th><th className="p-4 text-center" style={{width:'9%'}}>Vendedor</th><th className="p-4 text-left" style={{width:'25%'}}>Pagamento</th><th className="p-4 text-right" style={{width:'12%'}}>Total Pago</th><th className="p-4 text-center no-print" style={{width:'5%'}}></th></tr></thead>
+                                                            <tbody className="divide-y divide-[#0f0f0f]/10 bg-[#fdfaf4]">
                                                                 {group.items.map(s => (
-                                                                    <tr key={s.id} className="hover:bg-white/5 transition-colors group border-b border-white/5 last:border-0">
-                                                                        <td className="p-6 align-top break-words whitespace-normal pl-10"><div className="font-bold text-slate-200 leading-tight mb-2 text-lg">{s.clientName}</div><div className="text-xs font-mono text-slate-500 bg-white/5 border border-white/5 inline-block px-2 py-1 rounded-lg">{s.clientCpf}</div></td>
-                                                                        <td className="p-6 align-top whitespace-normal"><div className="space-y-3">{(s.items || []).map((i, idx) => (<div key={idx} className="flex justify-between items-start text-sm p-3 rounded-2xl border border-transparent hover:border-white/10 hover:bg-white/5 transition-all flex-wrap sm:flex-nowrap gap-4"><div className="flex-1 min-w-0 leading-snug whitespace-normal"><span className="font-bold text-odoo-400 bg-odoo-500/10 px-2 py-0.5 rounded-md mr-2 text-xs border border-odoo-500/20">{i.quantity}x</span> <span className="font-semibold text-slate-300">{i.type} - {i.description}</span><div className="text-[10px] text-slate-500 uppercase tracking-wider mt-1.5 font-bold flex flex-wrap gap-2">{i.ram_storage && <span>{i.ram_storage} •</span>}{i.color && <span>{i.color} •</span>}{i.imei && <span className="text-slate-600">IMEI: {i.imei} •</span>}<span>{i.financed === 'Sim' ? 'Financiado' : 'À Vista'}</span></div></div><div className="text-right min-w-[90px]"><div className="font-bold text-slate-300 text-base">{formatCurrency((i.unitPrice * i.quantity) - i.discount)}</div><div className="text-[10px] text-slate-500 font-medium mb-0.5">Unit: {formatCurrency(i.unitPrice)}</div>{i.discount > 0 && <div className="text-[10px] text-red-400 font-bold">-{formatCurrency(i.discount)}</div>}{(s.category === 'Troca' || s.category === 'Devolução') && (<div className={`text-[9px] font-black uppercase tracking-wider mt-0.5 ${i.unitPrice > 0 ? 'text-green-500' : 'text-red-500'}`}>{i.unitPrice > 0 ? 'Levou' : 'Devolveu'}</div>)}</div></div>))}</div></td>
-                                                                        <td className="p-6 align-top text-xs font-bold text-slate-500 uppercase text-center leading-none whitespace-normal tracking-wider pt-8">{s.employeeName}</td>
-                                                                        <td className="p-6 align-top whitespace-normal">{(s.category === 'Devolução' || (s.category === 'Troca' && (s.amountPaid || s.amount) < 0)) && (<div className="mb-4 font-bold text-red-400 bg-red-500/10 border border-red-500/20 p-2.5 rounded-xl text-center text-[10px] uppercase tracking-widest shadow-sm">DEVOLUÇÃO</div>)}<div className="space-y-3">{(s.payments || []).map((p, idx) => { let styles = getPaymentStyles(p.type); if (["Devolução Dinheiro", "Devolução Pix", "Devolução Estorno Cartão"].includes(p.method)) { styles = { wrapper: 'bg-red-500/10 border-red-500/20 text-red-400', amount: 'text-red-400' }; } return (<div key={idx} className={`flex justify-between text-xs px-4 py-3 rounded-xl border items-center ${styles.wrapper} flex-wrap bg-opacity-40 shadow-sm`}><div className="flex flex-col min-w-0 flex-1 mr-2"><span className="font-bold break-words whitespace-normal leading-tight">{p.method}</span><span className="text-[9px] uppercase font-bold opacity-60 tracking-wider mt-0.5">{p.installments ? `${p.installments} ` : ''}{p.type || 'Integral'}</span></div><span className={`font-mono font-bold whitespace-nowrap ${styles.amount}`}>{formatCurrency(p.amount)}</span></div>); })}</div></td>
-                                                                        <td className="p-6 align-top text-right pt-7"><span className="font-black text-white text-xl whitespace-nowrap bg-white/5 border border-white/10 px-4 py-2 rounded-xl shadow-sm">{formatCurrency(s.amountPaid || s.amount)}</span></td>
-                                                                        <td className="p-6 align-top text-center no-print pr-10 pt-7"><div className="flex flex-col items-center gap-3 opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0"><button onClick={() => openReceipt(s)} title="Ver Recibo" className="p-2.5 text-slate-500 hover:text-odoo-400 hover:bg-white/5 rounded-xl transition-colors"><Icons.Receipt className="w-5 h-5" /></button>{s.clientPhone && (<button onClick={() => window.open(`https://wa.me/55${s.clientPhone.replace(/\D/g, '')}`, '_blank')} title="WhatsApp" className="p-2.5 text-slate-500 hover:text-emerald-400 hover:bg-white/5 rounded-xl transition-colors"><Icons.WhatsApp className="w-5 h-5" /></button>)}<button onClick={() => { setPendingEditItem(s); setPendingAuthAction('edit'); setManagerAuthModalOpen(true); }} className="p-2.5 text-slate-500 hover:text-white hover:bg-white/5 rounded-xl transition-colors"><Icons.Edit className="w-5 h-5" /></button></div></td>
+                                                                    <tr key={s.id} className="hover:bg-[#0f0f0f]/5 transition-colors group border-b border-[#0f0f0f]/10 last:border-0">
+                                                                        <td className="p-4 pl-6 align-top">
+                                                                            <div className="font-bold text-[#0f0f0f] leading-tight mb-1" style={{fontSize:'15px'}}>{s.clientName}</div>
+                                                                            <div className="font-mono text-[#0f0f0f]/50" style={{fontSize:'11px'}}>{s.clientCpf}</div>
+                                                                        </td>
+                                                                        <td className="p-4 align-top">
+                                                                            <div className="space-y-2">{(s.items || []).map((i, idx) => (
+                                                                                <div key={idx} className="pb-2 border-b border-[#0f0f0f]/5 last:border-0">
+                                                                                    <div className="flex justify-between items-start gap-2">
+                                                                                        <div className="flex-1">
+                                                                                            <span className="font-bold text-[#c9a227] mr-1" style={{fontSize:'13px'}}>{i.quantity}x</span>
+                                                                                            <span className="font-semibold text-[#0f0f0f]" style={{fontSize:'13px'}}>{i.type} — {i.description}</span>
+                                                                                            <div className="flex flex-wrap gap-1 mt-0.5" style={{fontSize:'11px',color:'rgba(15,15,15,0.5)',fontWeight:600,textTransform:'uppercase'}}>
+                                                                                                {i.ram_storage && <span>{i.ram_storage}</span>}
+                                                                                                {i.color && <span>• {i.color}</span>}
+                                                                                                {i.imei && <span className="text-[#3cb371]">• IMEI: {i.imei}</span>}
+                                                                                                <span className={i.financed === 'Sim' ? 'text-[#a52a2a] font-bold' : ''}>{i.financed === 'Sim' ? '• Financiado' : '• À Vista'}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="text-right flex-shrink-0">
+                                                                                            <div className="font-bold text-[#0f0f0f]" style={{fontSize:'14px'}}>{formatCurrency((i.unitPrice * i.quantity) - i.discount)}</div>
+                                                                                            {i.discount > 0 && <div className="text-red-600 font-bold" style={{fontSize:'11px'}}>-{formatCurrency(i.discount)}</div>}
+                                                                                            {(s.category==='Troca'||s.category==='Devolução') && <div className="font-black uppercase" style={{fontSize:'10px',color:i.unitPrice>0?'#2e7d32':'#c0392b'}}>{i.unitPrice>0?'Levou':'Devolveu'}</div>}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            ))}</div>
+                                                                        </td>
+                                                                        <td className={`p-4 align-top text-center font-bold uppercase leading-snug ${s.employeeName==='Gabriela Ferreira'?'text-[#c0392b]':s.employeeName==='Sabrina Almeida'?'text-[#2c3e9e]':'text-[#0f0f0f]/50'}`} style={{fontSize:'11px'}}>{s.employeeName}</td>
+                                                                        <td className="p-4 align-top">
+                                                                            {(s.category==='Devolução'||(s.category==='Troca'&&(s.amountPaid||s.amount)<0))&&(<div className="mb-2 font-bold text-red-600 text-center uppercase tracking-wider" style={{fontSize:'10px'}}>DEVOLUÇÃO</div>)}
+                                                                            <div className="space-y-1">{(s.payments||[]).map((p,idx)=>{let styles=getPaymentStyles(p.type);if(["Devolução Dinheiro","Devolução Pix","Devolução Estorno Cartão"].includes(p.method)){styles={wrapper:'bg-red-500/10 border-red-500/20 text-red-600',amount:'text-red-700'};}return(<div key={idx} className={`flex justify-between px-3 py-1.5 rounded-xl border items-center ${styles.wrapper}`}><div className="flex-1 mr-2"><div className="font-bold leading-tight" style={{fontSize:'13px'}}>{p.method}</div><div className="uppercase font-bold opacity-60" style={{fontSize:'10px'}}>{p.installments?`${p.installments} `:''}{p.type||'Integral'}</div></div><span className={`font-mono font-bold whitespace-nowrap ${styles.amount}`} style={{fontSize:'13px'}}>{formatCurrency(p.amount)}</span></div>);})}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td className="p-4 align-top text-right">
+                                                                            <div className="font-black text-[#0f0f0f]" style={{fontSize:'17px',whiteSpace:'nowrap'}}>{formatCurrency(s.amountPaid||s.amount)}</div>
+                                                                            {s.clientSource&&<div className="mt-1 font-bold text-orange-600 uppercase tracking-wider text-center" style={{fontSize:'10px'}}>{s.clientSource}</div>}
+                                                                        </td>
+                                                                        <td className="p-4 align-top text-center no-print"><div className="flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-3 group-hover:translate-x-0"><button onClick={()=>openReceipt(s)} title="Ver Recibo" className="p-2 text-[#0f0f0f]/60 hover:text-[#0f0f0f] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.Receipt className="w-5 h-5"/></button>{s.clientPhone&&(<button onClick={()=>window.open(`https://wa.me/55${s.clientPhone.replace(/\D/g,'')}`, '_blank')} title="WhatsApp" className="p-2 text-[#0f0f0f]/60 hover:text-[#598c73] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.WhatsApp className="w-5 h-5"/></button>)}<button onClick={()=>{setPendingEditItem(s);setPendingAuthAction('edit');setManagerAuthModalOpen(true);}} className="p-2 text-[#0f0f0f]/60 hover:text-[#0f0f0f] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.Edit className="w-5 h-5"/></button></div></td>
                                                                     </tr>
                                                                 ))}
                                                             </tbody>
@@ -1673,20 +2200,166 @@
                         </div>
                     )}
                     {receiptModalOpen && currentReceipt && (
-                        <div className="fixed inset-0 z-[160] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-xl no-print receipt-modal-wrapper animate-in fade-in duration-500" onClick={() => setReceiptModalOpen(false)}>
-                            <div className="w-full max-w-[385px] animate-in zoom-in-95 duration-500 receipt-modal-content scale-100" onClick={e => e.stopPropagation()}>
-                                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[1.5rem] p-3 flex justify-between items-center mb-6 no-print receipt-actions-bar shadow-2xl"><div className="flex gap-3"><button onClick={() => window.print()} title="Imprimir" className="bg-white/10 p-3 rounded-2xl text-white hover:bg-white/20 hover:scale-105 transition-all"><Icons.Printer className="w-5 h-5" /></button><button onClick={handleExportReceiptPDF} title="Exportar PDF" className="bg-white/10 p-3 rounded-2xl text-white hover:bg-red-500/20 hover:text-red-200 hover:scale-105 transition-all"><Icons.FilePdf className="w-5 h-5" /></button></div><button onClick={() => setReceiptModalOpen(false)} title="Fechar" className="text-white hover:bg-white/10 p-3 rounded-2xl transition-all hover:rotate-90"><Icons.X className="w-5 h-5" /></button></div>
-                                <div id="receipt-paper" className="bg-white receipt-paper rounded-[1.5rem] overflow-hidden shadow-2xl font-receipt text-slate-900 text-[13px] leading-snug relative">
-                                    <div className="bg-slate-900 text-white p-8 text-center relative overflow-hidden"><div className="absolute top-0 left-0 w-full h-full opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '8px 8px' }}></div><div className="relative z-10"><h2 className="text-3xl font-black uppercase tracking-tighter mb-1 font-display">MIPLACE</h2><p className="text-[10px] uppercase tracking-[0.3em] opacity-60 mb-5">Premium • Tecnologia</p><div className="w-12 h-1 bg-odoo-500 mx-auto rounded-full mb-5"></div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1 border border-slate-700 inline-block px-4 py-1.5 rounded-full bg-slate-800">Cupom Não Fiscal</p><div className="flex justify-center gap-4 text-[11px] font-bold opacity-80 mt-4 font-mono"><span>{formatDateBR(currentReceipt.date)}</span><span className="opacity-30">|</span><span>{currentReceipt.timestamp ? new Date(currentReceipt.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '00:00'}</span></div></div></div>
-                                    <div className="p-8 relative">
-                                        <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNmMzZjNzQiLz48L3N2Zz4=')] opacity-20 pointer-events-none"></div>
-                                        <div className="mb-6 space-y-2 text-[12px] bg-slate-50/50 p-5 rounded-xl border border-slate-100 relative z-10"><div className="flex justify-between items-baseline"><span className="font-bold text-slate-400 uppercase text-[10px] tracking-wider">Cliente</span> <span className="font-bold text-right break-words max-w-[150px] text-sm">{currentReceipt.clientName}</span></div><div className="flex justify-between items-baseline"><span className="font-bold text-slate-400 uppercase text-[10px] tracking-wider">CPF</span> <span className="font-mono">{currentReceipt.clientCpf || '---'}</span></div><div className="flex justify-between items-baseline"><span className="font-bold text-slate-400 uppercase text-[10px] tracking-wider">Contato</span> <span className="font-mono">{currentReceipt.clientPhone || '---'}</span></div></div>
-                                        <div className="border-t-2 border-dashed border-slate-200 py-6 space-y-5 relative z-10">{(currentReceipt.items || []).sort((a, b) => { if (currentReceipt.category === 'Troca') return a.unitPrice - b.unitPrice; return 0; }).map((it, idx) => (<div key={idx} className="relative"><div className="flex justify-between items-start font-bold text-sm"><div className="flex gap-2"><span className="text-slate-400 font-mono">{it.quantity}x</span><span className="uppercase leading-tight">{it.description}</span></div><span className="font-mono whitespace-nowrap ml-2">{formatCurrency((it.unitPrice * it.quantity) - it.discount)}</span></div><div className="text-[10px] text-slate-400 pl-6 uppercase tracking-tight font-medium mt-1">{it.type} • {it.ram_storage} • {it.color}</div>{it.discount > 0 && <div className="text-[10px] text-red-500 pl-6 font-bold bg-red-50 inline-block rounded px-2 py-0.5 ml-6 mt-1">Desc: -{formatCurrency(it.discount)}</div>}</div>))}</div>
-                                        <div className="border-t-2 border-slate-800 pt-6 mt-4 mb-8 relative z-10"><div className="flex justify-between items-end mb-2"><span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Total a Pagar</span><span className="text-3xl font-black tracking-tighter">R$ {formatCurrency(currentReceipt.amount)}</span></div></div>
-                                        <div className="space-y-2 text-[11px] mb-10 relative z-10 bg-slate-50/80 p-4 rounded-xl border border-slate-100">{(currentReceipt.payments || []).map((p, idx) => (<div key={idx} className="flex justify-between uppercase border-b border-slate-200 pb-1.5 last:border-0 last:pb-0"><span className="font-bold text-slate-500">{p.method} <span className="text-[9px] opacity-60 ml-1">{p.installments}</span></span><span className="font-mono font-bold">{formatCurrency(p.amount)}</span></div>))}{currentReceipt.change > 0 && (<div className="flex justify-between uppercase pt-3 mt-1.5 border-t-2 border-slate-200"><span className="font-black text-slate-400">Troco</span><span className="font-mono font-bold text-slate-700">{formatCurrency(currentReceipt.change)}</span></div>)}</div>
-                                        <div className="text-center space-y-6 relative z-10"><div className="bg-slate-800 text-white rounded-2xl p-5 shadow-lg"><p className="text-[9px] font-bold uppercase mb-2 opacity-60 tracking-widest">WhatsApp / Suporte</p><p className="text-xl font-black tracking-wider font-mono">(19) 99497-5131</p></div><div className="text-[9px] uppercase text-slate-400 tracking-widest pt-3 font-bold"><p className="mb-2">Vendedor: {currentReceipt.employeeName}</p><p>Obrigado pela preferência!</p></div><div className="w-24 h-1 bg-slate-200 mx-auto rounded-full"></div></div>
+                        <div className="fixed inset-0 z-[160] flex items-center justify-center p-4 bg-black/70 backdrop-blur-xl no-print receipt-modal-wrapper animate-in fade-in duration-300" onClick={() => setReceiptModalOpen(false)}>
+                            <div className="w-full max-w-[420px] animate-in zoom-in-95 duration-300 receipt-modal-content overflow-y-auto" style={{maxHeight:'92vh'}} onClick={e => e.stopPropagation()}>
+                                {/* Action bar */}
+                                <div className="flex justify-between items-center mb-4 no-print px-1">
+                                    <div className="flex gap-2">
+                                        <button onClick={() => {
+                                            const el = document.getElementById('receipt-paper');
+                                            if (!el) return;
+                                            const win = window.open('', '_blank', 'width=400,height=700');
+                                            win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+                                                <style>
+                                                    @page { size: 80mm auto; margin: 0; }
+                                                    * { box-sizing: border-box; margin: 0; padding: 0; }
+                                                    body { width: 80mm; background: white; font-family: 'Share Tech Mono', monospace; }
+                                                    @media print { body { width: 80mm; } }
+                                                </style>
+                                                <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+                                            </head><body>${el.outerHTML}<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();};}<\/script></body></html>`);
+                                            win.document.close();
+                                        }} title="Imprimir" className="flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-xs uppercase tracking-wider transition-all active:scale-95" style={{background:'linear-gradient(110deg,#886918,#c9a227,#f5e4ab,#c9a227,#886918)',backgroundSize:'200% auto',color:'#0f0f0f',border:'1.5px solid rgba(15,15,15,0.4)',boxShadow:'0 2px 8px rgba(201,162,39,0.3)'}}>
+                                            <Icons.Printer className="w-4 h-4" /> Imprimir
+                                        </button>
+                                        <button onClick={handleExportReceiptPDF} title="Exportar PDF" className="flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-2xl font-bold text-xs uppercase tracking-wider text-white hover:bg-white/20 transition-all active:scale-95 border border-white/20">
+                                            <Icons.FilePdf className="w-4 h-4" /> PDF
+                                        </button>
                                     </div>
-                                    <div className="h-4 bg-slate-100" style={{ background: 'linear-gradient(45deg, transparent 33.333%, #ffffff 33.333%, #ffffff 66.667%, transparent 66.667%), linear-gradient(-45deg, transparent 33.333%, #ffffff 33.333%, #ffffff 66.667%, transparent 66.667%)', backgroundSize: '12px 24px', backgroundPosition: '0 -12px', transform: 'rotate(180deg)' }}></div>
+                                    <button onClick={() => setReceiptModalOpen(false)} title="Fechar" className="text-white/60 hover:text-white hover:bg-white/10 p-2.5 rounded-2xl transition-all">
+                                        <Icons.X className="w-5 h-5" />
+                                    </button>
+                                </div>
+
+                                {/* Receipt paper */}
+                                <div id="receipt-paper" className="receipt-paper rounded-2xl overflow-hidden shadow-2xl font-receipt text-[13px] leading-snug" style={{background:'#fdfaf4',color:'#0f0f0f'}}>
+
+                                    {/* Header - Champagne metallic */}
+                                    <div className="text-center relative overflow-hidden" style={{background:'linear-gradient(110deg,#886918 0%,#c9a227 20%,#f5e4ab 45%,#fff8e7 50%,#f5e4ab 55%,#c9a227 80%,#886918 100%)',padding:'28px 24px 20px'}}>
+                                        <div className="absolute inset-0 opacity-10" style={{backgroundImage:'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',backgroundSize:'8px 8px'}}></div>
+                                        <div className="relative z-10">
+                                            <h2 className="text-3xl font-black uppercase tracking-tighter mb-0.5 font-display" style={{color:'#0f0f0f',textShadow:'0 1px 0 rgba(255,255,255,0.5)'}}>MIPLACE</h2>
+                                            <p className="text-[10px] uppercase tracking-[0.35em] font-bold mb-4" style={{color:'rgba(15,15,15,0.65)'}}>Premium • Tecnologia</p>
+                                            <div className="w-16 h-0.5 mx-auto rounded-full mb-4" style={{background:'rgba(15,15,15,0.3)'}}></div>
+                                            <div className="inline-block px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest" style={{background:'rgba(15,15,15,0.12)',border:'1px solid rgba(15,15,15,0.2)',color:'rgba(15,15,15,0.7)'}}>Cupom Não Fiscal</div>
+                                            <div className="flex justify-center gap-4 text-[11px] font-bold mt-4 font-mono" style={{color:'rgba(15,15,15,0.7)'}}>
+                                                <span>{formatDateBR(currentReceipt.date)}</span>
+                                                <span style={{opacity:0.3}}>|</span>
+                                                <span>{currentReceipt.timestamp ? new Date(currentReceipt.timestamp).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '00:00'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-7 space-y-5">
+
+                                        {/* Cliente */}
+                                        <div className="rounded-xl border p-4 space-y-2" style={{background:'rgba(201,162,39,0.06)',borderColor:'rgba(201,162,39,0.2)'}}>
+                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{color:'#8a6d18'}}>▸ Dados do Cliente</p>
+                                            <div className="flex justify-between text-[12px]"><span className="font-bold" style={{color:'#6b6560'}}>Cliente</span><span className="font-bold text-right max-w-[170px] break-words" style={{color:'#0f0f0f'}}>{currentReceipt.clientName || '—'}</span></div>
+                                            {currentReceipt.clientCpf && <div className="flex justify-between text-[11px]"><span className="font-bold" style={{color:'#6b6560'}}>CPF</span><span className="font-mono" style={{color:'#0f0f0f'}}>{currentReceipt.clientCpf}</span></div>}
+                                            {currentReceipt.clientPhone && <div className="flex justify-between text-[11px]"><span className="font-bold" style={{color:'#6b6560'}}>Telefone</span><span className="font-mono" style={{color:'#0f0f0f'}}>{currentReceipt.clientPhone}</span></div>}
+                                        </div>
+
+                                        {/* Itens */}
+                                        <div>
+                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{color:'#8a6d18'}}>▸ Itens & Detalhes</p>
+                                            <div className="space-y-3">
+                                                {(currentReceipt.items || []).sort((a,b) => { if(currentReceipt.category==='Troca') return a.unitPrice - b.unitPrice; return 0; }).map((it, idx) => (
+                                                    <div key={idx} className="rounded-xl p-3.5" style={{background: it.unitPrice < 0 ? 'rgba(220,38,38,0.06)' : 'rgba(201,162,39,0.05)', border: it.unitPrice < 0 ? '1px solid rgba(220,38,38,0.15)' : '1px solid rgba(201,162,39,0.15)'}}>
+                                                        <div className="flex justify-between items-start">
+                                                            <div className="flex-1">
+                                                                <div className="flex items-center gap-2 mb-1">
+                                                                    <span className="text-[10px] font-black px-2 py-0.5 rounded-md" style={{background:'rgba(201,162,39,0.15)',color:'#8a6d18',border:'1px solid rgba(201,162,39,0.25)'}}>{it.quantity}x</span>
+                                                                    <span className="font-bold text-[12px] uppercase leading-tight" style={{color:'#0f0f0f'}}>{it.description}</span>
+                                                                </div>
+                                                                <div className="text-[10px] uppercase tracking-wide font-bold pl-1 flex flex-wrap gap-2" style={{color:'#6b6560'}}>
+                                                                    <span>{it.type}</span>
+                                                                    {it.ram_storage && <span>• {it.ram_storage}</span>}
+                                                                    {it.color && <span>• {it.color}</span>}
+                                                                    {it.imei && <span style={{color:'#3cb371'}}>• IMEI: {it.imei}</span>}
+                                                                    {it.financed && <span style={{color: it.financed==='Sim'?'#c0392b':'#6b6560'}}>• {it.financed==='Sim'?'Financiado':'À Vista'}</span>}
+                                                                </div>
+                                                            </div>
+                                                            <div className="text-right ml-3 flex-shrink-0">
+                                                                <div className="font-black text-[14px]" style={{color: it.unitPrice < 0 ? '#c0392b' : '#0f0f0f'}}>{formatCurrency((it.unitPrice * it.quantity) - it.discount)}</div>
+                                                                {it.unitPrice !== (it.unitPrice * it.quantity - it.discount) / it.quantity && <div className="text-[9px] font-medium" style={{color:'#6b6560'}}>Unit: {formatCurrency(it.unitPrice)}</div>}
+                                                                {it.discount > 0 && <div className="text-[10px] font-bold" style={{color:'#c0392b'}}>-{formatCurrency(it.discount)}</div>}
+                                                                {(currentReceipt.category==='Troca'||currentReceipt.category==='Devolução') && <div className="text-[9px] font-black uppercase" style={{color: it.unitPrice>0?'#2e7d32':'#c0392b'}}>{it.unitPrice>0?'↑ Levou':'↓ Devolveu'}</div>}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Divisor champagne */}
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex-1 h-px" style={{background:'linear-gradient(to right, transparent, rgba(201,162,39,0.4), transparent)'}}></div>
+                                            <div className="w-2 h-2 rounded-full" style={{background:'#c9a227'}}></div>
+                                            <div className="flex-1 h-px" style={{background:'linear-gradient(to right, transparent, rgba(201,162,39,0.4), transparent)'}}></div>
+                                        </div>
+
+                                        {/* Total */}
+                                        <div className="rounded-xl p-4 flex justify-between items-center" style={{background:'rgba(201,162,39,0.08)',border:'1.5px solid rgba(201,162,39,0.25)'}}>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{color:'#8a6d18'}}>Total a Pagar</span>
+                                            <span className="text-2xl font-black tracking-tighter" style={{color:'#0f0f0f'}}>R$ {formatCurrency(currentReceipt.amount)}</span>
+                                        </div>
+
+                                        {/* Pagamentos */}
+                                        <div>
+                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{color:'#8a6d18'}}>▸ Forma de Pagamento</p>
+                                            <div className="space-y-2">
+                                                {(currentReceipt.payments || []).map((p, idx) => (
+                                                    <div key={idx} className="flex justify-between items-center rounded-xl px-4 py-2.5" style={{background:'rgba(201,162,39,0.05)',border:'1px solid rgba(201,162,39,0.15)'}}>
+                                                        <div>
+                                                            <span className="font-bold text-[12px] uppercase" style={{color:'#0f0f0f'}}>{p.method}</span>
+                                                            {p.installments && <span className="ml-2 text-[9px] font-bold uppercase" style={{color:'#8a6d18'}}>({p.installments})</span>}
+                                                            <div className="text-[9px] uppercase font-bold" style={{color:'#6b6560'}}>{p.type || 'Integral'}</div>
+                                                        </div>
+                                                        <span className="font-mono font-black text-[13px]" style={{color:'#0f0f0f'}}>{formatCurrency(p.amount)}</span>
+                                                    </div>
+                                                ))}
+                                                {currentReceipt.change > 0 && (
+                                                    <div className="flex justify-between items-center rounded-xl px-4 py-2.5 mt-1" style={{background:'rgba(46,125,50,0.06)',border:'1px solid rgba(46,125,50,0.2)'}}>
+                                                        <span className="font-black text-[11px] uppercase tracking-wide" style={{color:'#2e7d32'}}>Troco</span>
+                                                        <span className="font-mono font-black" style={{color:'#2e7d32'}}>{formatCurrency(currentReceipt.change)}</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Total Pago */}
+                                        <div className="rounded-xl p-4 flex justify-between items-center" style={{background:'linear-gradient(110deg,rgba(201,162,39,0.12),rgba(201,162,39,0.06))',border:'1.5px solid rgba(201,162,39,0.35)'}}>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{color:'#8a6d18'}}>Total Pago</span>
+                                            <span className="text-2xl font-black tracking-tighter" style={{color:'#0f0f0f'}}>R$ {formatCurrency(currentReceipt.amountPaid || currentReceipt.amount)}</span>
+                                        </div>
+
+                                        {/* Observação */}
+                                        {currentReceipt.paymentObservation && (
+                                            <div className="rounded-xl p-3.5 text-[11px]" style={{background:'rgba(15,15,15,0.04)',border:'1px solid rgba(15,15,15,0.1)'}}>
+                                                <p className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{color:'#6b6560'}}>Observação</p>
+                                                <p style={{color:'#0f0f0f'}}>{currentReceipt.paymentObservation}</p>
+                                            </div>
+                                        )}
+
+                                        {/* Rodapé */}
+                                        <div className="text-center space-y-4 pt-2">
+                                            <div className="rounded-2xl p-4 shadow-md" style={{background:'linear-gradient(110deg,#886918,#c9a227,#f5e4ab,#c9a227,#886918)',backgroundSize:'200% auto'}}>
+                                                <p className="text-[9px] font-bold uppercase mb-1 tracking-widest" style={{color:'rgba(15,15,15,0.6)'}}>WhatsApp / Suporte</p>
+                                                <p className="text-lg font-black tracking-wider font-mono" style={{color:'#0f0f0f'}}>(19) 99497-5131</p>
+                                            </div>
+                                            <div className="text-[9px] uppercase tracking-widest font-bold space-y-1" style={{color:'#6b6560'}}>
+                                                <p>Vendedor: <span style={{color:'#0f0f0f'}}>{currentReceipt.employeeName}</span></p>
+                                                <p>Categoria: <span style={{color:'#0f0f0f'}}>{currentReceipt.category}</span></p>
+                                                <p className="pt-1">Obrigado pela preferência! ✦</p>
+                                            </div>
+                                            <div className="w-20 h-0.5 mx-auto rounded-full" style={{background:'linear-gradient(to right,transparent,rgba(201,162,39,0.5),transparent)'}}></div>
+                                        </div>
+
+                                    </div>
+
+                                    {/* Serrilhado inferior */}
+                                    <div className="h-4" style={{background:'linear-gradient(45deg, transparent 33.333%, #fdfaf4 33.333%, #fdfaf4 66.667%, transparent 66.667%), linear-gradient(-45deg, transparent 33.333%, #fdfaf4 33.333%, #fdfaf4 66.667%, transparent 66.667%)', backgroundSize:'12px 24px', backgroundPosition:'0 -12px', transform:'rotate(180deg)', backgroundColor:'rgba(201,162,39,0.06)'}}></div>
                                 </div>
                             </div>
                         </div>
@@ -1704,7 +2377,7 @@
                                         <p className="text-xs text-slate-400 mb-6 pl-14 leading-relaxed">Gere um arquivo de segurança (.json) contendo todos os dados de vendas e clientes.</p>
                                         <div className="flex gap-3">
                                             <button onClick={handleExportBackup} className="flex-1 py-4 bg-odoo-600 text-white rounded-2xl font-bold hover:bg-odoo-700 transition-all active-scale shadow-lg shadow-odoo-500/20 text-sm uppercase tracking-wide">Baixar Arquivo</button>
-                                            <button onClick={handleSaveToCloud} className="flex-1 py-4 bg-slate-700 text-white rounded-2xl font-bold hover:bg-slate-600 transition-all active-scale shadow-lg shadow-slate-700/20 text-sm uppercase tracking-wide flex items-center justify-center gap-2"><Icons.CloudUpload className="w-5 h-5" /> Nuvem</button>
+                                            <button onClick={handleSaveToCloud} className="flex-1 py-4 bg-[#A1B5C9] text-[#0f0f0f] rounded-2xl font-bold hover:bg-[#8DABC4] transition-all active-scale shadow-lg shadow-[#A1B5C9]/40 border border-[#0f0f0f]/10 text-sm uppercase tracking-wide flex items-center justify-center gap-2"><Icons.CloudUpload className="w-5 h-5" /> Nuvem</button>
                                         </div>
                                     </div>
                                     <div className="p-6 bg-white/5 rounded-[2rem] border border-white/10 hover:shadow-lg transition-all group duration-300 hover:-translate-y-1"><div className="flex items-center gap-4 mb-4"><div className="p-3 bg-white/10 text-white rounded-2xl group-hover:scale-110 transition-transform"><Icons.Upload className="w-6 h-6" /></div><h4 className="font-bold text-lg text-white">Importar Backup</h4></div><p className="text-xs text-slate-400 mb-6 pl-14 leading-relaxed">Restaure dados de um arquivo salvo anteriormente. Isso unificará com os dados atuais (Na nuvem).</p><input type="file" accept=".json" multiple onChange={handleImportBackup} ref={fileInputInternalRef} className="hidden" /><button onClick={() => fileInputInternalRef.current.click()} className="w-full py-4 bg-odoo-600 text-white rounded-2xl font-bold hover:bg-odoo-700 transition-all active-scale shadow-lg shadow-odoo-500/20 text-sm uppercase tracking-wide">Selecionar Arquivos</button></div>
@@ -1721,7 +2394,7 @@
                                 <div className="space-y-4">
                                     <div className="flex gap-3">
                                         <button onClick={handleExportBackup} className="flex-1 p-4 bg-odoo-600 text-white rounded-2xl font-bold hover:bg-odoo-700 shadow-lg shadow-odoo-500/30 transition-all active-scale uppercase tracking-wide text-[10px]">Baixar & Sair</button>
-                                        <button onClick={() => { handleSaveToCloud(); setTimeout(() => setLogoutModalOpen(false), 1500); }} className="flex-1 p-4 bg-slate-700 text-white rounded-2xl font-bold hover:bg-slate-600 shadow-lg shadow-slate-700/30 transition-all active-scale uppercase tracking-wide text-[10px] flex items-center justify-center gap-1"><Icons.CloudUpload className="w-4 h-4" /> Salvar Nuvem</button>
+                                        <button onClick={() => { handleSaveToCloud(); setTimeout(() => setLogoutModalOpen(false), 1500); }} className="flex-1 p-4 bg-[#A1B5C9] text-[#0f0f0f] rounded-2xl font-bold hover:bg-[#8DABC4] shadow-lg shadow-[#A1B5C9]/40 border border-[#0f0f0f]/10 transition-all active-scale uppercase tracking-wide text-[10px] flex items-center justify-center gap-1"><Icons.CloudUpload className="w-4 h-4" /> Salvar Nuvem</button>
                                     </div>
                                     <div className="flex gap-3"><button onClick={() => setLogoutModalOpen(false)} className="flex-1 p-4 bg-white/5 text-slate-400 rounded-2xl font-bold hover:bg-white/10 transition-colors active-scale text-xs uppercase tracking-wide">Cancelar</button><button onClick={() => { setIsLoggedIn(false); setLogoutModalOpen(false); }} className="flex-1 p-4 bg-white/5 border border-red-500/20 text-red-400 rounded-2xl font-bold hover:bg-red-500/10 transition-colors active-scale text-xs uppercase tracking-wide">Sair sem Salvar</button></div>
                                 </div>
@@ -1733,6 +2406,17 @@
                             <div className="classic-frame rounded-[3rem] p-10 text-center max-w-sm w-full animate-in zoom-in-95 shadow-2xl relative overflow-hidden">
                                 <div className="w-28 h-28 bg-odoo-500/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse-slow shadow-inner border border-odoo-500/20"><Icons.Check className="w-14 h-14 text-odoo-500" /></div><h3 className="font-bold text-3xl mb-4 text-slate-200 font-display">Confirmar Venda</h3><p className="text-sm text-slate-400 mb-10 px-4 font-medium">Você confirma o recebimento do pagamento e o lançamento dos itens?</p>
                                 <div className="flex gap-4"><button onClick={() => setConfirmSaleModalOpen(false)} className="flex-1 p-5 bg-white/5 rounded-2xl font-bold text-slate-400 hover:bg-white/10 transition-colors active-scale">Voltar</button><button onClick={() => { setConfirmSaleModalOpen(false); performSave(); }} className="flex-1 btn-gold rounded-2xl font-bold shadow-vision transition-all active-scale">Confirmar!</button></div>
+                            </div>
+                        </div>
+                    )}
+                    {confirmChangeModalOpen && (
+                        <div className="fixed inset-0 z-[190] flex items-center justify-center p-4 bg-black/60 backdrop-blur-lg no-print animate-in fade-in duration-500">
+                            <div className="classic-frame rounded-[3rem] p-10 text-center max-w-sm w-full animate-in zoom-in-95 shadow-2xl relative overflow-hidden">
+                                <div className="w-28 h-28 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse-slow shadow-inner border border-orange-500/20"><Icons.DollarSign className="w-14 h-14 text-orange-500" /></div>
+                                <h3 className="font-bold text-3xl mb-4 text-slate-200 font-display">Atenção ao Troco</h3>
+                                <p className="text-sm text-slate-400 mb-6 px-4 font-medium">O cliente deu um valor maior que o total.</p>
+                                <p className="text-2xl font-mono text-orange-400 font-bold mb-10">Troco: {formatCurrency(changeAmount)}</p>
+                                <div className="flex gap-4"><button onClick={() => setConfirmChangeModalOpen(false)} className="flex-1 p-5 bg-white/5 rounded-2xl font-bold text-slate-400 hover:bg-white/10 transition-colors active-scale">Corrigir</button><button onClick={() => { setConfirmChangeModalOpen(false); setConfirmSaleModalOpen(true); }} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-bold shadow-lg shadow-orange-500/30 transition-all active-scale">Confirmar Troco</button></div>
                             </div>
                         </div>
                     )}
