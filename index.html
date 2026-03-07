@@ -22,7 +22,7 @@
     <!-- html2pdf Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <!-- Configurações do Tailwind -->
+    <!-- Configuraíães do Tailwind -->
     <script>
         tailwind.config = {
             theme: {
@@ -106,7 +106,7 @@
 
     <style>
         /* ============================================
-           TEMA CHAMPAGNE & NOIR — Boutique Edition
+           TEMA CHAMPAGNE & NOIR • Boutique Edition
            Background: warm beige/off-white
            Panels: crisp white / ivory
            Buttons: champagne gold metallic + black text
@@ -146,7 +146,7 @@
             overflow-x: hidden;
         }
 
-        /* ─── Classic Frame (light panels) ─── */
+        /* --- Classic Frame (light panels) --- */
         .classic-frame {
             position: relative;
             background: var(--bg-card);
@@ -171,7 +171,7 @@
             pointer-events: none;
         }
 
-        /* ─── Inputs / Selects ─── */
+        /* --- Inputs / Selects --- */
         input,
         select,
         textarea {
@@ -195,7 +195,7 @@
             color: rgba(15, 15, 15, 0.35);
         }
 
-        /* ─── Champagne Gold Metallic Button ─── */
+        /* --- Champagne Gold Metallic Button --- */
         .btn-gold {
             background: linear-gradient(110deg,
                     #886918 0%,
@@ -231,7 +231,7 @@
             box-shadow: 0 1px 4px rgba(201, 162, 39, 0.15);
         }
 
-        /* ─── Glass / Glass-dark (repurposed to light) ─── */
+        /* --- Glass / Glass-dark (repurposed to light) --- */
         .glass {
             position: relative;
             background: var(--bg-card);
@@ -246,7 +246,7 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
         }
 
-        /* ─── Scrollbar — thin champagne on cream ─── */
+        /* --- Scrollbar • thin champagne on cream --- */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -270,7 +270,7 @@
             background: rgba(201, 162, 39, 0.4);
         }
 
-        /* ─── Headings ─── */
+        /* --- Headings --- */
         h1,
         h2,
         h3,
@@ -280,7 +280,7 @@
             color: var(--noir);
         }
 
-        /* ─── Tailwind overrides for dark-mode classes used inline ─── */
+        /* --- Tailwind overrides for dark-mode classes used inline --- */
         /* Remap text-slate-* to dark noir tones */
         .text-slate-200 {
             color: #1c1c1c !important;
@@ -302,7 +302,7 @@
             color: #0f0f0f !important;
         }
 
-        /* Cards that used bg-black / bg-onyx → ivory */
+        /* Cards that used bg-black / bg-onyx ? ivory */
         .bg-black,
         .bg-onyx-950,
         .bg-onyx-900,
@@ -310,12 +310,12 @@
             background-color: var(--bg-card) !important;
         }
 
-        /* border-white/* → thin black border */
+        /* border-white/* ? thin black border */
         [class*="border-white"] {
             border-color: var(--border) !important;
         }
 
-        /* bg-white/* overlays → very light beige */
+        /* bg-white/* overlays ? very light beige */
         .bg-white\/5 {
             background-color: rgba(15, 15, 15, 0.03) !important;
         }
@@ -336,35 +336,50 @@
             border-color: var(--border-dark) !important;
         }
 
-        /* ─── Impressão A4 — Apenas Tabela de Vendas ─── */
-        /* ─── Print: Relatório de Vendas (A4) ─── */
+        /* --- Impressão A4 • Apenas Tabela de Vendas em Preto e Branco --- */
         @media print {
             @page {
-                margin: 10mm 12mm;
+                margin: 10mm 10mm;
                 size: A4 portrait;
             }
 
-            /* Método visibility: oculta tudo mas mantém no fluxo */
-            html, body {
+            /* Reset body and html */
+            html,
+            body {
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
+                height: auto !important;
             }
 
+            /* Hide everything by default but collapse space */
             body * {
                 visibility: hidden !important;
             }
 
-            /* Revelar apenas a área de vendas e todos seus filhos */
+            /* Collapse height of main wrappers so they don't create blank pages */
+            #root,
+            .min-h-screen,
+            .relative.pt-6 {
+                height: 0 !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            /* Revelar apenas a Área de vendas e posicionar no topo */
             .print-sales-area,
             .print-sales-area * {
                 visibility: visible !important;
             }
 
-            /* Posicionar EXATAMENTE no topo-esquerdo da página */
             .print-sales-area {
-                position: fixed !important;
-                inset: 0 !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
                 width: 100vw !important;
                 background: white !important;
                 padding: 0 !important;
@@ -373,20 +388,28 @@
                 z-index: 9999 !important;
             }
 
-            /* Cabeçalho do relatório — override inline style */
+            /* Forçar Preto e Branco (sem cores) */
+            .print-sales-area * {
+                color: #000 !important;
+                background: transparent !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+
+            /* Cabeçalho do relatório */
             .print-header {
                 visibility: visible !important;
                 display: block !important;
                 height: auto !important;
-                overflow: visible !important;
                 text-align: center !important;
                 margin-bottom: 6mm !important;
                 padding-bottom: 4mm !important;
-                border-bottom: 1.5px solid #c9a227 !important;
+                border-bottom: 1px solid #000 !important;
             }
 
             /* Espaçamento entre grupos */
-            .print-sales-area .space-y-10 > div + div {
+            .print-sales-area .space-y-10>div+div {
                 margin-top: 6mm !important;
             }
 
@@ -394,7 +417,7 @@
             table.sales-table {
                 width: 100% !important;
                 border-collapse: collapse !important;
-                font-size: 9px !important;
+                font-size: 10px !important;
                 font-family: Arial, sans-serif !important;
                 table-layout: fixed !important;
                 page-break-inside: auto !important;
@@ -406,16 +429,16 @@
 
             /* Cabeçalhos */
             table.sales-table thead tr {
-                border-bottom: 1.5px solid #c9a227 !important;
+                border-bottom: 2px solid #000 !important;
             }
 
             table.sales-table th {
                 padding: 4px 5px !important;
-                font-size: 7.5px !important;
+                font-size: 8px !important;
                 font-weight: 900 !important;
                 text-transform: uppercase !important;
-                letter-spacing: 0.07em !important;
-                color: #8a6d18 !important;
+                letter-spacing: 0.05em !important;
+                color: #000 !important;
                 background: transparent !important;
                 border: none !important;
                 vertical-align: bottom !important;
@@ -437,40 +460,60 @@
 
             /* Separador fino entre linhas */
             table.sales-table tbody tr {
-                border-bottom: 0.5px solid rgba(0,0,0,0.07) !important;
+                border-bottom: 1px solid #ccc !important;
             }
+
             table.sales-table tbody tr:last-child {
                 border-bottom: none !important;
             }
 
-            /* ── Larguras A4 portrait (176mm úteis aprox) ── */
+            /* -- Larguras A4 portrait (176mm úteis aprox) -- */
             /* Cliente */
             table.sales-table th:nth-child(1),
-            table.sales-table td:nth-child(1) { width: 17% !important; }
+            table.sales-table td:nth-child(1) {
+                width: 17% !important;
+            }
 
             /* Itens & Detalhes */
             table.sales-table th:nth-child(2),
-            table.sales-table td:nth-child(2) { width: 36% !important; }
+            table.sales-table td:nth-child(2) {
+                width: 36% !important;
+            }
 
             /* Vendedor */
             table.sales-table th:nth-child(3),
-            table.sales-table td:nth-child(3) { width: 9% !important; text-align: center !important; }
+            table.sales-table td:nth-child(3) {
+                width: 9% !important;
+                text-align: center !important;
+            }
 
             /* Pagamento */
             table.sales-table th:nth-child(4),
-            table.sales-table td:nth-child(4) { width: 24% !important; }
+            table.sales-table td:nth-child(4) {
+                width: 24% !important;
+            }
 
             /* Total Pago */
             table.sales-table th:nth-child(5),
-            table.sales-table td:nth-child(5) { width: 14% !important; text-align: right !important; }
+            table.sales-table td:nth-child(5) {
+                width: 14% !important;
+                text-align: right !important;
+            }
 
-            /* Ocultar coluna de ações */
+            /* Ocultar coluna de aíães */
             table.sales-table th:nth-child(6),
-            table.sales-table td:nth-child(6) { display: none !important; }
+            table.sales-table td:nth-child(6) {
+                display: none !important;
+            }
 
             /* Revelar elementos ocultos por hover */
-            .opacity-0 { opacity: 1 !important; }
-            [class*="translate-x"] { transform: none !important; }
+            .opacity-0 {
+                opacity: 1 !important;
+            }
+
+            [class*="translate-x"] {
+                transform: none !important;
+            }
 
             /* Remover todos os estilos decorativos das células */
             table.sales-table td * {
@@ -481,7 +524,7 @@
             }
 
             /* Total Pago: texto grande e limpo */
-            table.sales-table td:nth-child(5) > span:first-child {
+            table.sales-table td:nth-child(5)>span:first-child {
                 font-weight: 900 !important;
                 font-size: 11px !important;
                 padding: 0 !important;
@@ -491,7 +534,7 @@
             }
 
             /* Remover wrapper visual azul da tabela */
-            .print-sales-area > div > div > div > div[class*="bg-"] {
+            .print-sales-area>div>div>div>div[class*="bg-"] {
                 background: transparent !important;
                 border: none !important;
                 box-shadow: none !important;
@@ -501,15 +544,15 @@
 
             /* Linha de data do grupo */
             .print-sales-area .flex.justify-between.items-end {
-                border-left: 2px solid #c9a227 !important;
-                padding: 1px 5px !important;
+                border-left: 2px solid #000 !important;
+                padding: 2px 6px !important;
                 margin-bottom: 2mm !important;
                 background: transparent !important;
                 border-radius: 0 !important;
                 box-shadow: none !important;
             }
 
-            /* Ocultar paginação */
+            /* Ocultar paginaíão */
             .print-sales-area .flex.justify-center.items-center {
                 display: none !important;
             }
@@ -520,43 +563,59 @@
             color: #0f0f0f;
         }
 
-        /* ─── Performance hints ─── */
+        /* --- Performance hints --- */
         [class*="sticky"] {
             will-change: transform;
         }
+
         .classic-frame {
             contain: layout style;
         }
+
         /* Reduce blur cost on decorative elements */
-        .blur-3xl { filter: blur(40px); }
-        .blur-2xl { filter: blur(24px); }
+        .blur-3xl {
+            filter: blur(40px);
+        }
+
+        .blur-2xl {
+            filter: blur(24px);
+        }
+
         /* Disable pointer-events on decorative blobs */
         .absolute.blur-3xl,
         .absolute.blur-2xl {
             pointer-events: none;
         }
+
         /* GPU-accelerate modals */
         .fixed[class*="z-["] {
             will-change: opacity, transform;
             transform: translateZ(0);
         }
+
         /* Reduce transition cost on list items - use shorter durations */
-        .space-y-10 > div,
-        .space-y-8 > div {
+        .space-y-10>div,
+        .space-y-8>div {
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
+
         /* Prevent layout thrash on scrollable containers */
         .overflow-y-auto {
             overscroll-behavior: contain;
             -webkit-overflow-scrolling: touch;
         }
+
         /* Contain list items for faster paint */
         .paginatedSale {
             contain: content;
         }
+
         /* Reduce animations for users who prefer it */
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+
+            *,
+            *::before,
+            *::after {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
             }
@@ -714,7 +773,7 @@
         const formatCurrency = (value) => new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Math.round((value + Number.EPSILON) * 100) / 100);
         const parseCurrency = (str) => typeof str !== 'string' ? (typeof str === 'number' ? str : 0) : Math.round((parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0) * 100) / 100;
 
-        // Single shared clock — avoids two separate setInterval timers
+        // Single shared clock • avoids two separate setInterval timers
         const useClock = () => {
             const [time, setTime] = useState(new Date());
             useEffect(() => { const t = setInterval(() => setTime(new Date()), 1000); return () => clearInterval(t); }, []);
@@ -786,7 +845,7 @@
             };
             const deleteReminder = (id) => db.collection('lembretes').doc(id).delete();
             const dayReminders = reminders.filter(r => r.date === selectedDateStr).sort((a, b) => a.time.localeCompare(b.time));
-            const getTypeColor = (type) => { switch (type) { case 'Ligação': return 'bg-odoo-500'; case 'Reunião': return 'bg-slate-500'; case 'Cobrança': return 'bg-red-500'; default: return 'bg-slate-600'; } };
+            const getTypeColor = (type) => { switch (type) { case 'Ligaíão': return 'bg-odoo-500'; case 'Reunião': return 'bg-slate-500'; case 'Cobrança': return 'bg-red-500'; default: return 'bg-slate-600'; } };
 
             return (
                 <div className="flex flex-col gap-8 animate-fade-in-up">
@@ -801,7 +860,7 @@
                                 </div>
                             </div>
                             <div className="grid grid-cols-7 bg-white/5 gap-px border-b border-white/10 backdrop-blur-sm">
-                                {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map(d => (<div key={d} className="bg-white/5 p-4 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">{d}</div>))}
+                                {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sãb"].map(d => (<div key={d} className="bg-white/5 p-4 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">{d}</div>))}
                                 {Array.from({ length: firstDay }).map((_, i) => <div key={`empty-${i}`} className="bg-white/5 h-28 sm:h-36"></div>)}
                                 {Array.from({ length: daysInMonth }).map((_, i) => {
                                     const d = i + 1;
@@ -852,7 +911,7 @@
                                 <h3 className="font-bold text-3xl mb-8 text-slate-200 font-display text-center">Novo Lembrete</h3>
                                 <div className="space-y-6">
                                     <div><label className="text-[10px] font-bold text-slate-400 uppercase ml-3 mb-2 block tracking-wider">Descrição</label><input type="text" value={newReminder.desc} onChange={e => setNewReminder({ ...newReminder, desc: e.target.value })} className="w-full p-5 rounded-[1.5rem] text-sm outline-none font-medium" placeholder="Ex: Ligar para cliente..." autoFocus /></div>
-                                    <div className="grid grid-cols-2 gap-5"><div><label className="text-[10px] font-bold text-slate-400 uppercase ml-3 mb-2 block tracking-wider">Horário</label><input type="time" value={newReminder.time} onChange={e => setNewReminder({ ...newReminder, time: e.target.value })} className="w-full p-5 rounded-[1.5rem] text-sm outline-none font-bold" /></div><div><label className="text-[10px] font-bold text-slate-400 uppercase ml-3 mb-2 block tracking-wider">Tipo</label><select value={newReminder.type} onChange={e => setNewReminder({ ...newReminder, type: e.target.value })} className="w-full p-5 rounded-[1.5rem] text-sm outline-none font-medium"><option value="Geral">Geral</option><option value="Ligação">Ligação</option><option value="Reunião">Reunião</option><option value="Cobrança">Cobrança</option></select></div></div>
+                                    <div className="grid grid-cols-2 gap-5"><div><label className="text-[10px] font-bold text-slate-400 uppercase ml-3 mb-2 block tracking-wider">Horário</label><input type="time" value={newReminder.time} onChange={e => setNewReminder({ ...newReminder, time: e.target.value })} className="w-full p-5 rounded-[1.5rem] text-sm outline-none font-bold" /></div><div><label className="text-[10px] font-bold text-slate-400 uppercase ml-3 mb-2 block tracking-wider">Tipo</label><select value={newReminder.type} onChange={e => setNewReminder({ ...newReminder, type: e.target.value })} className="w-full p-5 rounded-[1.5rem] text-sm outline-none font-medium"><option value="Geral">Geral</option><option value="Ligaíão">Ligaíão</option><option value="Reunião">Reunião</option><option value="Cobrança">Cobrança</option></select></div></div>
                                     <div className="flex gap-4 pt-6"><button onClick={() => setIsReminderModalOpen(false)} className="flex-1 p-5 bg-white/5 text-slate-400 rounded-[2rem] font-bold hover:bg-white/10 transition-colors active-scale">Cancelar</button><button onClick={handleAddReminder} className="flex-1 btn-gold rounded-[2rem] font-bold shadow-vision transition-all active-scale">Salvar</button></div>
                                 </div>
                             </div>
@@ -909,7 +968,7 @@
             const [confirmClientUpdateModalOpen, setConfirmClientUpdateModalOpen] = useState(false);
             const fileInputInternalRef = useRef(null);
             const [currentPage, setCurrentPage] = useState(1);
-            const itemsPerPage = 50;
+            const [itemsPerPage, setItemsPerPage] = useState(50);
             const [editingId, setEditingId] = useState(null);
             const [originalEmployeeName, setOriginalEmployeeName] = useState(null);
             const [date, setDate] = useState(() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; });
@@ -1000,7 +1059,7 @@
                 return () => unsub();
             }, []);
 
-            // Salvar configurações locais
+            // Salvar configuraíães locais
             useEffect(() => {
                 const st = localStorage.getItem('vendas_settings_v14');
                 if (st) {
@@ -1116,7 +1175,7 @@
             }, [clients, showToast, fillClientData]);
 
             const handleSaveClient = () => {
-                if (!clientName) { showToast("Nome é obrigatório", "error"); return; }
+                if (!clientName) { showToast("Nome • obrigatório", "error"); return; }
                 if (clientCpf && !validateCPF(clientCpf)) { showToast("CPF Inválido", "error"); return; }
 
                 const existingClient = clients.find(c => (c.cpf && clientCpf && c.cpf === clientCpf) || (c.name.trim().toLowerCase() === clientName.trim().toLowerCase()));
@@ -1332,10 +1391,10 @@
 
             const handleSaveToCloud = async () => {
                 if (!auth.currentUser) {
-                    showToast("Erro: Não conectado à nuvem.", "error");
+                    showToast("Erro: Não conectado • nuvem.", "error");
                     return;
                 }
-                showToast("Verificando sincronização com a nuvem...", "info");
+                showToast("Verificando sincronizaíão com a nuvem...", "info");
                 try {
                     await db.collection('system_logs').add({
                         action: 'manual_cloud_save',
@@ -1402,25 +1461,25 @@
                 window.location.reload();
             };
 
-            const handleExportReceiptPDF = () => {
+            const handleExportReceiptPDF = (action = 'save') => {
                 const element = document.getElementById('receipt-paper');
                 if (!element) { showToast("Erro: Elemento não encontrado", "error"); return; }
 
-                showToast("Gerando PDF...", "info");
+                showToast(action === 'save' ? "Gerando PDF..." : "Preparando Impressão...", "info");
 
                 // Clona o elemento para limpar estilos
                 const clone = element.cloneNode(true);
 
-                // Estilos forçados para o PDF
+                // Estilos forçados para o PDF (Mantendo Branding Premium)
                 clone.style.boxShadow = 'none';
                 clone.style.borderRadius = '0';
                 clone.style.margin = '0';
                 clone.style.padding = '0';
                 clone.style.maxWidth = '100%';
-                clone.style.width = '80mm'; // Largura fixa 80mm
-                clone.style.backgroundColor = '#ffffff';
-                clone.style.color = '#000000';
-                clone.style.height = 'auto'; // Altura automática
+                clone.style.width = '80mm';
+                clone.style.height = 'auto';
+                clone.style.background = '#fdfaf4'; // Ivory background matching screen
+                clone.style.color = '#0f0f0f';
 
                 // Container temporário para cálculo de altura
                 const container = document.createElement('div');
@@ -1432,7 +1491,6 @@
                 document.body.appendChild(container);
 
                 // Calcula altura dinâmica em mm (aprox 1px = 0.264583mm)
-                // Adicionamos um pequeno buffer para garantir que nada corte
                 const heightPx = clone.offsetHeight || clone.scrollHeight;
                 const heightMm = Math.ceil(heightPx * 0.264583) + 2;
 
@@ -1441,24 +1499,29 @@
                     filename: `recibo_${currentReceipt?.clientName || 'venda'}.pdf`,
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: {
-                        scale: 2,
+                        scale: 3, // Maior escala para nitidez térmica
                         useCORS: true,
                         logging: false,
                         scrollY: 0,
-                        windowWidth: document.documentElement.offsetWidth
+                        backgroundColor: '#fdfaf4'
                     },
-                    // Define o formato com a altura calculada exata do conteúdo
                     jsPDF: { unit: 'mm', format: [80, heightMm], orientation: 'portrait' }
                 };
 
-                html2pdf().set(opt).from(clone).save().then(() => {
-                    document.body.removeChild(container);
-                    showToast("PDF Exportado com Sucesso!");
-                }).catch(err => {
-                    console.error("Erro PDF:", err);
-                    if (document.body.contains(container)) document.body.removeChild(container);
-                    showToast("Erro ao gerar PDF", "error");
-                });
+                const worker = html2pdf().set(opt).from(clone);
+
+                if (action === 'save') {
+                    worker.save().then(() => {
+                        document.body.removeChild(container);
+                        showToast("PDF Exportado com Sucesso!");
+                    });
+                } else {
+                    worker.outputPdf('bloburl').then((url) => {
+                        window.open(url, '_blank');
+                        document.body.removeChild(container);
+                        showToast("Exibindo PDF para Impressão");
+                    });
+                }
             };
 
             const startEdit = useCallback((sale) => {
@@ -1526,111 +1589,109 @@
                 });
             }, [sales, searchTerm, filterDate, filterMode]);
 
-                    const exportListToPDF = () => {
-                        const source = document.querySelector('.print-sales-area');
-                        if (!source) { showToast("Nenhum dado para exportar", "error"); return; }
+            const printSalesList = () => {
+                setItemsPerPage(10000);
+                setTimeout(() => {
+                    const source = document.querySelector('.print-sales-area');
+                    if (!source) { showToast("Nenhum dado para imprimir", "error"); setItemsPerPage(50); return; }
 
-                        showToast("Gerando PDF...", "info");
+                    const clone = source.cloneNode(true);
+                    clone.querySelectorAll('.no-print').forEach(el => el.remove());
 
-                        // Clonar a área exata do print
-                        const clone = source.cloneNode(true);
+                    const ph = clone.querySelector('.print-header');
+                    if (ph) {
+                        ph.style.cssText = 'display:block;visibility:visible;height:auto;overflow:visible;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #000;font-family:Arial,sans-serif;';
+                        const totalDiv = document.createElement('div');
+                        totalDiv.style.cssText = 'font-size:12px; font-weight:bold; color:#000; margin-top:5px; letter-spacing:1px;';
+                        const totalValue = filteredSales.reduce((s, i) => s + (i.amountPaid || i.amount), 0);
+                        totalDiv.innerHTML = `TOTAL LISTADO: R$ ` + formatCurrency(totalValue);
+                        ph.appendChild(totalDiv);
+                    }
 
-                        // Remover elementos no-print (ações, paginação)
-                        clone.querySelectorAll('.no-print').forEach(el => el.remove());
+                    const iframe = document.createElement('iframe');
+                    iframe.style.position = 'fixed';
+                    iframe.style.right = '0';
+                    iframe.style.bottom = '0';
+                    iframe.style.width = '0';
+                    iframe.style.height = '0';
+                    iframe.style.border = '0';
+                    document.body.appendChild(iframe);
 
-                        // Revelar o print-header (que fica oculto na tela)
-                        const ph = clone.querySelector('.print-header');
-                        if (ph) { ph.style.cssText = 'display:block;visibility:visible;height:auto;overflow:visible;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #c9a227;font-family:Arial,sans-serif;'; }
+                    const win = iframe.contentWindow;
+                    win.document.write(`
+                        <html>
+                            <head>
+                                <title>Relatorio de Vendas</title>
+                                <style>
+                                    @page { margin: 10mm; size: A4 portrait; }
+                                    body { margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 10pt; color: #000; background: #fff; line-height: 1.3; }
+                                    * { color: #000 !important; background: transparent !important; box-shadow: none !important; text-shadow: none !important; border-color: #000 !important; border-radius: 0 !important; }
+                                    table { border-collapse: collapse; width: 100%; table-layout: fixed; margin-bottom: 20px; }
+                                    table tr { page-break-inside: avoid; border-bottom: 1px solid #ddd; }
+                                    table th, table td { padding: 8px 4px; text-align: left; vertical-align: top; word-wrap: break-word; }
+                                    table th { font-weight: bold; border-bottom: 2px solid #000; font-size: 9pt; text-transform: uppercase; color: #333 !important; }
+                                    
+                                    /* Flexbox para os cabeçalhos de data */
+                                    .flex { display: flex; align-items: center; justify-content: space-between; border-left: 3px solid #000; padding-left: 8px; margin-bottom: 8px; margin-top: 15px; background: #f9f9f9 !important; padding: 4px 8px; }
+                                    
+                                    /* Config colunas da tabela */
+                                    table th:nth-child(1), table td:nth-child(1) { width: 18%; }
+                                    table th:nth-child(2), table td:nth-child(2) { width: 38%; }
+                                    table th:nth-child(3), table td:nth-child(3) { width: 10%; text-align: center; }
+                                    table th:nth-child(4), table td:nth-child(4) { width: 20%; }
+                                    table th:nth-child(5), table td:nth-child(5) { width: 14%; text-align: right; }
+                                    
+                                    /* Destaque do TOTAL PAGO na tabela */
+                                    table td:nth-child(5) div:first-child { font-weight: bold; font-size: 11pt; }
+                                    
+                                    b, strong { font-weight: bold; }
+                                    h3 { margin: 0; font-size: 11pt; font-weight: bold; text-transform: uppercase; }
+                                    .space-y-10 > div { margin-bottom: 20px; }
+                                    .print-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 15px; }
+                                    p { margin: 3px 0; }
+                                    svg { display: none !important; } /* Esconder icones svg para nao poluir */
+                                    
+                                    /* Sobrescrever forçadamente tamanho de todas as tags internas que tenham style inline */
+                                    * { font-size: 10pt !important; line-height: 1.3 !important; }
+                                    h3, h3 * { font-size: 11pt !important; }
+                                    table th, table th * { font-size: 9pt !important; }
+                                    table td:nth-child(5) div:first-child, table td:nth-child(5) div:first-child * { font-size: 11pt !important; }
+                                    
+                                    /* Quebrar flexbox interno que causa sobreposição (overlap) */
+                                    td div.flex { display: block !important; border: none !important; padding: 0 !important; margin: 0 !important; background: transparent !important; }
+                                    td .flex-1, td .text-right, td .flex-shrink-0 { display: block !important; text-align: left !important; width: 100% !important; margin-top: 2px !important; }
+                                    
+                                    /* Destaque do preço do item jogado para a linha de baixo e alinhado */
+                                    td .text-right { margin-top: 4px !important; margin-bottom: 2px !important; font-weight: bold; }
+                                    
+                                    /* Maior espaíamento vertical nos itens aninhados */
+                                    td .space-y-2 > div { display: block !important; padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px dashed #ccc; width: 100%; clear: both; }
+                                    td .space-y-2 > div:last-child { border-bottom: none; }
+                                    
+                                    /* Tags de propriedades do item (ex: FINANCIADO, IMEI) */
+                                    td .flex-wrap { display: block !important; margin-top: 4px !important; }
+                                    td .flex-wrap span { display: inline-block !important; padding-right: 8px !important; }
+                                    
+                                    /* Pagamentos na coluna 4: quebrar em blocos por forma de pgto */
+                                    td:nth-child(4) div { display: block !important; margin-bottom: 3px !important; }
+                                </style>
+                            </head>
+                            <body>
+                                ${clone.outerHTML}
+                            </body>
+                        </html>
+                    `);
+                    win.document.close();
+                    win.focus();
 
-                        // Resetar opacidades e transforms (hover states)
-                        clone.querySelectorAll('[class*="opacity-0"]').forEach(el => el.style.opacity = '1');
-                        clone.querySelectorAll('[class*="translate-x"]').forEach(el => el.style.transform = 'none');
+                    setTimeout(() => {
+                        win.print();
+                        document.body.removeChild(iframe);
+                        setItemsPerPage(50);
+                    }, 350);
 
-                        // Aplicar estilos inline que replicam o @media print
-                        clone.style.cssText = 'background:white;padding:0;margin:0;width:794px;font-family:Arial,sans-serif;color:#0f0f0f;';
-
-                        // Remover backgrounds/bordas decorativos dos wrappers
-                        clone.querySelectorAll('[class*="bg-\\[#A1B5C9\\]"], [class*="rounded-\\[3rem\\]"]').forEach(el => {
-                            el.style.background = 'transparent';
-                            el.style.border = 'none';
-                            el.style.borderRadius = '0';
-                            el.style.boxShadow = 'none';
-                            el.style.overflow = 'visible';
-                            el.style.backdropFilter = 'none';
-                        });
-
-                        // Estilizar a tabela
-                        clone.querySelectorAll('table.sales-table').forEach(t => {
-                            t.style.cssText = 'width:100%;border-collapse:collapse;font-size:9px;font-family:Arial,sans-serif;table-layout:fixed;';
-                        });
-
-                        // Cabeçalhos da tabela
-                        clone.querySelectorAll('table.sales-table th').forEach((th, i) => {
-                            const widths = ['17%','36%','9%','24%','14%'];
-                            const aligns = ['left','left','center','left','right'];
-                            th.style.cssText = `width:${widths[i]||'auto'};padding:4px 5px;font-size:7.5px;font-weight:900;text-transform:uppercase;letter-spacing:0.07em;color:#8a6d18;background:transparent;border:none;vertical-align:bottom;text-align:${aligns[i]||'left'};border-bottom:1.5px solid #c9a227;`;
-                        });
-
-                        // Células da tabela
-                        clone.querySelectorAll('table.sales-table td').forEach(td => {
-                            td.style.cssText = 'padding:5px;border:none;border-bottom:0.5px solid rgba(0,0,0,0.07);color:#0f0f0f;background:transparent;vertical-align:top;font-size:9px;line-height:1.4;overflow:visible;white-space:normal;word-break:break-word;';
-                        });
-
-                        // Larguras corretas por posição
-                        clone.querySelectorAll('table.sales-table tr').forEach(row => {
-                            const cells = row.querySelectorAll('td, th');
-                            const widths = ['17%','36%','9%','24%','14%'];
-                            const aligns = ['left','left','center','left','right'];
-                            cells.forEach((cell, i) => {
-                                if (widths[i]) {
-                                    cell.style.width = widths[i];
-                                    cell.style.textAlign = aligns[i];
-                                }
-                            });
-                        });
-
-                        // Limpar sub-estilos decorativos (badges, cards de pagamento)
-                        clone.querySelectorAll('table.sales-table td *').forEach(el => {
-                            el.style.background = 'transparent';
-                            el.style.border = 'none';
-                            el.style.boxShadow = 'none';
-                            el.style.borderRadius = '0';
-                        });
-
-                        // Total Pago: destaque em negrito
-                        clone.querySelectorAll('table.sales-table td:nth-child(5)').forEach(td => {
-                            const first = td.querySelector('div');
-                            if (first) { first.style.cssText = 'font-weight:900;font-size:11px;text-align:right;white-space:nowrap;color:#0f0f0f;'; }
-                        });
-
-                        // Linha de data do grupo: borda champagne
-                        clone.querySelectorAll('.flex.justify-between.items-end').forEach(el => {
-                            el.style.cssText = 'display:flex;justify-content:space-between;align-items:center;border-left:2px solid #c9a227;padding:2px 5px;margin-bottom:4px;background:transparent;box-shadow:none;border-radius:0;';
-                        });
-
-                        // Inserir no DOM fora da viewport para html2canvas capturar
-                        const wrapper = document.createElement('div');
-                        wrapper.style.cssText = 'position:absolute;left:-9999px;top:0;width:794px;background:white;z-index:-1;overflow:visible;';
-                        wrapper.appendChild(clone);
-                        document.body.appendChild(wrapper);
-
-                        const opt = {
-                            margin: [10, 12, 10, 12],
-                            filename: `relatorio_vendas_${filterDate || 'geral'}.pdf`,
-                            image: { type: 'jpeg', quality: 0.97 },
-                            html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff', allowTaint: true },
-                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                        };
-
-                        html2pdf().set(opt).from(clone).save().then(() => {
-                            document.body.removeChild(wrapper);
-                            showToast("PDF exportado com sucesso!");
-                        }).catch(err => {
-                            if (document.body.contains(wrapper)) document.body.removeChild(wrapper);
-                            console.error("Erro PDF:", err);
-                            showToast("Erro ao gerar PDF: " + err.message, "error");
-                        });
-                    };
+                }, 250);
+            };
 
             const filteredClients = useMemo(() => {
                 if (!clientSearchTerm) return clients;
@@ -1641,7 +1702,7 @@
             const paginatedSales = useMemo(() => {
                 const startIndex = (currentPage - 1) * itemsPerPage;
                 return filteredSales.slice(startIndex, startIndex + itemsPerPage);
-            }, [filteredSales, currentPage]);
+            }, [filteredSales, currentPage, itemsPerPage]);
 
             const totalPages = Math.ceil(filteredSales.length / itemsPerPage);
 
@@ -1653,6 +1714,17 @@
             }, [paginatedSales, groupBy]);
 
             useEffect(() => setCurrentPage(1), [filterDate, searchTerm]);
+
+            useEffect(() => {
+                const handleBeforePrint = () => setItemsPerPage(10000);
+                const handleAfterPrint = () => setItemsPerPage(50);
+                window.addEventListener('beforeprint', handleBeforePrint);
+                window.addEventListener('afterprint', handleAfterPrint);
+                return () => {
+                    window.removeEventListener('beforeprint', handleBeforePrint);
+                    window.removeEventListener('afterprint', handleAfterPrint);
+                };
+            }, []);
 
             // Ao carregar, vai para o último lançamento do dia. Se não houver hoje, vai para a data mais recente.
             useEffect(() => {
@@ -1687,7 +1759,7 @@
                                 {SELLERS_LIST.map(n => (<button key={n} onClick={() => handleLoginClick(n)} className="w-full py-5 px-6 bg-white/5 border border-white/10 rounded-[2rem] flex items-center justify-between hover:bg-odoo-500/10 hover:border-odoo-500/30 hover:shadow-lg transition-all duration-300 group input-focus-effect active-scale relative overflow-hidden shadow-sm"><span className="font-bold text-slate-300 group-hover:text-odoo-400 relative z-10">{n}</span><div className="bg-white/5 p-2.5 rounded-full group-hover:bg-odoo-500 group-hover:text-white transition-colors relative z-10 shadow-sm"><Icons.ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-white" /></div></button>))}
                             </div>
                             {sessionPromptOpen && (<div className="absolute inset-0 rounded-[3rem] z-[25] flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.User className="w-8 h-8" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl text-center font-bold mb-4 font-display" style={{ color: '#0f0f0f' }}>Bem-vindo de volta!</h3><p className="mb-10 text-sm font-medium text-center" style={{ color: '#6b6560' }}>Deseja continuar logado como <b>{selectedUserForLogin}</b>?</p><div className="flex gap-4 w-full"><button onClick={() => { setSessionPromptOpen(false); setSettings({ employeeName: null }); }} className="flex-1 p-5 rounded-[2rem] font-bold transition-all hover:bg-black/5 active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Não, Sair</button><button onClick={() => { setIsLoggedIn(true); setSessionPromptOpen(false); showToast(`Sessão restaurada para ${selectedUserForLogin}`); }} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all shadow-md active-scale p-5 text-onyx-900">Sim, Continuar</button></div></div>)}
-                            {loginModalOpen && (<div className="absolute inset-0 rounded-[3rem] z-20 flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-14 h-14 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.Lock className="w-6 h-6" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl font-bold mb-2 font-display" style={{ color: '#0f0f0f' }}>Olá, {selectedUserForLogin}!</h3><p className="mb-10 text-sm font-medium" style={{ color: '#6b6560' }}>Digite sua senha para acessar.</p><input type="password" value={loginPasswordInput} onChange={e => setLoginPasswordInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && performLogin()} className="w-full p-5 rounded-[2rem] text-center mb-10 font-bold outline-none transition-all text-xl placeholder:font-normal shadow-sm" style={{ background: '#fff', border: '1.5px solid rgba(15,15,15,0.20)', color: '#0f0f0f' }} placeholder="••••••" autoFocus /><div className="flex gap-4 w-full"><button onClick={() => setLoginModalOpen(false)} className="flex-1 p-5 rounded-[2rem] font-bold transition-all active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Voltar</button><button onClick={performLogin} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all active-scale p-5">Entrar</button></div></div>)}
+                            {loginModalOpen && (<div className="absolute inset-0 rounded-[3rem] z-20 flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-14 h-14 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.Lock className="w-6 h-6" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl font-bold mb-2 font-display" style={{ color: '#0f0f0f' }}>Olá, {selectedUserForLogin}!</h3><p className="mb-10 text-sm font-medium" style={{ color: '#6b6560' }}>Digite sua senha para acessar.</p><input type="password" value={loginPasswordInput} onChange={e => setLoginPasswordInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && performLogin()} className="w-full p-5 rounded-[2rem] text-center mb-10 font-bold outline-none transition-all text-xl placeholder:font-normal shadow-sm" style={{ background: '#fff', border: '1.5px solid rgba(15,15,15,0.20)', color: '#0f0f0f' }} placeholder="ãããããã" autoFocus /><div className="flex gap-4 w-full"><button onClick={() => setLoginModalOpen(false)} className="flex-1 p-5 rounded-[2rem] font-bold transition-all active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Voltar</button><button onClick={performLogin} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all active-scale p-5">Entrar</button></div></div>)}
                         </div>
                     </div>
                 );
@@ -1706,13 +1778,13 @@
                                 <button onClick={() => setCurrentView(currentView === 'performance' ? 'dashboard' : 'performance')} className={`p-3 rounded-[1.5rem] transition-all duration-500 ${currentView === 'performance' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`} title="Desempenho"><Icons.BarChart className="w-5 h-5" /></button>
                                 <button onClick={() => setCurrentView(currentView === 'calendar' ? 'dashboard' : 'calendar')} className={`p-3 rounded-[1.5rem] transition-all duration-500 ${currentView === 'calendar' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`} title="Calendário"><Icons.Calendar className="w-5 h-5" /></button>
                                 <div className="w-px h-6 bg-white/10 mx-1"></div>
-                                <button onClick={() => setIsBackupOpen(true)} className="p-3 text-slate-400 hover:bg-white/10 hover:text-slate-300 rounded-[1.5rem] transition-all duration-300 hover:rotate-90 active-scale" title="Configurações"><Icons.Settings className="w-5 h-5" /></button>
+                                <button onClick={() => setIsBackupOpen(true)} className="p-3 text-slate-400 hover:bg-white/10 hover:text-slate-300 rounded-[1.5rem] transition-all duration-300 hover:rotate-90 active-scale" title="Configuraíães"><Icons.Settings className="w-5 h-5" /></button>
 
                                 <div className="relative">
                                     <button
                                         onClick={() => setIsHelpDropdownOpen(!isHelpDropdownOpen)}
                                         className={`p-3 rounded-[1.5rem] transition-all duration-300 active-scale ${isHelpDropdownOpen ? 'bg-white/10 text-slate-200' : 'text-slate-400 hover:bg-white/10'}`}
-                                        title="Links Úteis"
+                                        title="Links úteis"
                                     >
                                         <Icons.HelpCircle className="w-5 h-5" />
                                     </button>
@@ -1781,9 +1853,9 @@
                                             return (
                                                 <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-10">
                                                     <div className="flex-1 w-full">
-                                                        <div className="flex justify-between items-start mb-10"><div><h3 className="text-xs font-bold text-slate-500 uppercase tracking-[0.3em] mb-4">Meta de Aparelhos</h3><div className="flex items-baseline gap-4"><p className="text-7xl font-black tracking-tighter text-[#0f0f0f] drop-shadow-sm font-display">{unitsSold}</p><span className="text-3xl font-medium text-slate-500">/ {myTarget} <span className="text-base">un</span></span></div></div><div className="text-right bg-white p-6 rounded-[2rem] border border-[#0f0f0f]/10 shadow-sm"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Premiação Extra</p><p className={`text-4xl font-black ${isGoalReached ? 'text-odoo-500' : 'text-slate-400'}`}>R$ {formatCurrency(potentialCommission)}</p></div></div>
+                                                        <div className="flex justify-between items-start mb-10"><div><h3 className="text-xs font-bold text-slate-500 uppercase tracking-[0.3em] mb-4">Meta de Aparelhos</h3><div className="flex items-baseline gap-4"><p className="text-7xl font-black tracking-tighter text-[#0f0f0f] drop-shadow-sm font-display">{unitsSold}</p><span className="text-3xl font-medium text-slate-500">/ {myTarget} <span className="text-base">un</span></span></div></div><div className="text-right bg-white p-6 rounded-[2rem] border border-[#0f0f0f]/10 shadow-sm"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Premiaíão Extra</p><p className={`text-4xl font-black ${isGoalReached ? 'text-odoo-500' : 'text-slate-400'}`}>R$ {formatCurrency(potentialCommission)}</p></div></div>
                                                         <div className="w-full bg-slate-200/50 rounded-full h-6 mb-6 overflow-hidden border border-[#0f0f0f]/5 shadow-inner p-1"><div className={`h-full rounded-full transition-all duration-1000 ease-out flex items-center justify-end pr-3 shadow-sm relative overflow-hidden ${isGoalReached ? 'bg-gradient-to-r from-amber-400 to-amber-500 animate-pulse-slow' : 'bg-gradient-to-r from-[#A1B5C9] to-[#8DABC4]'}`} style={{ width: `${progress}%` }}><div className="absolute inset-0 bg-white/20 w-full h-full skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>{progress > 8 && <span className="text-[11px] font-bold text-white drop-shadow-sm z-10">{Math.round(progress)}%</span>}</div></div>
-                                                        <div className="flex items-center gap-4"><div className={`p-3 rounded-2xl shadow-sm border ${isGoalReached ? 'bg-amber-50 border-amber-500/20 text-amber-500' : 'bg-[#fdfaf4] border-[#0f0f0f]/10 text-slate-600'}`}>{isGoalReached ? <Icons.Trophy className="w-6 h-6 animate-bounce" /> : <Icons.BarChart className="w-6 h-6" />}</div><p className="text-lg font-medium text-slate-600">{isGoalReached ? "Parabéns! Você bateu a meta e já está acumulando comissão!" : `Faltam apenas ${Math.max(0, myTarget - unitsSold)} unidades para desbloquear sua premiação extra. Vamos lá!`}</p></div>
+                                                        <div className="flex items-center gap-4"><div className={`p-3 rounded-2xl shadow-sm border ${isGoalReached ? 'bg-amber-50 border-amber-500/20 text-amber-500' : 'bg-[#fdfaf4] border-[#0f0f0f]/10 text-slate-600'}`}>{isGoalReached ? <Icons.Trophy className="w-6 h-6 animate-bounce" /> : <Icons.BarChart className="w-6 h-6" />}</div><p className="text-lg font-medium text-slate-600">{isGoalReached ? "Parabéns! Você bateu a meta e já está acumulando comissão!" : `Faltam apenas ${Math.max(0, myTarget - unitsSold)} unidades para desbloquear sua premiaíão extra. Vamos lá!`}</p></div>
                                                     </div>
                                                 </div>
                                             );
@@ -1864,7 +1936,7 @@
                                     {/* ... (Gráficos Anteriores) ... */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                         <div className="border border-white/10 rounded-[2.5rem] p-10 hover:shadow-2xl hover:shadow-odoo-900/20 transition-all duration-500 bg-white/5 backdrop-blur-md group">
-                                            <h3 className="font-bold text-xs text-slate-500 uppercase mb-10 tracking-widest flex items-center gap-3"><div className="w-2 h-2 bg-odoo-400 rounded-full animate-pulse shadow-[0_0_10px_theme('colors.odoo.400')]"></div> Últimos 7 Dias</h3>
+                                            <h3 className="font-bold text-xs text-slate-500 uppercase mb-10 tracking-widest flex items-center gap-3"><div className="w-2 h-2 bg-odoo-400 rounded-full animate-pulse shadow-[0_0_10px_theme('colors.odoo.400')]"></div> últimos 7 Dias</h3>
                                             <div className="h-64 flex items-end gap-4 justify-between px-2">
                                                 {(() => {
                                                     const mySales = sales.filter(s => s.employeeName === settings.employeeName);
@@ -1944,7 +2016,7 @@
                         ) : currentView === 'clients' ? (
                             <div className="classic-frame rounded-[3rem] shadow-vision border border-white/10 overflow-hidden fade-in-up backdrop-blur-md">
                                 <div className="p-10 border-b border-white/10 flex justify-between items-center gap-6 bg-white/5 backdrop-blur-md"><h2 className="text-2xl font-bold text-slate-200 flex items-center gap-4 font-display"><div className="p-3 bg-white/10 rounded-2xl shadow-sm text-odoo-500 border border-white/5"><Icons.User className="w-6 h-6" /></div>Carteira de Clientes</h2><div className="relative group"><Icons.Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-hover:text-odoo-500 transition-colors" /><input type="text" placeholder="Buscar cliente..." value={clientSearchTerm} onChange={e => setClientSearchTerm(e.target.value)} className="w-80 pl-14 pr-5 py-4 border border-white/10 rounded-[1.5rem] text-sm outline-none font-medium text-slate-300 placeholder-slate-600" /></div></div>
-                                <div className="overflow-x-auto"><table className="w-full text-left"><thead className="bg-white/5 border-b border-white/10 text-slate-500 font-bold text-xs uppercase tracking-widest"><tr><th className="p-6 pl-10">Nome</th><th className="p-6">Contato</th><th className="whitespace-nowrap p-6">Vendedor</th><th className="whitespace-nowrap p-6 text-right pr-10">Ações</th></tr></thead><tbody className="divide-y divide-white/10">{filteredClients.map(c => (<tr key={c.id} className="hover:bg-white/5 transition-colors text-sm text-slate-400 group"><td className="p-6 pl-10"><div className="font-bold text-slate-200 leading-tight text-base group-hover:text-odoo-400 transition-colors">{c.name}</div><div className="text-xs text-[#78866b] mt-1 font-mono">{c.cpf}</div></td><td className="p-6"><div className="flex items-center gap-3"><span>{c.phone}</span>{c.phone && (<button onClick={() => window.open(`https://wa.me/55${c.phone.replace(/\D/g, '')}`, '_blank')} className="text-green-500 hover:text-green-400 transition-all hover:scale-110 active:scale-95" title="Chamar no WhatsApp"><Icons.WhatsApp className="w-4 h-4" /></button>)}</div><div className="text-[10px] italic text-slate-600 mt-0.5">{c.email}</div></td><td className="whitespace-nowrap p-6"><span className={`bg-white/5 px-3 py-1.5 rounded-xl text-xs font-bold border border-white/10 shadow-sm ${c.createdBy === 'Gabriela Ferreira' ? 'text-[#f08080]' : c.createdBy === 'Sabrina Almeida' ? 'text-[#4169e1]' : 'text-slate-400'}`}>{c.createdBy || '-'}</span></td><td className="whitespace-nowrap p-6 text-right pr-10"><button onClick={() => handleViewHistory(c)} className="px-5 py-3 bg-white/5 border border-white/10 text-slate-400 rounded-2xl text-xs font-bold mr-3 hover:bg-white/10 hover:text-white hover:shadow-md transition-all active-scale">Histórico</button><button onClick={() => handleOpenClientData(c)} className="px-5 py-3 bg-odoo-500/10 border border-odoo-500/20 text-odoo-500 rounded-2xl text-xs font-bold mr-3 hover:bg-odoo-500/20 hover:text-odoo-400 hover:shadow-md transition-all active-scale">Dados</button><button onClick={() => { fillClientData(c); setCurrentView('dashboard'); window.scrollTo(0, 0); }} className="px-5 py-3 btn-gold rounded-2xl text-xs font-bold shadow-vision transition-all active-scale">Nova Venda</button></td></tr>))}</tbody></table></div>
+                                <div className="overflow-x-auto"><table className="w-full text-left"><thead className="bg-white/5 border-b border-white/10 text-slate-500 font-bold text-xs uppercase tracking-widest"><tr><th className="p-6 pl-10">Nome</th><th className="p-6">Contato</th><th className="whitespace-nowrap p-6">Vendedor</th><th className="whitespace-nowrap p-6 text-right pr-10">Aãães</th></tr></thead><tbody className="divide-y divide-white/10">{filteredClients.map(c => (<tr key={c.id} className="hover:bg-white/5 transition-colors text-sm text-slate-400 group"><td className="p-6 pl-10"><div className="font-bold text-slate-200 leading-tight text-base group-hover:text-odoo-400 transition-colors">{c.name}</div><div className="text-xs text-[#78866b] mt-1 font-mono">{c.cpf}</div></td><td className="p-6"><div className="flex items-center gap-3"><span>{c.phone}</span>{c.phone && (<button onClick={() => window.open(`https://wa.me/55${c.phone.replace(/\D/g, '')}`, '_blank')} className="text-green-500 hover:text-green-400 transition-all hover:scale-110 active:scale-95" title="Chamar no WhatsApp"><Icons.WhatsApp className="w-4 h-4" /></button>)}</div><div className="text-[10px] italic text-slate-600 mt-0.5">{c.email}</div></td><td className="whitespace-nowrap p-6"><span className={`bg-white/5 px-3 py-1.5 rounded-xl text-xs font-bold border border-white/10 shadow-sm ${c.createdBy === 'Gabriela Ferreira' ? 'text-[#f08080]' : c.createdBy === 'Sabrina Almeida' ? 'text-[#4169e1]' : 'text-slate-400'}`}>{c.createdBy || '-'}</span></td><td className="whitespace-nowrap p-6 text-right pr-10"><button onClick={() => handleViewHistory(c)} className="px-5 py-3 bg-white/5 border border-white/10 text-slate-400 rounded-2xl text-xs font-bold mr-3 hover:bg-white/10 hover:text-white hover:shadow-md transition-all active-scale">Histórico</button><button onClick={() => handleOpenClientData(c)} className="px-5 py-3 bg-odoo-500/10 border border-odoo-500/20 text-odoo-500 rounded-2xl text-xs font-bold mr-3 hover:bg-odoo-500/20 hover:text-odoo-400 hover:shadow-md transition-all active-scale">Dados</button><button onClick={() => { fillClientData(c); setCurrentView('dashboard'); window.scrollTo(0, 0); }} className="px-5 py-3 btn-gold rounded-2xl text-xs font-bold shadow-vision transition-all active-scale">Nova Venda</button></td></tr>))}</tbody></table></div>
                             </div>
                         ) : (
                             <>
@@ -1987,7 +2059,7 @@
                                                         <div className="md:col-span-3"><label className="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Preço Unit</label><input type="text" placeholder="0,00" value={newItemPrice} onChange={handleItemPriceChange} className="w-full p-4 rounded-[1.2rem] text-sm text-right font-bold outline-none shadow-inner placeholder-slate-600" /></div>
                                                         <div className={category === 'Troca' ? "md:col-span-1" : "md:col-span-2"}><label className="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block">% Desc</label><input type="text" placeholder="%" value={newItemDiscountPercent} onChange={handlePercentChange} className="w-full p-4 rounded-[1.2rem] text-sm text-center outline-none shadow-inner placeholder-slate-600" /></div>
                                                         <div className={category === 'Troca' ? "md:col-span-1" : "md:col-span-2"}><label className="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Desc R$</label><input type="text" placeholder="0,00" value={newItemDiscount} onChange={handleDiscountValChange} className="w-full p-4 rounded-[1.2rem] text-sm text-right text-red-500 outline-none focus:ring-4 focus:ring-red-500/30 focus:border-red-500/50 transition-all shadow-inner focus:bg-white/10 placeholder-red-500/50" /></div>
-                                                        <button type="button" onClick={handleAddItem} className="md:col-span-12 btn-gold rounded-[1.5rem] py-5 text-sm active:scale-[0.98] transition-all uppercase tracking-wide">Adicionar Item à Lista</button>
+                                                        <button type="button" onClick={handleAddItem} className="md:col-span-12 btn-gold rounded-[1.5rem] py-5 text-sm active:scale-[0.98] transition-all uppercase tracking-wide">Adicionar Item • Lista</button>
                                                     </div>
                                                     {items.length > 0 && (<div className="overflow-hidden border border-white/10 rounded-[2rem] bg-white/5 shadow-sm backdrop-blur-sm"><table className="w-full text-left text-sm"><thead className="bg-white/5 border-b border-white/10 text-xs text-slate-500 uppercase font-bold tracking-wider"><tr><th className="p-5 text-center">Qtd</th><th className="p-5 text-left">Produto Detalhado</th><th className="p-5 text-right">Preço</th><th className="p-5 text-right">Desconto</th><th className="p-5 text-right">Total</th><th className="p-5 w-12"></th></tr></thead><tbody className="divide-y divide-white/10">{items.map(i => (<tr key={i.id} className={`hover:bg-white/5 transition-colors ${i.unitPrice < 0 ? 'bg-red-500/10' : ''}`}><td className="p-5 font-bold text-center text-slate-300">{i.quantity}</td><td className="p-5"><div className="font-bold text-slate-200">{i.type} - {i.description}</div><div className="text-xs text-slate-500 mt-1 flex gap-2 font-medium">{i.ram_storage && <span className="bg-white/5 px-2 py-0.5 rounded-md border border-white/10">{i.ram_storage}</span>}{i.color && <span className="bg-white/5 px-2 py-0.5 rounded-md border border-white/10">{i.color}</span>}<span className="bg-white/5 px-2 py-0.5 rounded-md border border-white/10">Finan: {i.financed}</span></div></td><td className="p-5 text-right font-mono text-slate-300">{formatCurrency(i.unitPrice)}</td><td className="p-5 text-right font-mono text-red-400">-{formatCurrency(i.discount)}</td><td className="p-5 text-right font-mono font-bold text-slate-200">{formatCurrency((i.unitPrice * i.quantity) - i.discount)}</td><td className="p-5 text-center"><button type="button" onClick={() => handleRemoveItem(i.id)} className="p-2 hover:bg-white/10 text-slate-500 hover:text-red-400 rounded-xl transition-colors active-scale"><Icons.Trash2 className="w-5 h-5" /></button></td></tr>))}</tbody></table></div>)}
                                                 </div>
@@ -2011,7 +2083,7 @@
                                                                 <div className="flex justify-between items-center pt-2 border-t border-[#0f0f0f]/10"><span className="font-bold text-xs uppercase text-slate-500 tracking-wider">Troco</span> <span className="text-orange-500 font-mono font-bold text-lg">{formatCurrency(changeAmount)}</span></div>
                                                             )}
                                                             <div className="pt-3 border-t border-[#0f0f0f]/10 mt-2">
-                                                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">Observação no Pagamento</label>
+                                                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">Observaíão no Pagamento</label>
                                                                 <input type="text" value={paymentObservation} onChange={e => setPaymentObservation(e.target.value)} placeholder="Ex: Transferência agendada..." className="w-full p-2.5 rounded-xl outline-none text-xs font-medium shadow-inner border border-[#0f0f0f]/10 bg-white/50 text-[#0f0f0f] placeholder:text-slate-400" />
                                                             </div>
                                                         </div>
@@ -2055,8 +2127,8 @@
                                                     <button onClick={() => setFilterMode('yearly')} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterMode === 'yearly' ? 'bg-[#A1B5C9] text-[#0f0f0f] shadow-md' : 'text-[#0f0f0f]/60 hover:bg-[#0f0f0f]/5'}`}>ANUAL</button>
                                                 </div>
                                                 <div className="flex gap-2">
-                                                    <button onClick={() => window.print()} className="px-6 py-4 bg-white text-[#0f0f0f] font-bold rounded-[1.5rem] hover:bg-slate-50 transition-all shadow-sm border border-[#0f0f0f]/10 active-scale text-sm flex items-center gap-2">
-                                                        <Icons.Printer className="w-5 h-5" /> <span className="hidden sm:inline">Imprimir</span>
+                                                    <button onClick={printSalesList} className="px-6 py-4 bg-white text-[#0f0f0f] font-bold rounded-[1.5rem] hover:bg-slate-50 transition-all shadow-sm border border-[#0f0f0f]/10 active-scale text-sm flex items-center gap-2">
+                                                        <Icons.Download className="w-5 h-5" /> <span className="hidden sm:inline">Salvar PDF / Imprimir</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -2099,33 +2171,33 @@
                                     {groupedSales.length > 0 ? (
                                         <div className="space-y-10 print-sales-area">
                                             {/* Cabeçalho visível apenas na impressão */}
-                                            <div className="print-header" style={{visibility:'hidden',height:0,overflow:'hidden'}}>
-                                                <div style={{fontFamily:'sans-serif'}}>
-                                                    <h1 style={{fontSize:'16px',fontWeight:900,textTransform:'uppercase',letterSpacing:'3px',margin:0,color:'#0f0f0f'}}>MIPLACE PREMIUM</h1>
-                                                    <p style={{fontSize:'9px',color:'#8a6d18',marginTop:'3px',fontWeight:700,textTransform:'uppercase',letterSpacing:'2px'}}>Relatório de Vendas</p>
-                                                    <p style={{fontSize:'9px',color:'#6b6560',marginTop:'2px'}}>{filterDate ? `Data: ${formatDateBR(filterDate)}` : (searchTerm ? `Filtro: ${searchTerm}` : `Geral — ${new Date().toLocaleDateString('pt-BR')}`)}</p>
+                                            <div className="print-header" style={{ visibility: 'hidden', height: 0, overflow: 'hidden' }}>
+                                                <div style={{ fontFamily: 'sans-serif' }}>
+                                                    <h1 style={{ fontSize: '16px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '3px', margin: 0, color: '#0f0f0f' }}>MIPLACE PREMIUM</h1>
+                                                    <p style={{ fontSize: '9px', color: '#8a6d18', marginTop: '3px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px' }}>Relatório de Vendas</p>
+                                                    <p style={{ fontSize: '9px', color: '#6b6560', marginTop: '2px' }}>{filterDate ? `Data: ${formatDateBR(filterDate)}` : (searchTerm ? `Filtro: ${searchTerm}` : `Geral • ${new Date().toLocaleDateString('pt-BR')}`)}</p>
                                                 </div>
                                             </div>
                                             {groupedSales.map(group => (
                                                 <div key={group.key} className="space-y-5">
                                                     <div className="flex justify-between items-end px-4 font-bold text-[#0f0f0f] tracking-tight border-l-4 border-[#c9a227] pl-6 py-2"><h3 className="text-xl">{groupBy === 'date' ? formatDateBR(group.key) : "Registros"}</h3><span className="text-sm bg-[#fdfaf4] px-4 py-1.5 rounded-xl border border-[#0f0f0f]/10 shadow-sm text-[#0f0f0f]/60 uppercase tracking-widest font-bold flex items-center gap-2">Subtotal: <span className="text-base text-[#0f0f0f] font-black tracking-normal">{formatCurrency(group.total)}</span></span></div>
                                                     <div className="bg-[#A1B5C9] backdrop-blur-md rounded-[3rem] border border-[#0f0f0f]/10 shadow-vision overflow-hidden overflow-x-auto">
-                                                        <table className="w-full sales-table"><thead className="bg-[#0f0f0f]/5 text-[#0f0f0f] border-b-2 border-[#c9a227]/60 font-bold text-[11px] uppercase tracking-widest"><tr><th className="p-4 pl-6 text-left" style={{width:'16%'}}>Cliente</th><th className="p-4 text-left" style={{width:'33%'}}>Itens & Detalhes</th><th className="p-4 text-center" style={{width:'9%'}}>Vendedor</th><th className="p-4 text-left" style={{width:'25%'}}>Pagamento</th><th className="p-4 text-right" style={{width:'12%'}}>Total Pago</th><th className="p-4 text-center no-print" style={{width:'5%'}}></th></tr></thead>
+                                                        <table className="w-full sales-table"><thead className="bg-[#0f0f0f]/5 text-[#0f0f0f] border-b-2 border-[#c9a227]/60 font-bold text-[11px] uppercase tracking-widest"><tr><th className="p-4 pl-6 text-left" style={{ width: '16%' }}>Cliente</th><th className="p-4 text-left" style={{ width: '33%' }}>Itens & Detalhes</th><th className="p-4 text-center" style={{ width: '9%' }}>Vendedor</th><th className="p-4 text-left" style={{ width: '25%' }}>Pagamento</th><th className="p-4 text-right" style={{ width: '12%' }}>Total Pago</th><th className="p-4 text-center no-print" style={{ width: '5%' }}></th></tr></thead>
                                                             <tbody className="divide-y divide-[#0f0f0f]/10 bg-[#fdfaf4]">
                                                                 {group.items.map(s => (
                                                                     <tr key={s.id} className="hover:bg-[#0f0f0f]/5 transition-colors group border-b border-[#0f0f0f]/10 last:border-0">
                                                                         <td className="p-4 pl-6 align-top">
-                                                                            <div className="font-bold text-[#0f0f0f] leading-tight mb-1" style={{fontSize:'15px'}}>{s.clientName}</div>
-                                                                            <div className="font-mono text-[#0f0f0f]/50" style={{fontSize:'11px'}}>{s.clientCpf}</div>
+                                                                            <div className="font-bold text-[#0f0f0f] leading-tight mb-1" style={{ fontSize: '15px' }}>{s.clientName}</div>
+                                                                            <div className="font-mono text-[#0f0f0f]/50" style={{ fontSize: '11px' }}>{s.clientCpf}</div>
                                                                         </td>
                                                                         <td className="p-4 align-top">
                                                                             <div className="space-y-2">{(s.items || []).map((i, idx) => (
                                                                                 <div key={idx} className="pb-2 border-b border-[#0f0f0f]/5 last:border-0">
                                                                                     <div className="flex justify-between items-start gap-2">
                                                                                         <div className="flex-1">
-                                                                                            <span className="font-bold text-[#c9a227] mr-1" style={{fontSize:'13px'}}>{i.quantity}x</span>
-                                                                                            <span className="font-semibold text-[#0f0f0f]" style={{fontSize:'13px'}}>{i.type} — {i.description}</span>
-                                                                                            <div className="flex flex-wrap gap-1 mt-0.5" style={{fontSize:'11px',color:'rgba(15,15,15,0.5)',fontWeight:600,textTransform:'uppercase'}}>
+                                                                                            <span className="font-bold text-[#c9a227] mr-1" style={{ fontSize: '13px' }}>{i.quantity}x</span>
+                                                                                            <span className="font-semibold text-[#0f0f0f]" style={{ fontSize: '13px' }}>{i.type} • {i.description}</span>
+                                                                                            <div className="flex flex-wrap gap-1 mt-0.5" style={{ fontSize: '11px', color: 'rgba(15,15,15,0.5)', fontWeight: 600, textTransform: 'uppercase' }}>
                                                                                                 {i.ram_storage && <span>{i.ram_storage}</span>}
                                                                                                 {i.color && <span>• {i.color}</span>}
                                                                                                 {i.imei && <span className="text-[#3cb371]">• IMEI: {i.imei}</span>}
@@ -2133,25 +2205,25 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className="text-right flex-shrink-0">
-                                                                                            <div className="font-bold text-[#0f0f0f]" style={{fontSize:'14px'}}>{formatCurrency((i.unitPrice * i.quantity) - i.discount)}</div>
-                                                                                            {i.discount > 0 && <div className="text-red-600 font-bold" style={{fontSize:'11px'}}>-{formatCurrency(i.discount)}</div>}
-                                                                                            {(s.category==='Troca'||s.category==='Devolução') && <div className="font-black uppercase" style={{fontSize:'10px',color:i.unitPrice>0?'#2e7d32':'#c0392b'}}>{i.unitPrice>0?'Levou':'Devolveu'}</div>}
+                                                                                            <div className="font-bold text-[#0f0f0f]" style={{ fontSize: '14px' }}>{formatCurrency((i.unitPrice * i.quantity) - i.discount)}</div>
+                                                                                            {i.discount > 0 && <div className="text-red-600 font-bold" style={{ fontSize: '11px' }}>-{formatCurrency(i.discount)}</div>}
+                                                                                            {(s.category === 'Troca' || s.category === 'Devolução') && <div className="font-black uppercase" style={{ fontSize: '10px', color: i.unitPrice > 0 ? '#2e7d32' : '#c0392b' }}>{i.unitPrice > 0 ? 'Levou' : 'Devolveu'}</div>}
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             ))}</div>
                                                                         </td>
-                                                                        <td className={`p-4 align-top text-center font-bold uppercase leading-snug ${s.employeeName==='Gabriela Ferreira'?'text-[#c0392b]':s.employeeName==='Sabrina Almeida'?'text-[#2c3e9e]':'text-[#0f0f0f]/50'}`} style={{fontSize:'11px'}}>{s.employeeName}</td>
+                                                                        <td className={`p-4 align-top text-center font-bold uppercase leading-snug ${s.employeeName === 'Gabriela Ferreira' ? 'text-[#c0392b]' : s.employeeName === 'Sabrina Almeida' ? 'text-[#2c3e9e]' : 'text-[#0f0f0f]/50'}`} style={{ fontSize: '11px' }}>{s.employeeName}</td>
                                                                         <td className="p-4 align-top">
-                                                                            {(s.category==='Devolução'||(s.category==='Troca'&&(s.amountPaid||s.amount)<0))&&(<div className="mb-2 font-bold text-red-600 text-center uppercase tracking-wider" style={{fontSize:'10px'}}>DEVOLUÇÃO</div>)}
-                                                                            <div className="space-y-1">{(s.payments||[]).map((p,idx)=>{let styles=getPaymentStyles(p.type);if(["Devolução Dinheiro","Devolução Pix","Devolução Estorno Cartão"].includes(p.method)){styles={wrapper:'bg-red-500/10 border-red-500/20 text-red-600',amount:'text-red-700'};}return(<div key={idx} className={`flex justify-between px-3 py-1.5 rounded-xl border items-center ${styles.wrapper}`}><div className="flex-1 mr-2"><div className="font-bold leading-tight" style={{fontSize:'13px'}}>{p.method}</div><div className="uppercase font-bold opacity-60" style={{fontSize:'10px'}}>{p.installments?`${p.installments} `:''}{p.type||'Integral'}</div></div><span className={`font-mono font-bold whitespace-nowrap ${styles.amount}`} style={{fontSize:'13px'}}>{formatCurrency(p.amount)}</span></div>);})}
+                                                                            {(s.category === 'Devolução' || (s.category === 'Troca' && (s.amountPaid || s.amount) < 0)) && (<div className="mb-2 font-bold text-red-600 text-center uppercase tracking-wider" style={{ fontSize: '10px' }}>DEVOLUÇÃO</div>)}
+                                                                            <div className="space-y-1">{(s.payments || []).map((p, idx) => { let styles = getPaymentStyles(p.type); if (["Devolução Dinheiro", "Devolução Pix", "Devolução Estorno Cartão"].includes(p.method)) { styles = { wrapper: 'bg-red-500/10 border-red-500/20 text-red-600', amount: 'text-red-700' }; } return (<div key={idx} className={`flex justify-between px-3 py-1.5 rounded-xl border items-center ${styles.wrapper}`}><div className="flex-1 mr-2"><div className="font-bold leading-tight" style={{ fontSize: '13px' }}>{p.method}</div><div className="uppercase font-bold opacity-60" style={{ fontSize: '10px' }}>{p.installments ? `${p.installments} ` : ''}{p.type || 'Integral'}</div></div><span className={`font-mono font-bold whitespace-nowrap ${styles.amount}`} style={{ fontSize: '13px' }}>{formatCurrency(p.amount)}</span></div>); })}
                                                                             </div>
                                                                         </td>
                                                                         <td className="p-4 align-top text-right">
-                                                                            <div className="font-black text-[#0f0f0f]" style={{fontSize:'17px',whiteSpace:'nowrap'}}>{formatCurrency(s.amountPaid||s.amount)}</div>
-                                                                            {s.clientSource&&<div className="mt-1 font-bold text-orange-600 uppercase tracking-wider text-center" style={{fontSize:'10px'}}>{s.clientSource}</div>}
+                                                                            <div className="font-black text-[#0f0f0f]" style={{ fontSize: '17px', whiteSpace: 'nowrap' }}>{formatCurrency(s.amountPaid || s.amount)}</div>
+                                                                            {s.clientSource && <div className="mt-1 font-bold text-orange-600 uppercase tracking-wider text-center" style={{ fontSize: '10px' }}>{s.clientSource}</div>}
                                                                         </td>
-                                                                        <td className="p-4 align-top text-center no-print"><div className="flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-3 group-hover:translate-x-0"><button onClick={()=>openReceipt(s)} title="Ver Recibo" className="p-2 text-[#0f0f0f]/60 hover:text-[#0f0f0f] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.Receipt className="w-5 h-5"/></button>{s.clientPhone&&(<button onClick={()=>window.open(`https://wa.me/55${s.clientPhone.replace(/\D/g,'')}`, '_blank')} title="WhatsApp" className="p-2 text-[#0f0f0f]/60 hover:text-[#598c73] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.WhatsApp className="w-5 h-5"/></button>)}<button onClick={()=>{setPendingEditItem(s);setPendingAuthAction('edit');setManagerAuthModalOpen(true);}} className="p-2 text-[#0f0f0f]/60 hover:text-[#0f0f0f] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.Edit className="w-5 h-5"/></button></div></td>
+                                                                        <td className="p-4 align-top text-center no-print"><div className="flex flex-col items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-3 group-hover:translate-x-0"><button onClick={() => openReceipt(s)} title="Ver Recibo" className="p-2 text-[#0f0f0f]/60 hover:text-[#0f0f0f] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.Receipt className="w-5 h-5" /></button>{s.clientPhone && (<button onClick={() => window.open(`https://wa.me/55${s.clientPhone.replace(/\D/g, '')}`, '_blank')} title="WhatsApp" className="p-2 text-[#0f0f0f]/60 hover:text-[#598c73] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.WhatsApp className="w-5 h-5" /></button>)}<button onClick={() => { setPendingEditItem(s); setPendingAuthAction('edit'); setManagerAuthModalOpen(true); }} className="p-2 text-[#0f0f0f]/60 hover:text-[#0f0f0f] hover:bg-[#0f0f0f]/10 rounded-xl transition-colors"><Icons.Edit className="w-5 h-5" /></button></div></td>
                                                                     </tr>
                                                                 ))}
                                                             </tbody>
@@ -2194,36 +2266,20 @@
                     {confirmClientUpdateModalOpen && (
                         <div className="fixed inset-0 z-[190] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-lg no-print animate-in fade-in duration-500">
                             <div className="bg-black/90 border border-white/10 rounded-[2.5rem] p-10 text-center max-w-sm w-full animate-in zoom-in-95 shadow-2xl relative overflow-hidden backdrop-blur-xl">
-                                <div className="absolute top-0 left-0 w-full h-2 bg-odoo-500"></div><div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner"><Icons.UserCheck className="w-12 h-12 text-odoo-400" /></div><h3 className="font-bold text-2xl mb-4 text-white font-display">Confirmar Alteração</h3><p className="text-sm text-slate-400 mb-10 leading-relaxed font-medium">Deseja realmente atualizar os dados cadastrais deste cliente?</p>
+                                <div className="absolute top-0 left-0 w-full h-2 bg-odoo-500"></div><div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner"><Icons.UserCheck className="w-12 h-12 text-odoo-400" /></div><h3 className="font-bold text-2xl mb-4 text-white font-display">Confirmar Alteraíão</h3><p className="text-sm text-slate-400 mb-10 leading-relaxed font-medium">Deseja realmente atualizar os dados cadastrais deste cliente?</p>
                                 <div className="flex gap-4"><button onClick={() => setConfirmClientUpdateModalOpen(false)} className="flex-1 p-4 bg-white/5 text-slate-400 rounded-[1.5rem] font-bold hover:bg-white/10 transition-all active-scale">Cancelar</button><button onClick={performClientUpdate} className="flex-1 p-4 bg-odoo-600 text-white rounded-[1.5rem] font-bold hover:bg-odoo-700 shadow-lg shadow-odoo-500/30 transition-all active-scale">Confirmar</button></div>
                             </div>
                         </div>
                     )}
                     {receiptModalOpen && currentReceipt && (
                         <div className="fixed inset-0 z-[160] flex items-center justify-center p-4 bg-black/70 backdrop-blur-xl no-print receipt-modal-wrapper animate-in fade-in duration-300" onClick={() => setReceiptModalOpen(false)}>
-                            <div className="w-full max-w-[420px] animate-in zoom-in-95 duration-300 receipt-modal-content overflow-y-auto" style={{maxHeight:'92vh'}} onClick={e => e.stopPropagation()}>
+                            <div className="w-full max-w-[378px] animate-in zoom-in-95 duration-300 receipt-modal-content overflow-y-auto transform scale-95 origin-center" style={{ maxHeight: '92vh' }} onClick={e => e.stopPropagation()}>
                                 {/* Action bar */}
                                 <div className="flex justify-between items-center mb-4 no-print px-1">
                                     <div className="flex gap-2">
-                                        <button onClick={() => {
-                                            const el = document.getElementById('receipt-paper');
-                                            if (!el) return;
-                                            const win = window.open('', '_blank', 'width=400,height=700');
-                                            win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
-                                                <style>
-                                                    @page { size: 80mm auto; margin: 0; }
-                                                    * { box-sizing: border-box; margin: 0; padding: 0; }
-                                                    body { width: 80mm; background: white; font-family: 'Share Tech Mono', monospace; }
-                                                    @media print { body { width: 80mm; } }
-                                                </style>
-                                                <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-                                            </head><body>${el.outerHTML}<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();};}<\/script></body></html>`);
-                                            win.document.close();
-                                        }} title="Imprimir" className="flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-xs uppercase tracking-wider transition-all active:scale-95" style={{background:'linear-gradient(110deg,#886918,#c9a227,#f5e4ab,#c9a227,#886918)',backgroundSize:'200% auto',color:'#0f0f0f',border:'1.5px solid rgba(15,15,15,0.4)',boxShadow:'0 2px 8px rgba(201,162,39,0.3)'}}>
-                                            <Icons.Printer className="w-4 h-4" /> Imprimir
-                                        </button>
-                                        <button onClick={handleExportReceiptPDF} title="Exportar PDF" className="flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-2xl font-bold text-xs uppercase tracking-wider text-white hover:bg-white/20 transition-all active:scale-95 border border-white/20">
-                                            <Icons.FilePdf className="w-4 h-4" /> PDF
+                                        <button onClick={() => handleExportReceiptPDF('preview')} title="Imprimir ou Salvar PDF" className="flex items-center gap-3 px-6 py-3 rounded-[1.5rem] font-black text-[13px] uppercase tracking-wider transition-all active:scale-95 group/print shadow-lg hover:shadow-xl" style={{ background: 'linear-gradient(110deg,#886918,#c9a227,#f5e4ab,#c9a227,#886918)', backgroundSize: '200% auto', color: '#0f0f0f', border: '1.5px solid rgba(15,15,15,0.4)' }}>
+                                            <Icons.Printer className="w-5 h-5 group-hover/print:scale-110 transition-transform" />
+                                            <span className="flex items-center gap-2">Imprimir <span className="opacity-30">/</span> Salvar PDF</span>
                                         </button>
                                     </div>
                                     <button onClick={() => setReceiptModalOpen(false)} title="Fechar" className="text-white/60 hover:text-white hover:bg-white/10 p-2.5 rounded-2xl transition-all">
@@ -2232,20 +2288,20 @@
                                 </div>
 
                                 {/* Receipt paper */}
-                                <div id="receipt-paper" className="receipt-paper rounded-2xl overflow-hidden shadow-2xl font-receipt text-[13px] leading-snug" style={{background:'#fdfaf4',color:'#0f0f0f'}}>
+                                <div id="receipt-paper" className="receipt-paper rounded-2xl overflow-hidden shadow-2xl font-receipt text-[13px] leading-snug" style={{ background: '#fdfaf4', color: '#0f0f0f' }}>
 
                                     {/* Header - Champagne metallic */}
-                                    <div className="text-center relative overflow-hidden" style={{background:'linear-gradient(110deg,#886918 0%,#c9a227 20%,#f5e4ab 45%,#fff8e7 50%,#f5e4ab 55%,#c9a227 80%,#886918 100%)',padding:'28px 24px 20px'}}>
-                                        <div className="absolute inset-0 opacity-10" style={{backgroundImage:'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',backgroundSize:'8px 8px'}}></div>
+                                    <div className="text-center relative overflow-hidden" style={{ background: 'linear-gradient(110deg,#886918 0%,#c9a227 20%,#f5e4ab 45%,#fff8e7 50%,#f5e4ab 55%,#c9a227 80%,#886918 100%)', padding: '28px 24px 20px' }}>
+                                        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '8px 8px' }}></div>
                                         <div className="relative z-10">
-                                            <h2 className="text-3xl font-black uppercase tracking-tighter mb-0.5 font-display" style={{color:'#0f0f0f',textShadow:'0 1px 0 rgba(255,255,255,0.5)'}}>MIPLACE</h2>
-                                            <p className="text-[10px] uppercase tracking-[0.35em] font-bold mb-4" style={{color:'rgba(15,15,15,0.65)'}}>Premium • Tecnologia</p>
-                                            <div className="w-16 h-0.5 mx-auto rounded-full mb-4" style={{background:'rgba(15,15,15,0.3)'}}></div>
-                                            <div className="inline-block px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest" style={{background:'rgba(15,15,15,0.12)',border:'1px solid rgba(15,15,15,0.2)',color:'rgba(15,15,15,0.7)'}}>Cupom Não Fiscal</div>
-                                            <div className="flex justify-center gap-4 text-[11px] font-bold mt-4 font-mono" style={{color:'rgba(15,15,15,0.7)'}}>
+                                            <h2 className="text-3xl font-black uppercase tracking-tighter mb-0.5 font-display" style={{ color: '#0f0f0f', textShadow: '0 1px 0 rgba(255,255,255,0.5)' }}>MIPLACE</h2>
+                                            <p className="text-[10px] uppercase tracking-[0.35em] font-bold mb-4" style={{ color: 'rgba(15,15,15,0.65)' }}>Premium • Tecnologia</p>
+                                            <div className="w-16 h-0.5 mx-auto rounded-full mb-4" style={{ background: 'rgba(15,15,15,0.3)' }}></div>
+                                            <div className="inline-block px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest" style={{ background: 'rgba(15,15,15,0.12)', border: '1px solid rgba(15,15,15,0.2)', color: 'rgba(15,15,15,0.7)' }}>Cupom Não Fiscal</div>
+                                            <div className="flex justify-center gap-4 text-[11px] font-bold mt-4 font-mono" style={{ color: 'rgba(15,15,15,0.7)' }}>
                                                 <span>{formatDateBR(currentReceipt.date)}</span>
-                                                <span style={{opacity:0.3}}>|</span>
-                                                <span>{currentReceipt.timestamp ? new Date(currentReceipt.timestamp).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '00:00'}</span>
+                                                <span style={{ opacity: 0.3 }}>|</span>
+                                                <span>{currentReceipt.timestamp ? new Date(currentReceipt.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '00:00'}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -2253,38 +2309,38 @@
                                     <div className="p-7 space-y-5">
 
                                         {/* Cliente */}
-                                        <div className="rounded-xl border p-4 space-y-2" style={{background:'rgba(201,162,39,0.06)',borderColor:'rgba(201,162,39,0.2)'}}>
-                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{color:'#8a6d18'}}>▸ Dados do Cliente</p>
-                                            <div className="flex justify-between text-[12px]"><span className="font-bold" style={{color:'#6b6560'}}>Cliente</span><span className="font-bold text-right max-w-[170px] break-words" style={{color:'#0f0f0f'}}>{currentReceipt.clientName || '—'}</span></div>
-                                            {currentReceipt.clientCpf && <div className="flex justify-between text-[11px]"><span className="font-bold" style={{color:'#6b6560'}}>CPF</span><span className="font-mono" style={{color:'#0f0f0f'}}>{currentReceipt.clientCpf}</span></div>}
-                                            {currentReceipt.clientPhone && <div className="flex justify-between text-[11px]"><span className="font-bold" style={{color:'#6b6560'}}>Telefone</span><span className="font-mono" style={{color:'#0f0f0f'}}>{currentReceipt.clientPhone}</span></div>}
+                                        <div className="rounded-xl border p-4 space-y-2" style={{ background: 'rgba(201,162,39,0.06)', borderColor: 'rgba(201,162,39,0.2)' }}>
+                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{ color: '#8a6d18' }}>• Dados do Cliente</p>
+                                            <div className="flex justify-between text-[12px]"><span className="font-bold" style={{ color: '#6b6560' }}>Cliente</span><span className="font-bold text-right max-w-[170px] break-words" style={{ color: '#0f0f0f' }}>{currentReceipt.clientName || '—'}</span></div>
+                                            {currentReceipt.clientCpf && <div className="flex justify-between text-[11px]"><span className="font-bold" style={{ color: '#6b6560' }}>CPF</span><span className="font-mono" style={{ color: '#0f0f0f' }}>{currentReceipt.clientCpf}</span></div>}
+                                            {currentReceipt.clientPhone && <div className="flex justify-between text-[11px]"><span className="font-bold" style={{ color: '#6b6560' }}>Telefone</span><span className="font-mono" style={{ color: '#0f0f0f' }}>{currentReceipt.clientPhone}</span></div>}
                                         </div>
 
                                         {/* Itens */}
                                         <div>
-                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{color:'#8a6d18'}}>▸ Itens & Detalhes</p>
+                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{ color: '#8a6d18' }}>• Itens & Detalhes</p>
                                             <div className="space-y-3">
-                                                {(currentReceipt.items || []).sort((a,b) => { if(currentReceipt.category==='Troca') return a.unitPrice - b.unitPrice; return 0; }).map((it, idx) => (
-                                                    <div key={idx} className="rounded-xl p-3.5" style={{background: it.unitPrice < 0 ? 'rgba(220,38,38,0.06)' : 'rgba(201,162,39,0.05)', border: it.unitPrice < 0 ? '1px solid rgba(220,38,38,0.15)' : '1px solid rgba(201,162,39,0.15)'}}>
+                                                {(currentReceipt.items || []).sort((a, b) => { if (currentReceipt.category === 'Troca') return a.unitPrice - b.unitPrice; return 0; }).map((it, idx) => (
+                                                    <div key={idx} className="rounded-xl p-3.5" style={{ background: it.unitPrice < 0 ? 'rgba(220,38,38,0.06)' : 'rgba(201,162,39,0.05)', border: it.unitPrice < 0 ? '1px solid rgba(220,38,38,0.15)' : '1px solid rgba(201,162,39,0.15)' }}>
                                                         <div className="flex justify-between items-start">
                                                             <div className="flex-1">
                                                                 <div className="flex items-center gap-2 mb-1">
-                                                                    <span className="text-[10px] font-black px-2 py-0.5 rounded-md" style={{background:'rgba(201,162,39,0.15)',color:'#8a6d18',border:'1px solid rgba(201,162,39,0.25)'}}>{it.quantity}x</span>
-                                                                    <span className="font-bold text-[12px] uppercase leading-tight" style={{color:'#0f0f0f'}}>{it.description}</span>
+                                                                    <span className="text-[10px] font-black px-2 py-0.5 rounded-md" style={{ background: 'rgba(201,162,39,0.15)', color: '#8a6d18', border: '1px solid rgba(201,162,39,0.25)' }}>{it.quantity}x</span>
+                                                                    <span className="font-bold text-[12px] uppercase leading-tight" style={{ color: '#0f0f0f' }}>{it.description}</span>
                                                                 </div>
-                                                                <div className="text-[10px] uppercase tracking-wide font-bold pl-1 flex flex-wrap gap-2" style={{color:'#6b6560'}}>
+                                                                <div className="text-[10px] uppercase tracking-wide font-bold pl-1 flex flex-wrap gap-2" style={{ color: '#6b6560' }}>
                                                                     <span>{it.type}</span>
                                                                     {it.ram_storage && <span>• {it.ram_storage}</span>}
                                                                     {it.color && <span>• {it.color}</span>}
-                                                                    {it.imei && <span style={{color:'#3cb371'}}>• IMEI: {it.imei}</span>}
-                                                                    {it.financed && <span style={{color: it.financed==='Sim'?'#c0392b':'#6b6560'}}>• {it.financed==='Sim'?'Financiado':'À Vista'}</span>}
+                                                                    {it.imei && <span style={{ color: '#3cb371' }}>• IMEI: {it.imei}</span>}
+                                                                    {it.financed && <span style={{ color: it.financed === 'Sim' ? '#c0392b' : '#6b6560' }}>• {it.financed === 'Sim' ? 'Financiado' : 'À Vista'}</span>}
                                                                 </div>
                                                             </div>
                                                             <div className="text-right ml-3 flex-shrink-0">
-                                                                <div className="font-black text-[14px]" style={{color: it.unitPrice < 0 ? '#c0392b' : '#0f0f0f'}}>{formatCurrency((it.unitPrice * it.quantity) - it.discount)}</div>
-                                                                {it.unitPrice !== (it.unitPrice * it.quantity - it.discount) / it.quantity && <div className="text-[9px] font-medium" style={{color:'#6b6560'}}>Unit: {formatCurrency(it.unitPrice)}</div>}
-                                                                {it.discount > 0 && <div className="text-[10px] font-bold" style={{color:'#c0392b'}}>-{formatCurrency(it.discount)}</div>}
-                                                                {(currentReceipt.category==='Troca'||currentReceipt.category==='Devolução') && <div className="text-[9px] font-black uppercase" style={{color: it.unitPrice>0?'#2e7d32':'#c0392b'}}>{it.unitPrice>0?'↑ Levou':'↓ Devolveu'}</div>}
+                                                                <div className="font-black text-[14px]" style={{ color: it.unitPrice < 0 ? '#c0392b' : '#0f0f0f' }}>{formatCurrency((it.unitPrice * it.quantity) - it.discount)}</div>
+                                                                {it.unitPrice !== (it.unitPrice * it.quantity - it.discount) / it.quantity && <div className="text-[9px] font-medium" style={{ color: '#6b6560' }}>Unit: {formatCurrency(it.unitPrice)}</div>}
+                                                                {it.discount > 0 && <div className="text-[10px] font-bold" style={{ color: '#c0392b' }}>-{formatCurrency(it.discount)}</div>}
+                                                                {(currentReceipt.category === 'Troca' || currentReceipt.category === 'Devolução') && <div className="text-[9px] font-black uppercase" style={{ color: it.unitPrice > 0 ? '#2e7d32' : '#c0392b' }}>{it.unitPrice > 0 ? '• Levou' : '• Devolveu'}</div>}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2294,72 +2350,72 @@
 
                                         {/* Divisor champagne */}
                                         <div className="flex items-center gap-3">
-                                            <div className="flex-1 h-px" style={{background:'linear-gradient(to right, transparent, rgba(201,162,39,0.4), transparent)'}}></div>
-                                            <div className="w-2 h-2 rounded-full" style={{background:'#c9a227'}}></div>
-                                            <div className="flex-1 h-px" style={{background:'linear-gradient(to right, transparent, rgba(201,162,39,0.4), transparent)'}}></div>
+                                            <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(201,162,39,0.4), transparent)' }}></div>
+                                            <div className="w-2 h-2 rounded-full" style={{ background: '#c9a227' }}></div>
+                                            <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(201,162,39,0.4), transparent)' }}></div>
                                         </div>
 
                                         {/* Total */}
-                                        <div className="rounded-xl p-4 flex justify-between items-center" style={{background:'rgba(201,162,39,0.08)',border:'1.5px solid rgba(201,162,39,0.25)'}}>
-                                            <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{color:'#8a6d18'}}>Total a Pagar</span>
-                                            <span className="text-2xl font-black tracking-tighter" style={{color:'#0f0f0f'}}>R$ {formatCurrency(currentReceipt.amount)}</span>
+                                        <div className="rounded-xl p-4 flex justify-between items-center" style={{ background: 'rgba(201,162,39,0.08)', border: '1.5px solid rgba(201,162,39,0.25)' }}>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: '#8a6d18' }}>Total a Pagar</span>
+                                            <span className="text-2xl font-black tracking-tighter" style={{ color: '#0f0f0f' }}>R$ {formatCurrency(currentReceipt.amount)}</span>
                                         </div>
 
                                         {/* Pagamentos */}
                                         <div>
-                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{color:'#8a6d18'}}>▸ Forma de Pagamento</p>
+                                            <p className="text-[9px] font-black uppercase tracking-widest mb-3" style={{ color: '#8a6d18' }}>? Forma de Pagamento</p>
                                             <div className="space-y-2">
                                                 {(currentReceipt.payments || []).map((p, idx) => (
-                                                    <div key={idx} className="flex justify-between items-center rounded-xl px-4 py-2.5" style={{background:'rgba(201,162,39,0.05)',border:'1px solid rgba(201,162,39,0.15)'}}>
+                                                    <div key={idx} className="flex justify-between items-center rounded-xl px-4 py-2.5" style={{ background: 'rgba(201,162,39,0.05)', border: '1px solid rgba(201,162,39,0.15)' }}>
                                                         <div>
-                                                            <span className="font-bold text-[12px] uppercase" style={{color:'#0f0f0f'}}>{p.method}</span>
-                                                            {p.installments && <span className="ml-2 text-[9px] font-bold uppercase" style={{color:'#8a6d18'}}>({p.installments})</span>}
-                                                            <div className="text-[9px] uppercase font-bold" style={{color:'#6b6560'}}>{p.type || 'Integral'}</div>
+                                                            <span className="font-bold text-[12px] uppercase" style={{ color: '#0f0f0f' }}>{p.method}</span>
+                                                            {p.installments && <span className="ml-2 text-[9px] font-bold uppercase" style={{ color: '#8a6d18' }}>({p.installments})</span>}
+                                                            <div className="text-[9px] uppercase font-bold" style={{ color: '#6b6560' }}>{p.type || 'Integral'}</div>
                                                         </div>
-                                                        <span className="font-mono font-black text-[13px]" style={{color:'#0f0f0f'}}>{formatCurrency(p.amount)}</span>
+                                                        <span className="font-mono font-black text-[13px]" style={{ color: '#0f0f0f' }}>{formatCurrency(p.amount)}</span>
                                                     </div>
                                                 ))}
                                                 {currentReceipt.change > 0 && (
-                                                    <div className="flex justify-between items-center rounded-xl px-4 py-2.5 mt-1" style={{background:'rgba(46,125,50,0.06)',border:'1px solid rgba(46,125,50,0.2)'}}>
-                                                        <span className="font-black text-[11px] uppercase tracking-wide" style={{color:'#2e7d32'}}>Troco</span>
-                                                        <span className="font-mono font-black" style={{color:'#2e7d32'}}>{formatCurrency(currentReceipt.change)}</span>
+                                                    <div className="flex justify-between items-center rounded-xl px-4 py-2.5 mt-1" style={{ background: 'rgba(46,125,50,0.06)', border: '1px solid rgba(46,125,50,0.2)' }}>
+                                                        <span className="font-black text-[11px] uppercase tracking-wide" style={{ color: '#2e7d32' }}>Troco</span>
+                                                        <span className="font-mono font-black" style={{ color: '#2e7d32' }}>{formatCurrency(currentReceipt.change)}</span>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
 
                                         {/* Total Pago */}
-                                        <div className="rounded-xl p-4 flex justify-between items-center" style={{background:'linear-gradient(110deg,rgba(201,162,39,0.12),rgba(201,162,39,0.06))',border:'1.5px solid rgba(201,162,39,0.35)'}}>
-                                            <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{color:'#8a6d18'}}>Total Pago</span>
-                                            <span className="text-2xl font-black tracking-tighter" style={{color:'#0f0f0f'}}>R$ {formatCurrency(currentReceipt.amountPaid || currentReceipt.amount)}</span>
+                                        <div className="rounded-xl p-4 flex justify-between items-center" style={{ background: 'linear-gradient(110deg,rgba(201,162,39,0.12),rgba(201,162,39,0.06))', border: '1.5px solid rgba(201,162,39,0.35)' }}>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: '#8a6d18' }}>Total Pago</span>
+                                            <span className="text-2xl font-black tracking-tighter" style={{ color: '#0f0f0f' }}>R$ {formatCurrency(currentReceipt.amountPaid || currentReceipt.amount)}</span>
                                         </div>
 
-                                        {/* Observação */}
+                                        {/* Observaíão */}
                                         {currentReceipt.paymentObservation && (
-                                            <div className="rounded-xl p-3.5 text-[11px]" style={{background:'rgba(15,15,15,0.04)',border:'1px solid rgba(15,15,15,0.1)'}}>
-                                                <p className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{color:'#6b6560'}}>Observação</p>
-                                                <p style={{color:'#0f0f0f'}}>{currentReceipt.paymentObservation}</p>
+                                            <div className="rounded-xl p-3.5 text-[11px]" style={{ background: 'rgba(15,15,15,0.04)', border: '1px solid rgba(15,15,15,0.1)' }}>
+                                                <p className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6b6560' }}>Observaíão</p>
+                                                <p style={{ color: '#0f0f0f' }}>{currentReceipt.paymentObservation}</p>
                                             </div>
                                         )}
 
                                         {/* Rodapé */}
                                         <div className="text-center space-y-4 pt-2">
-                                            <div className="rounded-2xl p-4 shadow-md" style={{background:'linear-gradient(110deg,#886918,#c9a227,#f5e4ab,#c9a227,#886918)',backgroundSize:'200% auto'}}>
-                                                <p className="text-[9px] font-bold uppercase mb-1 tracking-widest" style={{color:'rgba(15,15,15,0.6)'}}>WhatsApp / Suporte</p>
-                                                <p className="text-lg font-black tracking-wider font-mono" style={{color:'#0f0f0f'}}>(19) 99497-5131</p>
+                                            <div className="rounded-2xl p-4 shadow-md" style={{ background: 'linear-gradient(110deg,#886918,#c9a227,#f5e4ab,#c9a227,#886918)', backgroundSize: '200% auto' }}>
+                                                <p className="text-[9px] font-bold uppercase mb-1 tracking-widest" style={{ color: 'rgba(15,15,15,0.6)' }}>WhatsApp / Suporte</p>
+                                                <p className="text-lg font-black tracking-wider font-mono" style={{ color: '#0f0f0f' }}>(19) 99497-5131</p>
                                             </div>
-                                            <div className="text-[9px] uppercase tracking-widest font-bold space-y-1" style={{color:'#6b6560'}}>
-                                                <p>Vendedor: <span style={{color:'#0f0f0f'}}>{currentReceipt.employeeName}</span></p>
-                                                <p>Categoria: <span style={{color:'#0f0f0f'}}>{currentReceipt.category}</span></p>
-                                                <p className="pt-1">Obrigado pela preferência! ✦</p>
+                                            <div className="text-[9px] uppercase tracking-widest font-bold space-y-1" style={{ color: '#6b6560' }}>
+                                                <p>Vendedor: <span style={{ color: '#0f0f0f' }}>{currentReceipt.employeeName}</span></p>
+                                                <p>Categoria: <span style={{ color: '#0f0f0f' }}>{currentReceipt.category}</span></p>
+                                                <p className="pt-1">Obrigado pela preferência! ?</p>
                                             </div>
-                                            <div className="w-20 h-0.5 mx-auto rounded-full" style={{background:'linear-gradient(to right,transparent,rgba(201,162,39,0.5),transparent)'}}></div>
+                                            <div className="w-20 h-0.5 mx-auto rounded-full" style={{ background: 'linear-gradient(to right,transparent,rgba(201,162,39,0.5),transparent)' }}></div>
                                         </div>
 
                                     </div>
 
                                     {/* Serrilhado inferior */}
-                                    <div className="h-4" style={{background:'linear-gradient(45deg, transparent 33.333%, #fdfaf4 33.333%, #fdfaf4 66.667%, transparent 66.667%), linear-gradient(-45deg, transparent 33.333%, #fdfaf4 33.333%, #fdfaf4 66.667%, transparent 66.667%)', backgroundSize:'12px 24px', backgroundPosition:'0 -12px', transform:'rotate(180deg)', backgroundColor:'rgba(201,162,39,0.06)'}}></div>
+                                    <div className="h-4" style={{ background: 'linear-gradient(45deg, transparent 33.333%, #fdfaf4 33.333%, #fdfaf4 66.667%, transparent 66.667%), linear-gradient(-45deg, transparent 33.333%, #fdfaf4 33.333%, #fdfaf4 66.667%, transparent 66.667%)', backgroundSize: '12px 24px', backgroundPosition: '0 -12px', transform: 'rotate(180deg)', backgroundColor: 'rgba(201,162,39,0.06)' }}></div>
                                 </div>
                             </div>
                         </div>
