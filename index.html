@@ -703,6 +703,8 @@
             AlertTriangle: (props) => <Icon {...props} path='<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>' />,
             BarChart: (props) => <Icon {...props} path='<line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line>' />,
             Trophy: (props) => <Icon {...props} path='<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17"></path><path d="M14 14.66V17"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>' />,
+            Bell: (props) => <Icon {...props} path='<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path>' />,
+            BellOff: (props) => <Icon {...props} path='<path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M18.63 13A17.888 17.888 0 0 1 18 8"></path><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"></path><path d="M18 8a6 6 0 0 0-9.33-5"></path><line x1="1" y1="1" x2="23" y2="23"></line>' />,
             WhatsApp: (props) => <Icon {...props} path='<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>' />,
             FileText: (props) => <Icon {...props} path='<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line>' />,
             Clock: (props) => <Icon {...props} path='<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>' />,
@@ -717,10 +719,13 @@
         };
 
         const SELLERS_LIST = ["Gabriela Ferreira", "Sabrina Almeida"];
+        // Senhas armazenadas como SHA-256 — nunca em texto puro
+        const EMPLOYEES_CREDENTIALS = {
+            "Gabriela Ferreira": "0e2dbd9a9522f5b8ed699d1b2bfc2052199e647fb7530eea2b0e9bcc561961ed",
+            "Sabrina Almeida":   "4c1d3e1df7321c868a702e671aa6466a3cdf93027c8aa771dcf0865cef39ed28"
+        };
         const ADM_NAME = "Dark Morellato";
-        const ADM_PASSWORD = "#Ark343390";
-        const EMPLOYEES_CREDENTIALS = { "Gabriela Ferreira": "Gaby123", "Sabrina Almeida": "#Banana@3433" };
-        const ALL_USERS_LIST = ["Gabriela Ferreira", "Sabrina Almeida", "Dark Morellato"];
+        const ADM_HASH = "74644f83fa66e58657ceb464279792b75ed672730adf560180d8b6e333aa4fa2";
         const CATEGORIES_LIST = ["Venda a vista", "Crediario Payjoy", "Crediario Paymobi", "Crediario Crefaz", "Devolução", "Troca", "Outros"];
         const PRODUCT_TYPES = ["BRINDES", "CABOS", "CAPAS", "CARREGADOR", "CARTÃO SD", "CHIP", "FONES", "HONOR", "IPHONE", "MICROFONE", "MOTOROLA", "OUTROS", "PAGAMENTO", "PELICULA 3D", "PELICULA 9D", "PILHA", "POCO", "REALME", "RECEPTOR", "REDMI", "ROCK SPACE", "SAMSUNG"];
         const RAM_STORAGE_OPTIONS = ["4/128", "4/256", "4/512", "6/128", "6/256", "8/256", "8/512", "12/256", "12/512"];
@@ -736,8 +741,8 @@
         const GOAL_SELLERS = 25;
         const GOAL_MANAGER = 65;
         const COMMISSION_PER_UNIT = 10;
-        const MANAGER_PASSWORD = "#Banana@3433";
-        const APP_VERSION = "v2.2.0";
+        const MANAGER_HASH = "4c1d3e1df7321c868a702e671aa6466a3cdf93027c8aa771dcf0865cef39ed28"; // SHA-256
+        const APP_VERSION = "v2.4.0";
         const SALES_WINDOW_DAYS = 90; // Carregar apenas os últimos N dias do Firestore
 
         const HELP_LINKS = [
@@ -767,6 +772,13 @@
             if ((remainder === 10) || (remainder === 11)) remainder = 0;
             if (remainder !== parseInt(cpf.substring(10, 11))) return false;
             return true;
+        };
+
+        // Hash SHA-256 via Web Crypto API nativa (sem libs externas)
+        const hashPassword = async (plain) => {
+            const enc = new TextEncoder();
+            const buf = await crypto.subtle.digest('SHA-256', enc.encode(plain));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
         };
 
         const formatDateBR = (dateString) => {
@@ -941,6 +953,7 @@
 
         const App = () => {
             const [isLoggedIn, setIsLoggedIn] = useState(false);
+            const [isAdm, setIsAdm] = useState(false);
             const [sales, setSales] = useState([]);
             const [clients, setClients] = useState([]);
             const [settings, setSettings] = useState({ employeeName: "", currency: "R$" });
@@ -1017,13 +1030,17 @@
             const [lastAlertTime, setLastAlertTime] = useState(0);
 
             const [isHelpDropdownOpen, setIsHelpDropdownOpen] = useState(false);
-            const [isAdm, setIsAdm] = useState(false);
             const [isOnline, setIsOnline] = useState(navigator.onLine);
             const [pendingOfflineSave, setPendingOfflineSave] = useState(false);
             const [birthdayAlertOpen, setBirthdayAlertOpen] = useState(false);
             const [todayBirthdays, setTodayBirthdays] = useState([]);
             const [commissionModalOpen, setCommissionModalOpen] = useState(false);
             const [monthlyChartData, setMonthlyChartData] = useState([]);
+            const [notifications, setNotifications] = useState([]);
+            const [notifOpen, setNotifOpen] = useState(false);
+            const [notifRead, setNotifRead] = useState(() => {
+                try { return JSON.parse(localStorage.getItem('miplace_notif_read_v1') || '[]'); } catch { return []; }
+            });
 
             // --- FIREBASE SYNC & AUTH ---
             useEffect(() => {
@@ -1148,6 +1165,122 @@
                 }
                 setMonthlyChartData(chartData);
             }, [sales]);
+
+            // ══ Central de Notificações — recomputar sempre que sales/clients mudam ══
+            useEffect(() => {
+                if (!isLoggedIn) return;
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+                const today = now.toISOString().split('T')[0];
+                const notifs = [];
+
+                // 1. Aniversariantes da semana (próximos 7 dias)
+                const todayMM = String(now.getMonth() + 1).padStart(2, '0');
+                const todayDD = String(now.getDate()).padStart(2, '0');
+                clients.forEach(c => {
+                    if (!c.dob) return;
+                    let mm, dd;
+                    if (c.dob.includes('-')) { const p = c.dob.split('-'); mm = p[1]; dd = p[2]; }
+                    else if (c.dob.includes('/')) { const p = c.dob.split('/'); dd = p[0]; mm = p[1]; }
+                    if (!mm || !dd) return;
+                    // Verificar nos próximos 7 dias
+                    for (let i = 0; i <= 7; i++) {
+                        const d = new Date(now); d.setDate(d.getDate() + i);
+                        const dMM = String(d.getMonth() + 1).padStart(2, '0');
+                        const dDD = String(d.getDate()).padStart(2, '0');
+                        if (mm === dMM && dd === dDD) {
+                            const isToday = i === 0;
+                            notifs.push({
+                                id: `bday-${c.id}`,
+                                type: 'birthday',
+                                priority: isToday ? 'high' : 'medium',
+                                icon: '🎂',
+                                title: isToday ? `Aniversário hoje: ${c.name.split(' ')[0]}` : `Aniversário em ${i} dia${i > 1 ? 's' : ''}: ${c.name.split(' ')[0]}`,
+                                detail: c.phone ? `📱 ${c.phone}` : 'Sem telefone',
+                                phone: c.phone,
+                                name: c.name,
+                                at: new Date().toISOString(),
+                            });
+                            break;
+                        }
+                    }
+                });
+
+                // 2. Meta próxima do fim do mês (< 5 dias restantes e < 80% atingida)
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                const daysLeft = daysInMonth - now.getDate();
+                const countUnitsN = (arr) => arr.reduce((acc, s) => {
+                    const pos = (s.items||[]).filter(i => ELIGIBLE_FOR_GOAL.includes(i.type) && i.unitPrice > 0);
+                    const neg = (s.items||[]).filter(i => ELIGIBLE_FOR_GOAL.includes(i.type) && i.unitPrice < 0);
+                    return acc + pos.reduce((sum,i) => sum + i.quantity, 0) - neg.reduce((sum,i) => sum + Math.abs(i.quantity), 0);
+                }, 0);
+
+                SELLERS_LIST.forEach(seller => {
+                    const sellerSales = sales.filter(s => {
+                        const d = new Date((s.date||'') + 'T00:00:00');
+                        return s.employeeName === seller && d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+                    });
+                    const units = countUnitsN(sellerSales);
+                    const target = GOAL_SELLERS;
+                    const pct = (units / target) * 100;
+                    if (daysLeft <= 7 && pct < 90) {
+                        const missing = Math.max(0, target - units);
+                        notifs.push({
+                            id: `goal-${seller}-${currentMonth}-${currentYear}`,
+                            type: 'goal',
+                            priority: daysLeft <= 3 ? 'high' : 'medium',
+                            icon: '🎯',
+                            title: `Meta: ${seller.split(' ')[0]} precisa de ${missing} un`,
+                            detail: `${units}/${target} un • ${daysLeft} dias restantes`,
+                            at: new Date().toISOString(),
+                        });
+                    }
+                });
+
+                // 3. IMEIs duplicados detectados
+                const imeiMap = {};
+                sales.forEach(s => {
+                    (s.items||[]).forEach(i => {
+                        if (i.imei && i.imei.trim().length > 5) {
+                            const key = i.imei.trim();
+                            if (!imeiMap[key]) imeiMap[key] = [];
+                            imeiMap[key].push(s);
+                        }
+                    });
+                });
+                const dupes = Object.entries(imeiMap).filter(([, arr]) => arr.length > 1);
+                if (dupes.length > 0) {
+                    notifs.push({
+                        id: `imei-dupes-${dupes.length}`,
+                        type: 'warning',
+                        priority: 'high',
+                        icon: '⚠️',
+                        title: `${dupes.length} IMEI${dupes.length > 1 ? 's' : ''} duplicado${dupes.length > 1 ? 's' : ''} detectado${dupes.length > 1 ? 's' : ''}`,
+                        detail: dupes.slice(0, 2).map(([imei]) => imei).join(', ') + (dupes.length > 2 ? '...' : ''),
+                        at: new Date().toISOString(),
+                    });
+                }
+
+                // 5. Clientes novos cadastrados hoje (destaque positivo)
+                const newClientsToday = clients.filter(c => c.createdAt && c.createdAt.startsWith(today));
+                if (newClientsToday.length > 0) {
+                    notifs.push({
+                        id: `new-clients-${today}`,
+                        type: 'success',
+                        priority: 'low',
+                        icon: '👤',
+                        title: `${newClientsToday.length} novo${newClientsToday.length > 1 ? 's' : ''} cliente${newClientsToday.length > 1 ? 's' : ''} cadastrado${newClientsToday.length > 1 ? 's' : ''} hoje`,
+                        detail: newClientsToday.map(c => c.name.split(' ')[0]).join(', '),
+                        at: new Date().toISOString(),
+                    });
+                }
+
+                // Ordenar: high → medium → low
+                const order = { high: 0, medium: 1, low: 2 };
+                notifs.sort((a, b) => order[a.priority] - order[b.priority]);
+                setNotifications(notifs);
+            }, [sales, clients, isLoggedIn]);
 
             // Salvar configurações locais
             useEffect(() => {
@@ -1393,34 +1526,18 @@
                 const safeDiscount = Math.round((totalDiscount + Number.EPSILON) * 100) / 100;
 
                 const saleId = editingId || db.collection('vendas').doc().id;
-                const isEdit = !!editingId;
-
-                // Montar entrada do histórico de edições
-                const editEntry = {
-                    editedBy: settings.employeeName,
-                    editedAt: new Date().toISOString(),
-                    action: isEdit ? 'update' : 'create',
-                };
-
-                // Se é edição, preservar histórico anterior e somar nova entrada
-                const existingSale = isEdit ? sales.find(s => s.id === editingId) : null;
-                const prevHistory = (existingSale && existingSale.editHistory) ? existingSale.editHistory : [];
-                const editHistory = isEdit ? [...prevHistory, editEntry] : [editEntry];
 
                 const saleData = {
                     id: saleId,
                     date,
-                    timestamp: isEdit ? (existingSale?.timestamp || new Date().toISOString()) : new Date().toISOString(),
-                    lastEditedAt: new Date().toISOString(),
-                    lastEditedBy: settings.employeeName,
-                    editHistory,
+                    timestamp: new Date().toISOString(),
                     clientName, clientCpf, clientPhone, clientEmail, clientDob, clientAddress, clientNumber, clientCity, clientZip, clientState, clientNeighborhood, category, items, amount: safeTotal, discount: safeDiscount, employeeName: originalEmployeeName || settings.employeeName, store: "Miplace Premium", payments: paymentList, amountPaid: totalPaid, change: changeAmount, clientSource, paymentObservation
                 };
 
                 db.collection('vendas').doc(saleId).set(saleData)
                     .then(() => {
-                        showToast(isEdit ? "Atualizado na nuvem!" : "Venda registrada na nuvem!");
-                        if (!isEdit) openReceipt(saleData);
+                        showToast(editingId ? "Atualizado na nuvem!" : "Venda registrada na nuvem!");
+                        if (!editingId) openReceipt(saleData);
                         resetForm();
                     })
                     .catch(err => showToast("Erro ao salvar: " + err.message, "error"));
@@ -1453,7 +1570,8 @@
             };
 
             const handleManagerAuth = async () => {
-                if (managerPassword === MANAGER_PASSWORD) {
+                const inputHash = await hashPassword(managerPassword);
+                if (inputHash === MANAGER_HASH) {
                     if (pendingAuthAction === 'save') performSave();
                     if (pendingAuthAction === 'reset') performFactoryReset();
                     if (pendingAuthAction === 'edit' && pendingEditItem) startEdit(pendingEditItem);
@@ -1868,25 +1986,18 @@
             }, [sales.length]);
 
             const handleLoginClick = useCallback((name) => { setSelectedUserForLogin(name); setLoginPasswordInput(''); setLoginModalOpen(true); }, []);
-            const performLogin = useCallback(() => {
-                // Login ADM (Dark Morellato)
+            const performLogin = useCallback(async () => {
+                const inputHash = await hashPassword(loginPasswordInput);
+                // Login ADM
                 if (selectedUserForLogin === ADM_NAME) {
-                    if (loginPasswordInput === ADM_PASSWORD) {
-                        setSettings({ employeeName: ADM_NAME });
-                        setIsAdm(true);
-                        setIsLoggedIn(true);
-                        setLoginModalOpen(false);
-                        showToast(`Bem-vindo, ${ADM_NAME}! 🔑`);
+                    if (inputHash === ADM_HASH) {
+                        setSettings({ employeeName: ADM_NAME }); setIsAdm(true); setIsLoggedIn(true); setLoginModalOpen(false); showToast(`Bem-vindo, ${ADM_NAME}! 🔑`);
                     } else showToast("Senha ADM incorreta", "error");
                     return;
                 }
                 // Login normal
-                if (loginPasswordInput === EMPLOYEES_CREDENTIALS[selectedUserForLogin]) {
-                    setSettings({ employeeName: selectedUserForLogin });
-                    setIsAdm(false);
-                    setIsLoggedIn(true);
-                    setLoginModalOpen(false);
-                    showToast(`Bem-vindo, ${selectedUserForLogin}!`);
+                if (inputHash === EMPLOYEES_CREDENTIALS[selectedUserForLogin]) {
+                    setSettings({ employeeName: selectedUserForLogin }); setIsAdm(false); setIsLoggedIn(true); setLoginModalOpen(false); showToast(`Bem-vindo, ${selectedUserForLogin}!`);
                 } else showToast("Senha incorreta", "error");
             }, [loginPasswordInput, selectedUserForLogin, showToast]);
 
@@ -1903,12 +2014,6 @@
                             <div className="p-10 space-y-5">
                                 <p className="text-center text-slate-400 text-sm font-medium mb-4">Selecione seu perfil para entrar</p>
                                 {SELLERS_LIST.map(n => (<button key={n} onClick={() => handleLoginClick(n)} className="w-full py-5 px-6 bg-white/5 border border-white/10 rounded-[2rem] flex items-center justify-between hover:bg-odoo-500/10 hover:border-odoo-500/30 hover:shadow-lg transition-all duration-300 group input-focus-effect active-scale relative overflow-hidden shadow-sm"><span className="font-bold text-slate-300 group-hover:text-odoo-400 relative z-10">{n}</span><div className="bg-white/5 p-2.5 rounded-full group-hover:bg-odoo-500 group-hover:text-white transition-colors relative z-10 shadow-sm"><Icons.ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-white" /></div></button>))}
-                                <div className="border-t border-white/10 pt-4 mt-2">
-                                    <button onClick={() => handleLoginClick(ADM_NAME)} className="w-full py-4 px-6 bg-white/5 border border-white/5 rounded-[2rem] flex items-center justify-between hover:bg-red-500/10 hover:border-red-500/20 hover:shadow-lg transition-all duration-300 group active-scale relative overflow-hidden shadow-sm opacity-60 hover:opacity-100">
-                                        <div className="flex items-center gap-3 relative z-10"><Icons.Key className="w-4 h-4 text-slate-600 group-hover:text-red-500 transition-colors" /><span className="font-bold text-slate-500 group-hover:text-red-400 text-sm">{ADM_NAME}</span><span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider bg-white/5 px-2 py-0.5 rounded-full border border-white/10">ADM</span></div>
-                                        <div className="bg-white/5 p-2 rounded-full group-hover:bg-red-500/20 group-hover:text-red-400 transition-colors relative z-10 shadow-sm"><Icons.ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-red-400" /></div>
-                                    </button>
-                                </div>
                             </div>
                             {sessionPromptOpen && (<div className="absolute inset-0 rounded-[3rem] z-[25] flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.User className="w-8 h-8" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl text-center font-bold mb-4 font-display" style={{ color: '#0f0f0f' }}>Bem-vindo de volta!</h3><p className="mb-10 text-sm font-medium text-center" style={{ color: '#6b6560' }}>Deseja continuar logado como <b>{selectedUserForLogin}</b>?</p><div className="flex gap-4 w-full"><button onClick={() => { setSessionPromptOpen(false); setSettings({ employeeName: null }); }} className="flex-1 p-5 rounded-[2rem] font-bold transition-all hover:bg-black/5 active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Não, Sair</button><button onClick={() => { setIsLoggedIn(true); setSessionPromptOpen(false); showToast(`Sessão restaurada para ${selectedUserForLogin}`); }} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all shadow-md active-scale p-5 text-onyx-900">Sim, Continuar</button></div></div>)}
                             {loginModalOpen && (<div className="absolute inset-0 rounded-[3rem] z-20 flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-14 h-14 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.Lock className="w-6 h-6" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl font-bold mb-2 font-display" style={{ color: '#0f0f0f' }}>Olá, {selectedUserForLogin}!</h3><p className="mb-10 text-sm font-medium" style={{ color: '#6b6560' }}>Digite sua senha para acessar.</p><input type="password" value={loginPasswordInput} onChange={e => setLoginPasswordInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && performLogin()} className="w-full p-5 rounded-[2rem] text-center mb-10 font-bold outline-none transition-all text-xl placeholder:font-normal shadow-sm" style={{ background: '#fff', border: '1.5px solid rgba(15,15,15,0.20)', color: '#0f0f0f' }} placeholder="••••••" autoFocus /><div className="flex gap-4 w-full"><button onClick={() => setLoginModalOpen(false)} className="flex-1 p-5 rounded-[2rem] font-bold transition-all active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Voltar</button><button onClick={performLogin} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all active-scale p-5">Entrar</button></div></div>)}
@@ -1941,12 +2046,83 @@
                                 <button onClick={() => setCurrentView(currentView === 'clients' ? 'dashboard' : 'clients')} className={`p-3 rounded-[1.5rem] transition-all duration-500 ${currentView === 'clients' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`} title="Carteira de Clientes">{currentView === 'clients' ? <Icons.Home className="w-5 h-5" /> : <Icons.Users className="w-5 h-5" />}</button>
                                 <button onClick={() => setCurrentView(currentView === 'performance' ? 'dashboard' : 'performance')} className={`p-3 rounded-[1.5rem] transition-all duration-500 ${currentView === 'performance' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`} title="Desempenho"><Icons.BarChart className="w-5 h-5" /></button>
                                 {(settings.employeeName === "Sabrina Almeida" || isAdm) && (
-                                    <button onClick={() => setCurrentView(currentView === 'manager' ? 'dashboard' : 'manager')} className={`p-3 rounded-[1.5rem] transition-all duration-500 ${currentView === 'manager' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`} title="Painel Gerencial">
-                                        <Icons.Trophy className="w-5 h-5" />
-                                    </button>
+                                    <button onClick={() => setCurrentView(currentView === 'manager' ? 'dashboard' : 'manager')} className={`p-3 rounded-[1.5rem] transition-all duration-500 ${currentView === 'manager' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`} title="Painel Gerencial"><Icons.Trophy className="w-5 h-5" /></button>
                                 )}
                                 <button onClick={() => setCurrentView(currentView === 'calendar' ? 'dashboard' : 'calendar')} className={`p-3 rounded-[1.5rem] transition-all duration-500 ${currentView === 'calendar' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`} title="Calendário"><Icons.Calendar className="w-5 h-5" /></button>
                                 <div className="w-px h-6 bg-white/10 mx-1"></div>
+                                {/* Sininho de Notificações */}
+                                <div className="relative">
+                                    <button
+                                        onClick={() => { setNotifOpen(!notifOpen); setNotifRead(prev => { const ids = [...new Set([...prev, ...notifications.map(n => n.id)])]; localStorage.setItem('miplace_notif_read_v1', JSON.stringify(ids)); return ids; }); }}
+                                        className={`p-3 rounded-[1.5rem] transition-all duration-300 active-scale relative ${notifOpen ? 'bg-white/10 text-slate-200' : 'text-slate-400 hover:bg-white/10 hover:text-slate-300'}`}
+                                        title="Notificações"
+                                    >
+                                        <Icons.Bell className="w-5 h-5" />
+                                        {notifications.filter(n => !notifRead.includes(n.id)).length > 0 && (
+                                            <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-red-500 rounded-full text-[9px] font-black text-white flex items-center justify-center shadow-lg shadow-red-500/50 animate-pulse">
+                                                {notifications.filter(n => !notifRead.includes(n.id)).length > 9 ? '9+' : notifications.filter(n => !notifRead.includes(n.id)).length}
+                                            </span>
+                                        )}
+                                    </button>
+                                    {notifOpen && (
+                                        <>
+                                            <div className="fixed inset-0 z-[40]" onClick={() => setNotifOpen(false)}></div>
+                                            <div className="absolute right-0 top-full mt-4 w-96 classic-frame rounded-[2rem] shadow-2xl border border-white/20 z-[50] overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+                                                <div className="p-5 bg-white/5 border-b border-white/10 flex items-center justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                        <Icons.Bell className="w-4 h-4 text-odoo-500" />
+                                                        <span className="font-bold text-xs text-slate-300 uppercase tracking-wider">Notificações</span>
+                                                        {notifications.length > 0 && <span className="bg-odoo-500/20 text-odoo-500 border border-odoo-500/30 text-[10px] font-black px-2 py-0.5 rounded-full">{notifications.length}</span>}
+                                                    </div>
+                                                    {notifications.length > 0 && (
+                                                        <button onClick={() => { const ids = notifications.map(n => n.id); setNotifRead(ids); localStorage.setItem('miplace_notif_read_v1', JSON.stringify(ids)); }} className="text-[10px] font-bold text-slate-500 hover:text-slate-300 transition-colors uppercase tracking-wider">
+                                                            Marcar todas como lidas
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                <div className="max-h-[70vh] overflow-y-auto custom-scrollbar">
+                                                    {notifications.length === 0 ? (
+                                                        <div className="p-10 text-center">
+                                                            <div className="text-4xl mb-3">✅</div>
+                                                            <p className="text-sm font-bold text-slate-400">Tudo em ordem!</p>
+                                                            <p className="text-xs text-slate-600 mt-1">Sem alertas no momento.</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="p-3 space-y-2">
+                                                            {notifications.map(n => {
+                                                                const isUnread = !notifRead.includes(n.id);
+                                                                const priorityColor = n.priority === 'high' ? 'border-red-500/30 bg-red-500/5' : n.priority === 'medium' ? 'border-amber-500/30 bg-amber-500/5' : 'border-white/10 bg-white/5';
+                                                                const dotColor = n.priority === 'high' ? 'bg-red-500' : n.priority === 'medium' ? 'bg-amber-500' : 'bg-emerald-500';
+                                                                return (
+                                                                    <div key={n.id} className={`p-4 rounded-2xl border transition-all duration-300 hover:brightness-110 ${priorityColor} ${isUnread ? 'ring-1 ring-white/10' : 'opacity-60'}`}>
+                                                                        <div className="flex items-start gap-3">
+                                                                            <span className="text-xl leading-none mt-0.5">{n.icon}</span>
+                                                                            <div className="flex-1 min-w-0">
+                                                                                <div className="flex items-center gap-2 mb-1">
+                                                                                    <p className="font-bold text-slate-200 text-sm leading-tight">{n.title}</p>
+                                                                                    {isUnread && <div className={`w-2 h-2 rounded-full shrink-0 ${dotColor} shadow-[0_0_6px_currentColor]`}></div>}
+                                                                                </div>
+                                                                                <p className="text-xs text-slate-500 font-medium">{n.detail}</p>
+                                                                                {n.phone && (
+                                                                                    <a href={`https://wa.me/55${n.phone.replace(/\D/g,'')}?text=${encodeURIComponent('Olá ' + (n.name||'') + '! 🎂 Feliz aniversário! A equipe Miplace Premium deseja a você um dia incrível!')}`} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="mt-2 inline-flex items-center gap-1.5 text-[10px] font-bold text-green-600 bg-green-500/10 border border-green-500/20 px-2.5 py-1 rounded-lg hover:bg-green-500/20 transition-colors">
+                                                                                        <Icons.WhatsApp className="w-3 h-3" /> Parabenizar
+                                                                                    </a>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="p-3 border-t border-white/10 bg-white/5">
+                                                    <p className="text-[10px] text-slate-600 text-center font-medium">Atualizado automaticamente • {new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'})}</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
                                 <button onClick={() => setIsBackupOpen(true)} className="p-3 text-slate-400 hover:bg-white/10 hover:text-slate-300 rounded-[1.5rem] transition-all duration-300 hover:rotate-90 active-scale" title="Configurações"><Icons.Settings className="w-5 h-5" /></button>
 
                                 <div className="relative">
@@ -2005,162 +2181,152 @@
                         {currentView === 'calendar' ? (
                             <SimpleCalendar routineState={routineState} toggleRoutine={toggleRoutine} />
                         ) : currentView === 'manager' ? (
-                            <div className="space-y-10">
-                                {/* Header Painel Gerencial */}
+                            <div className="space-y-8">
                                 <div className="classic-frame rounded-[3rem] shadow-vision border border-white/60 p-10">
+
+                                    {/* Header */}
                                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
                                         <h2 className="text-3xl font-bold text-slate-200 flex items-center gap-4 font-display">
                                             <div className="p-3 bg-white/10 rounded-2xl text-odoo-500 shadow-sm border border-white/5"><Icons.Trophy className="w-8 h-8" /></div>
                                             Painel Gerencial
-                                            <span className="text-slate-500 font-normal text-lg">• Tempo Real</span>
                                         </h2>
                                         <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-full">
                                             <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_6px_#10b981] animate-pulse"></div>
-                                            <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Ao Vivo</span>
+                                            <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Tempo Real</span>
                                         </div>
                                     </div>
 
-                                    {/* Cards KPI — Loja toda */}
+                                    {/* 5 KPIs */}
                                     {(() => {
                                         const now = new Date();
-                                        const currentMonth = now.getMonth();
-                                        const currentYear = now.getFullYear();
+                                        const cm = now.getMonth(), cy = now.getFullYear();
                                         const today = now.toISOString().split('T')[0];
-                                        const monthSales = sales.filter(s => {
-                                            const d = new Date((s.date||'') + 'T00:00:00');
-                                            return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
-                                        });
-                                        const totalToday = sales.filter(s => s.date === today).reduce((a,s)=>a+(s.amountPaid||s.amount||0),0);
-                                        const totalMonth = monthSales.reduce((a,s)=>a+(s.amountPaid||s.amount||0),0);
-                                        const salesCount = monthSales.filter(s=>(s.amountPaid||s.amount||0)>0).length;
-                                        const avgTicket = salesCount > 0 ? totalMonth / salesCount : 0;
-                                        const countUnits = (arr) => arr.reduce((acc,s)=>{
+                                        const mSales = sales.filter(s => { const d = new Date((s.date||'')+'T00:00:00'); return d.getMonth()===cm && d.getFullYear()===cy; });
+                                        const todayRev = sales.filter(s => s.date === today).reduce((a,s)=>a+(s.amountPaid||s.amount||0),0);
+                                        const monthRev = mSales.reduce((a,s)=>a+(s.amountPaid||s.amount||0),0);
+                                        const cnt = mSales.filter(s=>(s.amountPaid||s.amount||0)>0).length;
+                                        const avgT = cnt > 0 ? monthRev/cnt : 0;
+                                        const units = mSales.reduce((acc,s)=>{
                                             const pos=(s.items||[]).filter(i=>ELIGIBLE_FOR_GOAL.includes(i.type)&&i.unitPrice>0);
                                             const neg=(s.items||[]).filter(i=>ELIGIBLE_FOR_GOAL.includes(i.type)&&i.unitPrice<0);
                                             return acc+pos.reduce((sum,i)=>sum+i.quantity,0)-neg.reduce((sum,i)=>sum+Math.abs(i.quantity),0);
                                         },0);
-                                        const totalUnits = countUnits(monthSales);
                                         const kpis = [
-                                            { label: 'Faturamento Hoje', value: `R$ ${formatCurrency(totalToday)}`, icon: 'DollarSign', color: 'text-emerald-500' },
-                                            { label: 'Faturamento Mês', value: `R$ ${formatCurrency(totalMonth)}`, icon: 'TrendingUp', color: 'text-odoo-500' },
-                                            { label: 'Vendas no Mês', value: salesCount, icon: 'ShoppingBag', color: 'text-blue-400' },
-                                            { label: 'Aparelhos Vendidos', value: `${totalUnits} un`, icon: 'Smartphone', color: 'text-violet-400' },
-                                            { label: 'Ticket Médio', value: `R$ ${formatCurrency(avgTicket)}`, icon: 'Tag', color: 'text-amber-400' },
+                                            { label:'Faturamento Hoje', val:`R$ ${formatCurrency(todayRev)}`, color:'text-emerald-400', bg:'bg-emerald-500/10 border-emerald-500/20' },
+                                            { label:'Faturamento Mês',  val:`R$ ${formatCurrency(monthRev)}`, color:'text-odoo-400',    bg:'bg-odoo-500/10 border-odoo-500/20' },
+                                            { label:'Nº de Vendas',     val:cnt,                               color:'text-blue-400',    bg:'bg-blue-500/10 border-blue-500/20' },
+                                            { label:'Aparelhos Vendidos',val:`${units} un`,                    color:'text-violet-400',  bg:'bg-violet-500/10 border-violet-500/20' },
+                                            { label:'Ticket Médio',     val:`R$ ${formatCurrency(avgT)}`,      color:'text-amber-400',   bg:'bg-amber-500/10 border-amber-500/20' },
                                         ];
                                         return (
-                                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
-                                                {kpis.map(k => (
-                                                    <div key={k.label} className="p-6 rounded-[2rem] border border-white/10 bg-white/5 hover:bg-white/10 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
-                                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">{k.label}</p>
-                                                        <p className={`text-xl font-black ${k.color} leading-tight`}>{k.value}</p>
+                                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
+                                                {kpis.map(k=>(
+                                                    <div key={k.label} className={`p-6 rounded-[2rem] border ${k.bg} hover:-translate-y-1 hover:shadow-xl transition-all duration-300`}>
+                                                        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-3 leading-tight">{k.label}</p>
+                                                        <p className={`text-lg font-black ${k.color} leading-tight`}>{k.val}</p>
                                                     </div>
                                                 ))}
                                             </div>
                                         );
                                     })()}
 
-                                    {/* Comparativo lado a lado — vendedoras */}
+                                    {/* Ranking + Gráficos */}
                                     {(() => {
                                         const now = new Date();
-                                        const currentMonth = now.getMonth();
-                                        const currentYear = now.getFullYear();
-                                        const countUnits = (arr) => arr.reduce((acc,s)=>{
+                                        const cm = now.getMonth(), cy = now.getFullYear();
+                                        const countU = (arr) => arr.reduce((acc,s)=>{
                                             const pos=(s.items||[]).filter(i=>ELIGIBLE_FOR_GOAL.includes(i.type)&&i.unitPrice>0);
                                             const neg=(s.items||[]).filter(i=>ELIGIBLE_FOR_GOAL.includes(i.type)&&i.unitPrice<0);
                                             return acc+pos.reduce((sum,i)=>sum+i.quantity,0)-neg.reduce((sum,i)=>sum+Math.abs(i.quantity),0);
                                         },0);
-
-                                        const sellerColors = ['text-[#f08080]', 'text-[#4169e1]'];
-                                        const sellerRing = ['ring-[#f08080]/30', 'ring-[#4169e1]/30'];
-
-                                        const sellerData = SELLERS_LIST.map((seller, idx) => {
-                                            const monthSales = sales.filter(s => {
-                                                const d = new Date((s.date||'') + 'T00:00:00');
-                                                return s.employeeName === seller && d.getMonth() === currentMonth && d.getFullYear() === currentYear;
-                                            });
-                                            const units = countUnits(monthSales);
-                                            const revenue = monthSales.reduce((a,s)=>a+(s.amountPaid||s.amount||0),0);
-                                            const salesCount = monthSales.filter(s=>(s.amountPaid||s.amount||0)>0).length;
-                                            const avgTicket = salesCount > 0 ? revenue / salesCount : 0;
-                                            const target = GOAL_SELLERS;
-                                            const progress = Math.min((units / target) * 100, 100);
-                                            const goalReached = units >= target;
-                                            const commission = goalReached ? units * COMMISSION_PER_UNIT : 0;
-                                            return { seller, units, revenue, salesCount, avgTicket, target, progress, goalReached, commission, color: sellerColors[idx], ring: sellerRing[idx] };
+                                        const COLORS = ['text-[#f08080]','text-[#6EA8FE]'];
+                                        const RINGS  = ['ring-[#f08080]/20','ring-[#6EA8FE]/20'];
+                                        const BAR_CLS = ['bg-gradient-to-r from-[#f08080] to-[#e05555]','bg-gradient-to-r from-[#6EA8FE] to-[#4285F4]'];
+                                        const BAR_V   = ['bg-gradient-to-t from-odoo-600 to-odoo-400','bg-gradient-to-t from-slate-600 to-slate-400'];
+                                        const data = SELLERS_LIST.map((seller,idx)=>{
+                                            const ms = sales.filter(s=>{ const d=new Date((s.date||'')+'T00:00:00'); return s.employeeName===seller&&d.getMonth()===cm&&d.getFullYear()===cy; });
+                                            const units = countU(ms);
+                                            const rev   = ms.reduce((a,s)=>a+(s.amountPaid||s.amount||0),0);
+                                            const cnt   = ms.filter(s=>(s.amountPaid||s.amount||0)>0).length;
+                                            const avgT  = cnt>0?rev/cnt:0;
+                                            const prog  = Math.min((units/GOAL_SELLERS)*100,100);
+                                            const goalOk= units>=GOAL_SELLERS;
+                                            const comm  = goalOk ? units*COMMISSION_PER_UNIT : 0;
+                                            return { seller, units, rev, cnt, avgT, prog, goalOk, comm, color:COLORS[idx], ring:RINGS[idx], bar:BAR_CLS[idx], barV:BAR_V[idx] };
                                         });
-
-                                        // Ranking (por unidades)
-                                        const sorted = [...sellerData].sort((a,b) => b.units - a.units);
+                                        const sorted = [...data].sort((a,b)=>b.units-a.units);
+                                        const maxRev = Math.max(...data.map(d=>d.rev),1);
 
                                         return (
                                             <div className="space-y-8">
-                                                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-3">
-                                                    <div className="w-2 h-2 bg-odoo-400 rounded-full animate-pulse shadow-[0_0_10px_theme('colors.odoo.400')]"></div>
-                                                    Ranking de Vendedoras — {new Date().toLocaleString('pt-BR', {month:'long', year:'numeric'})}
-                                                </h3>
+                                                {/* Section label */}
+                                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                                    <span className="w-2 h-2 rounded-full bg-odoo-400 animate-pulse shadow-[0_0_6px_theme('colors.odoo.400')]"></span>
+                                                    Ranking — {now.toLocaleString('pt-BR',{month:'long',year:'numeric'})}
+                                                </p>
 
-                                                {/* Ranking cards */}
+                                                {/* Cards lado a lado */}
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    {sorted.map((d, rank) => (
+                                                    {sorted.map((d,rank)=>(
                                                         <div key={d.seller} className={`relative p-8 rounded-[2.5rem] border border-white/10 bg-white/5 ring-2 ${d.ring} hover:bg-white/10 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300`}>
-                                                            {/* Rank badge */}
-                                                            <div className="absolute -top-4 -left-2 w-10 h-10 flex items-center justify-center rounded-2xl font-black text-xl shadow-xl" style={{background: rank === 0 ? 'linear-gradient(135deg,#c9a227,#f5e4ab)' : '#1a1a1a', color: rank === 0 ? '#0f0f0f' : '#666', border: '2px solid rgba(255,255,255,0.15)'}}>
-                                                                {rank === 0 ? '🥇' : '🥈'}
+                                                            {/* Medalha */}
+                                                            <div className="absolute -top-4 -left-2 w-10 h-10 flex items-center justify-center rounded-2xl font-black text-xl shadow-xl" style={{background:rank===0?'linear-gradient(135deg,#c9a227,#f5e4ab)':'#1a1a1a',color:rank===0?'#0f0f0f':'#666',border:'2px solid rgba(255,255,255,0.15)'}}>
+                                                                {rank===0?'🥇':'🥈'}
                                                             </div>
-
-                                                            <div className="flex justify-between items-start mb-6">
+                                                            {/* Nome + status */}
+                                                            <div className="flex justify-between items-start mb-6 mt-2">
                                                                 <div>
                                                                     <p className={`font-black text-xl ${d.color}`}>{d.seller.split(' ')[0]}</p>
                                                                     <p className="text-xs text-slate-500 mt-0.5">{d.seller.split(' ').slice(1).join(' ')}</p>
                                                                 </div>
-                                                                {d.goalReached
-                                                                    ? <span className="bg-amber-500/20 text-amber-500 border border-amber-500/30 px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1"><Icons.Trophy className="w-3 h-3" /> Meta!</span>
-                                                                    : <span className="bg-white/5 text-slate-500 border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase">{Math.max(0, d.target - d.units)} p/ meta</span>
+                                                                {d.goalOk
+                                                                    ? <span className="bg-amber-500/20 text-amber-500 border border-amber-500/30 px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1"><Icons.Trophy className="w-3 h-3"/> Meta atingida!</span>
+                                                                    : <span className="bg-white/5 text-slate-500 border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold">{Math.max(0,GOAL_SELLERS-d.units)} un para meta</span>
                                                                 }
                                                             </div>
-
-                                                            {/* Progress bar */}
-                                                            <div className="w-full bg-white/10 rounded-full h-3 mb-2 overflow-hidden">
-                                                                <div className={`h-full rounded-full transition-all duration-1000 ${d.goalReached ? 'bg-gradient-to-r from-amber-400 to-amber-500' : 'bg-gradient-to-r from-slate-500 to-slate-400'}`} style={{width:`${d.progress}%`}}></div>
+                                                            {/* Barra de progresso */}
+                                                            <div className="w-full bg-white/10 rounded-full h-3 mb-1 overflow-hidden">
+                                                                <div className={`h-full rounded-full transition-all duration-1000 ${d.goalOk?'bg-gradient-to-r from-amber-400 to-amber-500':'bg-gradient-to-r from-slate-500 to-slate-400'}`} style={{width:`${d.prog}%`}}></div>
                                                             </div>
-                                                            <p className="text-[10px] text-slate-500 text-right mb-6">{d.units} / {d.target} unidades • {Math.round(d.progress)}%</p>
-
-                                                            {/* KPIs grid */}
+                                                            <p className="text-[10px] text-slate-500 text-right mb-6">{d.units} / {GOAL_SELLERS} un • {Math.round(d.prog)}%</p>
+                                                            {/* Grid de métricas */}
                                                             <div className="grid grid-cols-2 gap-3">
                                                                 <div className="p-4 bg-white/5 rounded-2xl border border-white/10 text-center">
                                                                     <p className="text-[9px] text-slate-500 uppercase tracking-wider mb-1">Faturamento</p>
-                                                                    <p className="font-black text-slate-200 text-base">R$ {formatCurrency(d.revenue)}</p>
+                                                                    <p className="font-black text-slate-200">R$ {formatCurrency(d.rev)}</p>
                                                                 </div>
                                                                 <div className="p-4 bg-white/5 rounded-2xl border border-white/10 text-center">
                                                                     <p className="text-[9px] text-slate-500 uppercase tracking-wider mb-1">Ticket Médio</p>
-                                                                    <p className="font-black text-slate-200 text-base">R$ {formatCurrency(d.avgTicket)}</p>
+                                                                    <p className="font-black text-slate-200">R$ {formatCurrency(d.avgT)}</p>
                                                                 </div>
                                                                 <div className="p-4 bg-white/5 rounded-2xl border border-white/10 text-center">
                                                                     <p className="text-[9px] text-slate-500 uppercase tracking-wider mb-1">Nº Vendas</p>
-                                                                    <p className="font-black text-slate-200 text-2xl">{d.salesCount}</p>
+                                                                    <p className="font-black text-slate-200 text-2xl">{d.cnt}</p>
                                                                 </div>
-                                                                <div className={`p-4 rounded-2xl border text-center ${d.goalReached ? 'bg-amber-500/10 border-amber-500/20' : 'bg-white/5 border-white/10'}`}>
+                                                                <div className={`p-4 rounded-2xl border text-center ${d.goalOk?'bg-amber-500/10 border-amber-500/20':'bg-white/5 border-white/10'}`}>
                                                                     <p className="text-[9px] text-slate-500 uppercase tracking-wider mb-1">Premiação</p>
-                                                                    <p className={`font-black text-base ${d.goalReached ? 'text-amber-500' : 'text-slate-500'}`}>R$ {formatCurrency(d.commission)}</p>
+                                                                    <p className={`font-black ${d.goalOk?'text-amber-400':'text-slate-500'}`}>R$ {formatCurrency(d.comm)}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                {/* Barra comparativa de aparelhos */}
-                                                <div className="border border-white/10 rounded-[2.5rem] p-10 bg-white/5">
-                                                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8">Comparativo de Aparelhos — Vendedoras vs Meta ({GOAL_SELLERS} un)</h4>
-                                                    <div className="space-y-6">
-                                                        {sorted.map(d => (
+                                                {/* Barras horizontais — aparelhos vs meta */}
+                                                <div className="p-8 rounded-[2.5rem] border border-white/10 bg-white/5">
+                                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-8">Aparelhos vs Meta ({GOAL_SELLERS} un) — Mês Atual</p>
+                                                    <div className="space-y-5">
+                                                        {sorted.map((d,idx)=>(
                                                             <div key={d.seller}>
                                                                 <div className="flex justify-between items-center mb-2">
                                                                     <span className={`font-bold text-sm ${d.color}`}>{d.seller.split(' ')[0]}</span>
-                                                                    <span className="font-mono font-bold text-slate-400 text-sm">{d.units} <span className="text-slate-600">/ {d.target} un</span></span>
+                                                                    <span className="font-mono font-bold text-slate-400 text-sm">{d.units} <span className="text-slate-600">/ {GOAL_SELLERS} un</span></span>
                                                                 </div>
-                                                                <div className="w-full bg-white/10 rounded-full h-5 overflow-hidden">
-                                                                    <div className={`h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-3 ${d.goalReached ? 'bg-gradient-to-r from-amber-400 to-amber-500' : 'bg-gradient-to-r from-slate-600 to-slate-400'}`} style={{width:`${d.progress}%`, minWidth: d.units > 0 ? '2rem' : '0'}}>
-                                                                        {d.progress > 15 && <span className="text-[10px] font-black text-white">{Math.round(d.progress)}%</span>}
+                                                                <div className="w-full bg-white/10 rounded-full h-5 overflow-hidden relative">
+                                                                    {/* Meta marker */}
+                                                                    <div className="absolute top-0 bottom-0 w-0.5 bg-white/30 z-10" style={{left:'100%'}}></div>
+                                                                    <div className={`h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-3 ${d.goalOk?'bg-gradient-to-r from-amber-400 to-amber-500':d.bar}`} style={{width:`${d.prog}%`,minWidth:d.units>0?'2rem':'0'}}>
+                                                                        {d.prog>18&&<span className="text-[10px] font-black text-white">{Math.round(d.prog)}%</span>}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2168,26 +2334,26 @@
                                                     </div>
                                                 </div>
 
-                                                {/* Faturamento comparativo (barras verticais) */}
-                                                <div className="border border-white/10 rounded-[2.5rem] p-10 bg-white/5">
-                                                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8">Faturamento por Vendedora — Mês Atual</h4>
-                                                    <div className="h-48 flex items-end gap-8 justify-center">
-                                                        {sorted.map((d, i) => {
-                                                            const maxRev = Math.max(...sorted.map(x => x.revenue), 1);
-                                                            const h = Math.max((d.revenue / maxRev) * 100, 4);
-                                                            const barColors = ['bg-gradient-to-t from-odoo-600 to-odoo-400', 'bg-gradient-to-t from-slate-600 to-slate-400'];
+                                                {/* Barras verticais — faturamento */}
+                                                <div className="p-8 rounded-[2.5rem] border border-white/10 bg-white/5">
+                                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-8">Faturamento por Vendedora — Mês Atual</p>
+                                                    <div className="h-48 flex items-end gap-8 justify-center px-4">
+                                                        {sorted.map((d,i)=>{
+                                                            const h = Math.max((d.rev/maxRev)*100,4);
                                                             return (
-                                                                <div key={d.seller} className="flex flex-col items-center flex-1 group/bar h-full justify-end max-w-[160px] relative">
-                                                                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black border border-white/10 text-white text-[10px] font-bold px-3 py-1.5 rounded-xl opacity-0 group-hover/bar:opacity-100 transition-all whitespace-nowrap z-10 shadow-xl">
-                                                                        R$ {formatCurrency(d.revenue)}
+                                                                <div key={d.seller} className="flex flex-col items-center flex-1 group/bar h-full justify-end max-w-[200px] relative">
+                                                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/90 border border-white/10 text-white text-[10px] font-bold px-3 py-1.5 rounded-xl opacity-0 group-hover/bar:opacity-100 transition-all whitespace-nowrap z-10 shadow-xl pointer-events-none">
+                                                                        R$ {formatCurrency(d.rev)}
                                                                     </div>
-                                                                    <div className={`w-full rounded-t-2xl ${barColors[i]} shadow-lg transition-all duration-700`} style={{height:`${h}%`}}></div>
+                                                                    <div className={`w-full rounded-t-2xl ${d.barV} shadow-lg transition-all duration-1000`} style={{height:`${h}%`}}></div>
                                                                     <p className={`font-bold text-sm mt-4 ${d.color}`}>{d.seller.split(' ')[0]}</p>
+                                                                    <p className="text-[10px] text-slate-500 font-mono">R$ {formatCurrency(d.rev)}</p>
                                                                 </div>
                                                             );
                                                         })}
                                                     </div>
                                                 </div>
+
                                             </div>
                                         );
                                     })()}
@@ -2604,12 +2770,7 @@
                                                                 {group.items.map(s => (
                                                                     <tr key={s.id} className="hover:bg-[#0f0f0f]/5 transition-colors group border-b border-[#0f0f0f]/10 last:border-0">
                                                                         <td className="p-4 pl-6 align-top">
-                                                                            <div className="font-bold text-[#0f0f0f] leading-tight mb-1 flex items-center gap-1 flex-wrap" style={{ fontSize: '15px' }}>
-                                                                                {s.clientName}
-                                                                                {s.editHistory && s.editHistory.length > 1 && (
-                                                                                    <span title={`Editado por ${s.lastEditedBy || '?'} em ${s.lastEditedAt ? new Date(s.lastEditedAt).toLocaleString('pt-BR') : ''}`} style={{fontSize:'9px'}} className="font-black uppercase bg-amber-100 text-amber-700 border border-amber-300 px-1.5 py-0.5 rounded-md tracking-wider cursor-help">✏️ editado</span>
-                                                                                )}
-                                                                            </div>
+                                                                            <div className="font-bold text-[#0f0f0f] leading-tight mb-1" style={{ fontSize: '15px' }}>{s.clientName}</div>
                                                                             <div className="font-mono text-[#0f0f0f]/50" style={{ fontSize: '11px' }}>{s.clientCpf}</div>
                                                                         </td>
                                                                         <td className="p-4 align-top">
@@ -2817,19 +2978,6 @@
                                             <div className="rounded-xl p-3.5 text-[11px]" style={{ background: 'rgba(15,15,15,0.04)', border: '1px solid rgba(15,15,15,0.1)' }}>
                                                 <p className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6b6560' }}>Observação</p>
                                                 <p style={{ color: '#0f0f0f' }}>{currentReceipt.paymentObservation}</p>
-                                            </div>
-                                        )}
-
-                                        {/* Histórico de Edições — visível apenas para ADM */}
-                                        {isAdm && currentReceipt && currentReceipt.editHistory && currentReceipt.editHistory.length > 0 && (
-                                            <div className="rounded-xl p-3.5 text-[11px]" style={{ background: 'rgba(220,38,38,0.04)', border: '1px dashed rgba(220,38,38,0.2)' }}>
-                                                <p className="text-[9px] font-black uppercase tracking-widest mb-2" style={{ color: '#c0392b' }}>Histórico de Alterações</p>
-                                                {currentReceipt.editHistory.map((e, i) => (
-                                                    <div key={i} className="flex justify-between text-[10px] font-mono py-0.5" style={{ color: '#6b6560' }}>
-                                                        <span>{e.action === 'create' ? '✅ Criado por' : '✏️ Editado por'} <b style={{color:'#0f0f0f'}}>{e.editedBy}</b></span>
-                                                        <span>{new Date(e.editedAt).toLocaleString('pt-BR', {day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'})}</span>
-                                                    </div>
-                                                ))}
                                             </div>
                                         )}
 
