@@ -12,7 +12,7 @@
 
     <!-- Fontes Premium - apenas pesos essenciais -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&family=Space+Mono:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&family=Space+Mono:wght@700&family=Roboto+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <!-- Fonte Mono para Recibo -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         display: ['"Playfair Display"', 'serif'],
-                        mono: ['"Space Mono"', 'monospace'],
+                        mono: ['"Roboto Mono"', '"Space Mono"', 'monospace'],
                         receipt: ['"Share Tech Mono"', 'monospace']
                     },
                     colors: {
@@ -105,6 +105,12 @@
     </script>
 
     <style>
+        /* Fonte numérica com zero recortado para melhor legibilidade 0 vs 8 */
+        .font-mono {
+            font-variant-numeric: slashed-zero;
+            font-feature-settings: "zero" 1;
+        }
+
         /* ============================================
            TEMA CHAMPAGNE & NOIR • Boutique Edition
            Background: warm beige/off-white
@@ -1501,7 +1507,7 @@
                 if (newItemImei && newItemImei.trim().length > 0) {
                     const imeiClean = newItemImei.trim();
                     // Verificar duplicata no formulário atual
-                    const inCurrentForm = items.some(i => i.imei && i.imei.trim() === imeiClean);
+                    const inCurrentForm = items.some(i => i.imei && i.imei.trim() === imeiClean && i.id !== editingItemId);
                     if (inCurrentForm) { showToast("⚠️ IMEI já adicionado nesta venda!", "error"); return; }
                     // Verificar duplicata nas vendas históricas (excluindo a venda em edição)
                     const inHistory = sales.some(s => {
@@ -2141,7 +2147,7 @@
                                     </button>
                                 </div>
                             </div>
-                            {sessionPromptOpen && (<div className="absolute inset-0 rounded-[3rem] z-[25] flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.User className="w-8 h-8" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl text-center font-bold mb-4 font-display" style={{ color: '#0f0f0f' }}>Bem-vindo de volta!</h3><p className="mb-10 text-sm font-medium text-center" style={{ color: '#6b6560' }}>Deseja continuar logado como <b>{selectedUserForLogin}</b>?</p><div className="flex gap-4 w-full"><button onClick={() => { setSessionPromptOpen(false); setSettings({ employeeName: null }); }} className="flex-1 p-5 rounded-[2rem] font-bold transition-all hover:bg-black/5 active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Não, Sair</button><button onClick={() => { setIsLoggedIn(true); setSessionPromptOpen(false); showToast(`Sessão restaurada para ${selectedUserForLogin}`); }} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all shadow-md active-scale p-5 text-onyx-900">Sim, Continuar</button></div></div>)}
+                            {sessionPromptOpen && (<div className="absolute inset-0 rounded-[3rem] z-[25] flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.User className="w-8 h-8" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl text-center font-bold mb-4 font-display" style={{ color: '#0f0f0f' }}>Bem-vindo de volta!</h3><p className="mb-10 text-sm font-medium text-center" style={{ color: '#6b6560' }}>Deseja continuar logado como <b>{selectedUserForLogin}</b>?</p><div className="flex gap-4 w-full"><button onClick={() => { setSessionPromptOpen(false); setSettings({ employeeName: null }); }} className="flex-1 p-5 rounded-[2rem] font-bold transition-all hover:bg-black/5 active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Não, Sair</button><button onClick={() => { setIsLoggedIn(true); setSessionPromptOpen(false); if (selectedUserForLogin === ADM_NAME) setIsAdm(true); showToast(`Sessão restaurada para ${selectedUserForLogin}`); }} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all shadow-md active-scale p-5 text-onyx-900">Sim, Continuar</button></div></div>)}
                             {loginModalOpen && (<div className="absolute inset-0 rounded-[3rem] z-20 flex flex-col items-center justify-center p-10 animate-in fade-in zoom-in-95 duration-500" style={{ background: '#fdfaf4', borderTop: '1px solid rgba(201,162,39,0.35)' }}><div className="w-14 h-14 rounded-full flex items-center justify-center mb-6 shadow-sm" style={{ background: 'linear-gradient(135deg,#c9a227,#e4ba4a)', border: '1.5px solid rgba(15,15,15,0.15)' }}><Icons.Lock className="w-6 h-6" style={{ color: '#0f0f0f' }} /></div><h3 className="text-3xl font-bold mb-2 font-display" style={{ color: '#0f0f0f' }}>Olá, {selectedUserForLogin}!</h3><p className="mb-10 text-sm font-medium" style={{ color: '#6b6560' }}>Digite sua senha para acessar.</p><input type="password" value={loginPasswordInput} onChange={e => setLoginPasswordInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && performLogin()} className="w-full p-5 rounded-[2rem] text-center mb-10 font-bold outline-none transition-all text-xl placeholder:font-normal shadow-sm" style={{ background: '#fff', border: '1.5px solid rgba(15,15,15,0.20)', color: '#0f0f0f' }} placeholder="••••••" autoFocus /><div className="flex gap-4 w-full"><button onClick={() => setLoginModalOpen(false)} className="flex-1 p-5 rounded-[2rem] font-bold transition-all active-scale" style={{ background: 'transparent', border: '1.5px solid rgba(15,15,15,0.18)', color: '#4a4640' }}>Voltar</button><button onClick={performLogin} className="flex-1 btn-gold rounded-[2rem] font-bold transition-all active-scale p-5">Entrar</button></div></div>)}
                         </div>
                     </div>
@@ -2195,6 +2201,15 @@
                                     title="Carteira de Clientes">
                                     {currentView !== 'clients' && <span className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none" style={{ background:'radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.2) 0%, transparent 70%)', transition:'opacity 0.3s' }}></span>}
                                     {currentView === 'clients' ? <Icons.Home className="w-5 h-5" /> : <Icons.Users className="w-5 h-5 relative z-10" />}
+                                </button>
+
+                                <button onClick={() => setCurrentView(currentView === 'referrals' ? 'dashboard' : 'referrals')}
+                                    className={`p-3 rounded-[1.5rem] transition-all duration-300 active-scale relative overflow-hidden group ${currentView === 'referrals' ? 'btn-gold text-onyx-900 shadow-md ring-1 ring-black/5' : 'text-slate-400'}`}
+                                    onMouseEnter={e=>{ if(currentView!=='referrals'){ e.currentTarget.style.background='rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow='0 0 14px rgba(201,162,39,0.15)'; }}}
+                                    onMouseLeave={e=>{ if(currentView!=='referrals'){ e.currentTarget.style.background=''; e.currentTarget.style.boxShadow=''; }}}
+                                    title="Indicações">
+                                    {currentView !== 'referrals' && <span className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none" style={{ background:'radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.2) 0%, transparent 70%)', transition:'opacity 0.3s' }}></span>}
+                                    <Icons.UserPlus className="w-5 h-5 relative z-10" />
                                 </button>
 
                                 <button onClick={() => setCurrentView(currentView === 'performance' ? 'dashboard' : 'performance')}
@@ -2382,6 +2397,207 @@
                     <div className="max-w-6xl mx-auto px-6 space-y-10 animate-fade-in-up">
                         {currentView === 'calendar' ? (
                             <SimpleCalendar routineState={routineState} toggleRoutine={toggleRoutine} />
+                        ) : currentView === 'referrals' ? (
+                            <div className="space-y-8">
+                                <div className="classic-frame rounded-[3rem] shadow-vision border border-white/60 p-10">
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+                                        <h2 className="text-3xl font-bold text-slate-200 flex items-center gap-4 font-display">
+                                            <div className="p-3 bg-white/10 rounded-2xl text-odoo-500 shadow-sm border border-white/5"><Icons.UserPlus className="w-8 h-8" /></div>
+                                            Análise de Indicações
+                                        </h2>
+                                    </div>
+                                    {(() => {
+                                        // ── Normalização e clustering por palavras-chave ──
+                                        const normStr = (s) => s.trim().toLowerCase()
+                                            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                                            .replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+
+                                        const STOP = new Set(['de','do','da','dos','das','e','a','o','as','os','em','com','para','por','um','uma','no','na','nos','nas','ao','aos','que','se','via','pelo','pela','antiga','antigo','novo','nova']);
+
+                                        const extractKw = (s) => {
+                                            const words = normStr(s).split(' ').filter(w => w.length > 2 && !STOP.has(w));
+                                            return new Set(words.length ? words : [normStr(s)]);
+                                        };
+
+                                        const salesWithSource = sales.filter(s => s.clientSource && s.clientSource.trim());
+                                        const uniqueSrcs = [...new Set(salesWithSource.map(s => s.clientSource.trim()))];
+                                        const kwMap = {};
+                                        uniqueSrcs.forEach(s => { kwMap[s] = extractKw(s); });
+
+                                        // Union-Find para clustering
+                                        const parent = {};
+                                        uniqueSrcs.forEach(s => { parent[s] = s; });
+                                        const find = (x) => { if (parent[x] !== x) parent[x] = find(parent[x]); return parent[x]; };
+                                        const unite = (x, y) => { parent[find(x)] = find(y); };
+
+                                        for (let i = 0; i < uniqueSrcs.length; i++) {
+                                            for (let j = i + 1; j < uniqueSrcs.length; j++) {
+                                                const a = uniqueSrcs[i], b = uniqueSrcs[j];
+                                                const ka = kwMap[a], kb = kwMap[b];
+                                                const inter = [...ka].filter(k => kb.has(k)).length;
+                                                const unionSz = new Set([...ka, ...kb]).size;
+                                                const jaccard = inter / unionSz;
+                                                const isSubset = [...ka].every(k => kb.has(k)) || [...kb].every(k => ka.has(k));
+                                                if (jaccard >= 0.4 || (inter >= 1 && isSubset)) unite(a, b);
+                                            }
+                                        }
+
+                                        // Mapear cada variante ao rótulo canônico (variante mais frequente do grupo)
+                                        const clusters = {};
+                                        uniqueSrcs.forEach(s => {
+                                            const root = find(s);
+                                            if (!clusters[root]) clusters[root] = [];
+                                            clusters[root].push(s);
+                                        });
+                                        const srcToCanonical = {};
+                                        Object.values(clusters).forEach(group => {
+                                            const freq = {};
+                                            group.forEach(s => { freq[s] = salesWithSource.filter(x => x.clientSource.trim() === s).length; });
+                                            const canonical = [...group].sort((a, b) => freq[b] - freq[a])[0];
+                                            group.forEach(s => { srcToCanonical[s] = canonical; });
+                                        });
+
+                                        // Construir sourceMap agrupado
+                                        const sourceMap = {};
+                                        salesWithSource.forEach(s => {
+                                            const raw = s.clientSource.trim();
+                                            const canon = srcToCanonical[raw] || raw;
+                                            if (!sourceMap[canon]) sourceMap[canon] = { count: 0, revenue: 0, sales: [], aliases: new Set() };
+                                            sourceMap[canon].count++;
+                                            sourceMap[canon].revenue += (s.amountPaid || s.amount || 0);
+                                            sourceMap[canon].sales.push({ ...s, _rawSource: raw });
+                                            if (raw.toLowerCase() !== canon.toLowerCase()) sourceMap[canon].aliases.add(raw);
+                                        });
+
+                                        const totalReferrals = salesWithSource.length;
+                                        const totalRevenue = salesWithSource.reduce((a, s) => a + (s.amountPaid || s.amount || 0), 0);
+                                        const allRevenue = sales.reduce((a, s) => a + (s.amountPaid || s.amount || 0), 0);
+                                        const sources = Object.entries(sourceMap).sort((a, b) => b[1].count - a[1].count);
+                                        const topSource = sources[0] ? sources[0][0] : '—';
+                                        const maxCount = sources[0] ? sources[0][1].count : 1;
+                                        const maxRev = Math.max(...sources.map(([,d]) => d.revenue), 1);
+                                        const referralRate = allRevenue > 0 ? (totalRevenue / allRevenue * 100).toFixed(1) : '0.0';
+                                        const mergedGroups = sources.filter(([,d]) => d.aliases.size > 0).length;
+
+                                        const kpis = [
+                                            { label: 'Total Indicações', val: totalReferrals, color: 'text-odoo-400', bg: 'bg-odoo-500/10 border-odoo-500/20' },
+                                            { label: 'Grupos Únicos', val: sources.length, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
+                                            { label: 'Principal Fonte', val: topSource, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
+                                            { label: 'Fat. Indicações', val: `R$ ${formatCurrency(totalRevenue)}`, color: 'text-violet-400', bg: 'bg-violet-500/10 border-violet-500/20' },
+                                            { label: '% do Fat. Total', val: `${referralRate}%`, color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
+                                        ];
+                                        return (
+                                            <>
+                                                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+                                                    {kpis.map(k => (
+                                                        <div key={k.label} className={`p-6 rounded-[2rem] border ${k.bg} hover:-translate-y-1 hover:shadow-xl transition-all duration-300`}>
+                                                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-3 leading-tight">{k.label}</p>
+                                                            <p className={`text-lg font-black ${k.color} leading-tight break-all`}>{k.val}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                {mergedGroups > 0 && (
+                                                    <div className="mb-8 flex items-center gap-3 px-5 py-3 bg-odoo-500/10 border border-odoo-500/20 rounded-2xl text-xs font-bold text-odoo-400">
+                                                        <span className="text-lg">🔗</span>
+                                                        {mergedGroups} grupo{mergedGroups !== 1 ? 's mesclados' : ' mesclado'} automaticamente por palavras-chave semelhantes
+                                                    </div>
+                                                )}
+                                                {sources.length > 0 ? (
+                                                    <>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                                                            <div className="p-8 bg-white/5 rounded-[2rem] border border-white/10">
+                                                                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Indicações por Quantidade</h3>
+                                                                <div className="space-y-5">
+                                                                    {sources.slice(0, 10).map(([src, data]) => (
+                                                                        <div key={src}>
+                                                                            <div className="flex justify-between items-center mb-1">
+                                                                                <div>
+                                                                                    <span className="text-sm font-bold text-slate-200">{src}</span>
+                                                                                    {data.aliases.size > 0 && <span className="ml-2 text-[10px] text-odoo-400 font-bold">+{data.aliases.size} variação{data.aliases.size !== 1 ? 'ões' : ''}</span>}
+                                                                                </div>
+                                                                                <span className="text-xs font-bold text-slate-400">{data.count} venda{data.count !== 1 ? 's' : ''}</span>
+                                                                            </div>
+                                                                            {data.aliases.size > 0 && <p className="text-[10px] text-slate-500 mb-1 italic">{[...data.aliases].join(' • ')}</p>}
+                                                                            <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden">
+                                                                                <div className="h-full rounded-full bg-gradient-to-r from-odoo-600 to-odoo-300 transition-all duration-700" style={{ width: `${(data.count / maxCount) * 100}%` }}></div>
+                                                                            </div>
+                                                                            <p className="text-[10px] text-slate-500 mt-1 text-right">Ticket médio: R$ {formatCurrency(data.revenue / data.count)}</p>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                            <div className="p-8 bg-white/5 rounded-[2rem] border border-white/10">
+                                                                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Faturamento por Fonte</h3>
+                                                                <div className="space-y-5">
+                                                                    {[...sources].sort((a, b) => b[1].revenue - a[1].revenue).slice(0, 10).map(([src, data]) => (
+                                                                        <div key={src}>
+                                                                            <div className="flex justify-between items-center mb-1">
+                                                                                <span className="text-sm font-bold text-slate-200">{src}</span>
+                                                                                <span className="text-xs font-bold text-emerald-400">R$ {formatCurrency(data.revenue)}</span>
+                                                                            </div>
+                                                                            <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden">
+                                                                                <div className="h-full rounded-full bg-gradient-to-r from-emerald-700 to-emerald-400 transition-all duration-700" style={{ width: `${(data.revenue / maxRev) * 100}%` }}></div>
+                                                                            </div>
+                                                                            <p className="text-[10px] text-slate-500 mt-1 text-right">{data.count} venda{data.count !== 1 ? 's' : ''}</p>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="bg-[#fdfaf4] rounded-[2.5rem] border border-[#0f0f0f]/10 overflow-hidden shadow-sm">
+                                                            <div className="p-6 border-b border-[#0f0f0f]/10 flex items-center gap-3">
+                                                                <Icons.UserPlus className="w-5 h-5 text-[#c9a227]" />
+                                                                <h3 className="font-bold text-[#0f0f0f] text-lg">Detalhamento das Indicações</h3>
+                                                                <span className="ml-auto text-xs font-bold text-[#0f0f0f]/40 uppercase tracking-wider">{salesWithSource.length} registro{salesWithSource.length !== 1 ? 's' : ''}</span>
+                                                            </div>
+                                                            <div className="overflow-x-auto">
+                                                                <table className="w-full text-sm">
+                                                                    <thead className="bg-[#0f0f0f]/5 text-[#0f0f0f] text-[10px] font-bold uppercase tracking-widest border-b border-[#0f0f0f]/10">
+                                                                        <tr>
+                                                                            <th className="p-4 pl-6 text-left">Data</th>
+                                                                            <th className="p-4 text-left">Cliente</th>
+                                                                            <th className="p-4 text-left">Vendedor</th>
+                                                                            <th className="p-4 text-left">Grupo / Original</th>
+                                                                            <th className="p-4 text-left">Produto Principal</th>
+                                                                            <th className="p-4 text-right pr-6">Valor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody className="divide-y divide-[#0f0f0f]/5">
+                                                                        {[...salesWithSource].sort((a, b) => (b.date || '').localeCompare(a.date || '')).map(s => {
+                                                                            const raw = s.clientSource.trim();
+                                                                            const canon = srcToCanonical[raw] || raw;
+                                                                            const isMerged = raw.toLowerCase() !== canon.toLowerCase();
+                                                                            return (
+                                                                                <tr key={s.id} className="hover:bg-[#0f0f0f]/5 transition-colors">
+                                                                                    <td className="p-4 pl-6 text-[#0f0f0f]/50 font-mono text-xs whitespace-nowrap">{formatDateBR(s.date)}</td>
+                                                                                    <td className="p-4 font-semibold text-[#0f0f0f]">{s.clientName || '—'}</td>
+                                                                                    <td className="p-4 text-[#0f0f0f]/50 text-xs font-bold uppercase">{s.employeeName}</td>
+                                                                                    <td className="p-4">
+                                                                                        <span className="bg-[#c9a227]/10 text-[#8a6d18] border border-[#c9a227]/30 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wide">{canon}</span>
+                                                                                        {isMerged && <p className="text-[10px] text-[#0f0f0f]/40 mt-1 italic">digitado: "{raw}"</p>}
+                                                                                    </td>
+                                                                                    <td className="p-4 text-[#0f0f0f]/60 text-xs">{(s.items || [])[0] ? `${s.items[0].type} ${s.items[0].description}` : '—'}</td>
+                                                                                    <td className="p-4 text-right pr-6 font-mono font-bold text-[#0f0f0f] whitespace-nowrap">R$ {formatCurrency(s.amountPaid || s.amount || 0)}</td>
+                                                                                </tr>
+                                                                            );
+                                                                        })}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <div className="text-center py-24 text-slate-500 flex flex-col items-center">
+                                                        <div className="p-8 bg-white/5 rounded-full mb-8 shadow-inner ring-1 ring-white/5"><Icons.UserPlus className="w-16 h-16 opacity-20 text-white" /></div>
+                                                        <p className="font-bold text-2xl text-slate-400 mb-2">Nenhuma indicação registrada</p>
+                                                        <p className="text-sm">Preencha o campo "Conheceu a loja?" ao registrar uma venda.</p>
+                                                    </div>
+                                                )}
+                                            </>
+                                        );
+                                    })()}
+                                </div>
+                            </div>
                         ) : currentView === 'manager' ? (
                             <div className="space-y-8">
                                 <div className="classic-frame rounded-[3rem] shadow-vision border border-white/60 p-10">
@@ -3004,6 +3220,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className="text-right flex-shrink-0">
+                                                                                            {i.discount > 0 && <div className="text-[#0f0f0f]/40 font-medium line-through" style={{ fontSize: '11px' }}>{formatCurrency(i.unitPrice * i.quantity)}</div>}
                                                                                             <div className="font-bold text-[#0f0f0f]" style={{ fontSize: '14px' }}>{formatCurrency((i.unitPrice * i.quantity) - i.discount)}</div>
                                                                                             {i.discount > 0 && <div className="text-red-600 font-bold" style={{ fontSize: '11px' }}>-{formatCurrency(i.discount)}</div>}
                                                                                             {(s.category === 'Troca' || s.category === 'Devolução') && <div className="font-black uppercase" style={{ fontSize: '10px', color: i.unitPrice > 0 ? '#2e7d32' : '#c0392b' }}>{i.unitPrice > 0 ? 'Levou' : 'Devolveu'}</div>}
@@ -3129,7 +3346,10 @@
                                                             {currentReceipt.category === 'Troca' && <p style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: it.unitPrice > 0 ? '#2e7d32' : '#c0392b', marginTop: '2px' }}>{it.unitPrice > 0 ? '↑ Levou' : '↓ Devolveu'}</p>}
                                                         </div>
                                                         <span style={{ fontSize: '12px', fontWeight: 700, color: '#0f0f0f', textAlign: 'center', alignSelf: 'start', paddingTop: '2px' }}>{it.quantity}</span>
-                                                        <span style={{ fontSize: '13px', fontWeight: 800, color: it.unitPrice < 0 ? '#c0392b' : '#0f0f0f', textAlign: 'right', alignSelf: 'start', paddingTop: '2px' }}>{formatCurrency((it.unitPrice * it.quantity) - it.discount)}</span>
+                                                        <div style={{ textAlign: 'right', alignSelf: 'start', paddingTop: '2px' }}>
+                                                            {it.discount > 0 && <span style={{ fontSize: '10px', fontWeight: 600, color: '#6b6560', textDecoration: 'line-through', display: 'block' }}>{formatCurrency(it.unitPrice * it.quantity)}</span>}
+                                                            <span style={{ fontSize: '13px', fontWeight: 800, color: it.unitPrice < 0 ? '#c0392b' : '#0f0f0f' }}>{formatCurrency((it.unitPrice * it.quantity) - it.discount)}</span>
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </div>
