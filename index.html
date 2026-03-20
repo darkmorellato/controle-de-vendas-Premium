@@ -2424,15 +2424,31 @@
                                         const kwMap = {};
                                         uniqueSrcs.forEach(s => { kwMap[s] = extractKw(s); });
 
+                                        // ── Agrupamentos forçados por palavras-chave explícitas ──
+                                        const FORCED_GROUPS = [
+                                            ['pri almeida', 'pri almeida sabrina', 'pri'],
+                                            ['sabrina almeida', 'sabrina', 'sa'],
+                                        ];
+
                                         // Union-Find para clustering
                                         const parent = {};
                                         uniqueSrcs.forEach(s => { parent[s] = s; });
                                         const find = (x) => { if (parent[x] !== x) parent[x] = find(parent[x]); return parent[x]; };
                                         const unite = (x, y) => { parent[find(x)] = find(y); };
 
+                                        // Aplicar agrupamentos forçados antes do clustering automático
+                                        const forcedMember = new Set();
+                                        FORCED_GROUPS.forEach(aliases => {
+                                            const matching = uniqueSrcs.filter(s => aliases.includes(normStr(s)));
+                                            matching.forEach(s => forcedMember.add(s));
+                                            for (let i = 1; i < matching.length; i++) unite(matching[0], matching[i]);
+                                        });
+
                                         for (let i = 0; i < uniqueSrcs.length; i++) {
                                             for (let j = i + 1; j < uniqueSrcs.length; j++) {
                                                 const a = uniqueSrcs[i], b = uniqueSrcs[j];
+                                                // Não deixar o clustering automático alterar grupos forçados
+                                                if (forcedMember.has(a) || forcedMember.has(b)) continue;
                                                 const ka = kwMap[a], kb = kwMap[b];
                                                 const inter = [...ka].filter(k => kb.has(k)).length;
                                                 const unionSz = new Set([...ka, ...kb]).size;
